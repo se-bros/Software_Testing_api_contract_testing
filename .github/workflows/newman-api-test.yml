@@ -1,0 +1,112 @@
+# Newman API tests — chay Postman Collection (CRUD) tren API mau bang GitHub Actions.
+#
+# Luong: checkout -> setup Node -> cai & khoi dong provider (localhost:8080)
+#        -> doi provider san sang -> cai Newman + htmlextra -> chay Newman
+#        -> upload report (LUON upload, ke ca khi test fail).
+#
+# Luu y quan trong:
+# - Provider co endpoint /health PUBLIC (dang ky TRUOC authMiddleware trong server.js)
+#   tra 200 ma khong can token -> readiness probe goi /health bang `curl -f`,
+#   chi pass khi that su nhan 200. curl co san tren ubuntu-latest -> khong can
+#   cai them dependency. (Cac route con lai van doi Bearer token nhu cu.)
+# - Report xuat ra newman/output/ (da duoc .gitignore che san) de chay local
+#   khong de lai file rac; trong CI van upload nguyen thu muc lam artifact.
+# - Token do Pre-request script cua Collection tu sinh (ISO 8601 timestamp),
+#   khong can secret nao trong CI.
+
+name: Newman API tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+  # Ve yeu cau "chay sau build/deploy": repo hien KHONG co job build/deploy nao
+  # de gate (provider chi `node server.js`, khong co buoc build) -> khong tao job
+  # build gia. Khi nao co:
+  #   - Cung 1 workflow: them `needs: <ten-job-build>` vao job ben duoi.
+  #   - Workflow deploy rieng: doi trigger tren thanh
+  #       workflow_run: { workflows: ["<Ten workflow deploy>"], types: [completed] }
+
+permissions:
+  contents: read
+
+concurrency:
+  group: newman-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  newman-api-test:
+    name: Newman API tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      PROVIDER_DIR: src/sample-api/pact-workshop-js/provider
+      COLLECTION: src/postman/collections/product-service.postman_collection.json
+      ENVIRONMENT: src/postman/environments/local.postman_environment.json
+      REPORT_DIR: newman/output
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: src/sample-api/pact-workshop-js/provider/package-lock.json
+
+      - name: Install provider dependencies
+        working-directory: ${{ env.PROVIDER_DIR }}
+        run: npm ci
+
+      - name: Prepare report directory
+        run: mkdir -p "$REPORT_DIR"
+
+      - name: Start provider API
+        working-directory: ${{ env.PROVIDER_DIR }}
+        run: |
+          nohup npm start > "$GITHUB_WORKSPACE/$REPORT_DIR/provider.log" 2>&1 &
+          echo "Provider dang khoi dong (PID $!)..."
+
+      - name: Wait for provider to be ready
+        run: |
+          # /health la route public tra 200. curl -f: exit != 0 khi HTTP >= 400
+          # hoac chua ket noi duoc -> chi pass khi that su nhan 200.
+          for i in $(seq 1 30); do
+            if curl -fsS -o /dev/null "http://127.0.0.1:8080/health"; then
+              echo "Provider ready sau ${i} lan thu"
+              exit 0
+            fi
+            echo "Cho provider... (${i}/30)"
+            sleep 1
+          done
+          echo "Provider khong san sang sau 30s" >&2
+          exit 1
+
+      - name: Install Newman and HTML reporter
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Run Newman
+        run: |
+          newman run "$COLLECTION" \
+            -e "$ENVIRONMENT" \
+            --reporters cli,htmlextra,json \
+            --reporter-htmlextra-export "$REPORT_DIR/report.html" \
+            --reporter-json-export "$REPORT_DIR/report.json"
+
+      - name: Upload Newman report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: ${{ env.REPORT_DIR }}/
+          if-no-files-found: error
+          retention-days: 7

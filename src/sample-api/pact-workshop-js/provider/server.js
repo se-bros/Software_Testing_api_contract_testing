@@ -8,6 +8,8 @@ const createApp = () => {
     const app = express();
     app.use(cors());
     app.use(express.json());
+    // Public health check — dang ky TRUOC authMiddleware nen khong doi token.
+    app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
     app.use(authMiddleware);
     app.use(routes);
     return app;
