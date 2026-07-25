@@ -42,13 +42,17 @@ Evidence: Expected deliverables: `can-i-deploy` quality gate step in CI/CD pipel
 - Thử nghiệm sinh test case tự động bằng Postman Postbot và biên soạn tài liệu đánh giá tính thực tiễn của công cụ AI này.
 - Xây dựng bộ cẩm nang prompts thông minh cho ChatGPT và Claude nhằm hướng dẫn các bạn cùng lớp viết test script cho Postman và tạo cấu trúc kiểm thử hợp đồng tự động.
 
-Evidence: Expected deliverables: Tài liệu đánh giá Postman Postbot & Standalone Prompt Guide template.
+Evidence:
+- Postbot: [`postbot-evaluation.md`](evidences/TuanAnh/postbot-evaluation.md) (+ `r1.png`…`r9.png`)
+- Prompt Guide: [`prompt-guide.md`](evidences/TuanAnh/prompt-guide.md) (+ `r2_chatgpt.png`, `r4_chatgpt.png`, [`r2_chatgpt_ai_review.md`](evidences/TuanAnh/r2_chatgpt_ai_review.md))
+- Collection: [`w07-postbot-testing.postman_collection.json`](evidences/TuanAnh/w07-postbot-testing.postman_collection.json)
+- AI Audit: [`AI Usage/TuanAnh/AI_Audit_Report.md`](AI%20Usage/TuanAnh/AI_Audit_Report.md)
 
 ## AI Usage Declaration
 
 Nhóm đã sử dụng các công cụ AI (Claude, ChatGPT, Postman Postbot) để hỗ trợ biên soạn tài liệu đánh giá công cụ AI và hỗ trợ tạo cấu trúc workflow CI/CD.
 
-Link: Expected deliverable: `AI_Audit_Report.md` (sẽ được ghi nhận bằng chứng khi thực hiện trong tuần)
+Link: [`AI Usage/TuanAnh/AI_Audit_Report.md`](AI%20Usage/TuanAnh/AI_Audit_Report.md) (và các thành viên khác trong `AI Usage/`)
 
 ## Tasks Planned for Next Week
 

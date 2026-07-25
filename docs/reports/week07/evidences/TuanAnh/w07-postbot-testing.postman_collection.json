@@ -1,0 +1,456 @@
+{
+  "info": {
+    "_postman_id": "e7b0a152-w007-4c52-9a01-postbot-testing",
+    "name": "Postbot Testing",
+    "description": "Collection phục vụ W07 — đánh giá Postman Postbot (23127152).\n\nCấu trúc: folder `testing` chứa các request khớp smoke auth/CRUD tuần 06 và kế hoạch trong `postbot-evaluation.md`.\n\nCách dùng Postbot:\n1. Chọn environment `Product Service - Local` (hoặc set `baseUrl` = http://localhost:8080).\n2. Đảm bảo Provider đang chạy (port 8080).\n3. Send request → mở tab Tests → Postbot → Add tests for this request.\n4. Review script sinh ra, ghi vào `postbot-evaluation.md`.\n\nAuth: Pre-request cấp Collection sinh `authToken` = ISO-8601 (lùi 5s). Request cần auth dùng Bearer {{authToken}}. Request negative auth tắt Authorization.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "seedProductId",
+      "value": "10"
+    },
+    {
+      "key": "missingProductId",
+      "value": "khong-ton-tai"
+    },
+    {
+      "key": "createdProductId",
+      "value": ""
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Bearer token = ISO-8601 trong vòng 1 giờ, không ở tương lai.",
+          "// Auth middleware: diff >= 0 && diff <= 3600 (giây).",
+          "// Lùi 5s tránh lệch đồng hồ client/server.",
+          "const token = new Date(Date.now() - 5000).toISOString();",
+          "pm.collectionVariables.set('authToken', token);",
+          "if (pm.environment) {",
+          "    pm.environment.set('authToken', token);",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "testing",
+      "description": "Bộ request chuẩn bị cho thử nghiệm Postbot + đối chiếu smoke W06.\n\nGợi ý thứ tự chạy:\n1 → 2 (GET auth) → 3 → 4 → 5 (POST) → 6 → 7 (PUT) → 8 → 9 (DELETE).\n\nRequest 04 (POST hợp lệ) lưu `createdProductId` để request 08 DELETE dùng id vừa tạo (tránh xoá seed cố định).",
+      "item": [
+        {
+          "name": "01 GET /products — no Authorization → 401",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            },
+            "description": "Smoke #1 / Postbot negative auth.\n\nKỳ vọng: `401` + `{\"error\":\"Unauthorized\"}`.\n\nPostbot: Send → Tests → Add tests for this request."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: dùng Postbot sinh pm.test() rồi dán vào đây.",
+                  "// Kỳ vọng thủ công: status 401."
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "02 GET /products — Bearer hợp lệ → 200",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            },
+            "description": "Smoke #2 / Postbot happy path.\n\nKỳ vọng: `200` + mảng product (seed 09/10/11).\n\nPostbot: Send → Tests → Add tests for this request."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: dùng Postbot sinh pm.test() rồi dán vào đây.",
+                  "// Kỳ vọng thủ công: status 200, body là array."
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "03 POST /products — no Authorization → 401",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Postbot Test Card\",\n  \"version\": \"v1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            },
+            "description": "Smoke #3.\n\nKỳ vọng: `401` dù body hợp lệ (auth chạy trước route)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: Postbot — Add tests for this request",
+                  "// Kỳ vọng: status 401"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "04 POST /products — body hợp lệ → 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Giữ đoạn lưu id để DELETE (#08) tái sử dụng.",
+                  "// Phần assert status/body: xoá comment dưới và dùng Postbot sinh thêm.",
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body && body.id) {",
+                  "        pm.collectionVariables.set('createdProductId', String(body.id));",
+                  "        if (pm.environment) {",
+                  "            pm.environment.set('createdProductId', String(body.id));",
+                  "        }",
+                  "        console.log('createdProductId =', body.id);",
+                  "    }",
+                  "}",
+                  "",
+                  "// TODO: dùng Postbot bổ sung pm.test() (status 201, field id/type/name)."
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Postbot Test Card\",\n  \"version\": \"v1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            },
+            "description": "Smoke #4 / Postbot create happy path.\n\nKỳ vọng: `201` + product vừa tạo.\nTest script sẵn có chỉ lưu `createdProductId` cho request DELETE — phần assert để Postbot sinh."
+          },
+          "response": []
+        },
+        {
+          "name": "05 POST /products — thiếu type/name → 400",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"v1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            },
+            "description": "Smoke #5 / Postbot negative validation.\n\nKỳ vọng: `400` + `{\"message\":\"type and name are required\"}`."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: Postbot — Add tests for this request",
+                  "// Kỳ vọng: status 400"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "06 PUT /product/:id — id tồn tại → 200",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Updated By Postbot\",\n  \"version\": \"v2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/product/{{seedProductId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["product", "{{seedProductId}}"]
+            },
+            "description": "Smoke #6 (mặc định `seedProductId` = 10).\n\nKỳ vọng: `200` + product đã cập nhật.\nCó thể đổi collection variable `seedProductId` nếu seed khác."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: Postbot — Add tests for this request",
+                  "// Kỳ vọng: status 200"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "07 PUT /product/:id — id không tồn tại → 404",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Ghost Product\",\n  \"version\": \"v1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/product/{{missingProductId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["product", "{{missingProductId}}"]
+            },
+            "description": "Smoke #7 (`missingProductId` = khong-ton-tai).\n\nKỳ vọng: `404` + `{\"message\":\"Product not found\"}`."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: Postbot — Add tests for this request",
+                  "// Kỳ vọng: status 404"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "08 DELETE /product/:id — id vừa tạo → 204",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product/{{createdProductId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["product", "{{createdProductId}}"]
+            },
+            "description": "Smoke #8 (an toàn hơn bản curl cố định id 11).\n\nChạy **04 POST** trước để có `createdProductId`.\nKỳ vọng: `204` (không body)."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = pm.collectionVariables.get('createdProductId') || pm.environment.get('createdProductId');",
+                  "if (!id) {",
+                  "    console.warn('createdProductId trống — hãy Send request 04 POST trước.');",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: Postbot — Add tests for this request",
+                  "// Kỳ vọng: status 204"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "09 DELETE /product/:id — id không tồn tại → 404",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product/{{missingProductId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["product", "{{missingProductId}}"]
+            },
+            "description": "Smoke #9.\n\nKỳ vọng: `404` + `{\"message\":\"Product not found\"}`."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// TODO: Postbot — Add tests for this request",
+                  "// Kỳ vọng: status 404"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    }
+  ]
+}
