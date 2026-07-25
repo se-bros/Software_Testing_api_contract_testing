@@ -1,0 +1,32 @@
+
+========================================
+  Newman Automated Test Runner
+========================================
+[INFO]  Timestamp : 20260725_225848
+[INFO]  Engine    : newman
+[INFO]  Output    : docs\reports\week07\evidences\QuocTan\reports\20260725_225848
+
+========================================
+  Kiem tra yeu cau he thong
+========================================
+[OK]    newman CLI  : v6.2.2
+
+========================================
+  Kiem tra Provider API
+========================================
+[INFO]  Dang ket noi: http://localhost:8080/products ...
+[OK]    Provider API dang hoat dong tai http://localhost:8080 (HTTP 200)
+
+========================================
+  Bat dau chay kiem thu (1 collection)
+========================================
+[INFO]  Dang thuc thi: product-service
+[OK]    PASSED -- product-service
+
+========================================
+  Tong ket
+========================================
+[INFO]  Tong so Collections : 1
+[INFO]  Thanh cong (PASSED)  : 1/1
+[OK]    Tat ca bo kiem thu deu PASSED!
+[INFO]  Bao cao xuat tai: docs\reports\week07\evidences\QuocTan\reports\20260725_225848
