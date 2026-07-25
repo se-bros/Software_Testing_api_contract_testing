@@ -127,23 +127,22 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/pact-foundation/pact-ruby-standalone/master/install.sh | bash
           echo "${HOME}/.pact/bin" >> "$GITHUB_PATH"
 
-      # Kiểm tra consumer (FrontendWebsite) có thể deploy lên production không.
-      # --to-environment production: so sánh với các version đang chạy ở production.
+      # Kiểm tra consumer (FrontendWebsite) có thể deploy không (so với phiên bản mới nhất).
       - name: Can-I-Deploy — FrontendWebsite (consumer)
         run: |
           pact-broker can-i-deploy \
             --pacticipant FrontendWebsite \
             --version "$GIT_COMMIT" \
-            --to-environment production \
+            --latest \
             --broker-base-url "$PACT_BROKER_BASE_URL" \
             --broker-token "$PACT_BROKER_TOKEN"
 
-      # Kiểm tra provider (ProductService) có thể deploy lên production không.
+      # Kiểm tra provider (ProductService) có thể deploy không (so với phiên bản mới nhất).
       - name: Can-I-Deploy — ProductService (provider)
         run: |
           pact-broker can-i-deploy \
             --pacticipant ProductService \
             --version "$GIT_COMMIT" \
-            --to-environment production \
+            --latest \
             --broker-base-url "$PACT_BROKER_BASE_URL" \
             --broker-token "$PACT_BROKER_TOKEN"
