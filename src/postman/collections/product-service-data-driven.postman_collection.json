@@ -60,6 +60,13 @@
           "        key: \"Authorization\",",
           "        value: resolved",
           "    });",
+          "} else if (authFromData === undefined) {",
+          "    // Chạy mặc định không data file → gán Token hợp lệ",
+          "    pm.variables.set(\"currentAuthHeader\", `Bearer ${now}`);",
+          "    pm.request.headers.upsert({",
+          "        key: \"Authorization\",",
+          "        value: `Bearer ${now}`",
+          "    });",
           "} else {",
           "    // auth_header rỗng → xóa header Authorization — giả lập thiếu token",
           "    pm.variables.set(\"currentAuthHeader\", \"\");",
@@ -902,7 +909,16 @@
                   "const pid = pm.iterationData.get(\"product_id\");",
                   "if (pid !== undefined && pid !== null && pid !== \"\") {",
                   "    pm.variables.set(\"productId\", String(pid));",
-                  "}"
+                  "}",
+                  "// Pre-setup: Tự động POST tạo mới sản phẩm để bài test DELETE luôn có dữ liệu thực thi",
+                  "const baseUrl = pm.variables.get(\"baseUrl\") || \"http://localhost:8080\";",
+                  "const now = new Date().toISOString();",
+                  "pm.sendRequest({",
+                  "    url: `${baseUrl}/products`,",
+                  "    method: 'POST',",
+                  "    header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${now}` },",
+                  "    body: { mode: 'raw', raw: JSON.stringify({ type: \"gadget\", name: \"Auto Pre-setup Item\" }) }",
+                  "}, function (err, res) {});"
                 ]
               }
             },
