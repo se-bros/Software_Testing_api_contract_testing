@@ -53,6 +53,15 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Publish Pact to Pactflow Broker
+        working-directory: src/sample-api/pact-workshop-js/provider
+        env:
+          PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          GIT_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+          GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: node publish-pact.js
+
   provider-verification:
     name: Provider Pact verification
     needs: consumer-pact
@@ -80,10 +89,13 @@ jobs:
           name: consumer-pacts
           path: src/sample-api/pact-workshop-js/consumer/pacts
 
-      - name: Verify Pact against provider
+      - name: Verify Pact against provider & publish results
         working-directory: src/sample-api/pact-workshop-js/provider
         env:
           CI: true
+          PACT_BROKER_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+          PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+          PACT_PUBLISH_RESULTS: 'true'
           PACT_FILE: ${{ github.workspace }}/src/sample-api/pact-workshop-js/consumer/pacts/FrontendWebsite-ProductService.json
           GIT_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
