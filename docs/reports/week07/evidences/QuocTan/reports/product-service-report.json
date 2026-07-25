@@ -1,0 +1,5002 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "a7c1e900-0002-4b20-8e10-9c1d2e3f4a5b"
+    },
+    "item": [
+      {
+        "id": "e76854ef-09c3-45a2-a923-25cdf6aca1f9",
+        "name": "GET",
+        "item": [
+          {
+            "id": "179f5d17-e597-4bcb-8c8c-1090d849ded6",
+            "name": "Happy Path",
+            "item": [
+              {
+                "id": "9d9e2ca0-ee19-4720-8255-ce2c0eb02078",
+                "name": "GET /products - lay toan bo product",
+                "request": {
+                  "description": {
+                    "content": "Happy path: tra ve mang product seed (id 09, 10, 11).",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "products"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "GET"
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "2de30e47-9ace-4dab-951a-05f167a46621",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 200', function () {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "",
+                        "pm.test('Body la mang khong rong', function () {",
+                        "    const body = pm.response.json();",
+                        "    pm.expect(body).to.be.an('array').that.is.not.empty;",
+                        "});",
+                        "",
+                        "// LUU Y HOP DONG: chi id/type/name la BAT BUOC.",
+                        "// POST /products khong yeu cau 'version' -> product tao ra co the thieu han field nay",
+                        "// (JSON.stringify bo qua undefined). Vi vay khong the assert 'version' cho MOI product.",
+                        "// Xem muc 'Van de da phat hien' trong AI_Audit_Report tuan 6.",
+                        "pm.test('Moi product co du id, type, name', function () {",
+                        "    pm.response.json().forEach(function (p) {",
+                        "        pm.expect(p).to.have.property('id');",
+                        "        pm.expect(p).to.have.property('type');",
+                        "        pm.expect(p).to.have.property('name');",
+                        "    });",
+                        "});",
+                        "",
+                        "pm.test('Product seed (09/10/11) co field version', function () {",
+                        "    pm.response.json()",
+                        "        .filter(function (p) { return ['09', '10', '11'].indexOf(p.id) !== -1; })",
+                        "        .forEach(function (p) { pm.expect(p).to.have.property('version'); });",
+                        "});"
+                      ],
+                      "_lastExecutionId": "99db4107-dda8-4cd0-8543-5397f4966a0c"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "3a816210-c8ad-4364-808d-b3bf56756393",
+                "name": "GET /product/:id - lay product theo id",
+                "request": {
+                  "description": {
+                    "content": "Happy path: product seed 09 = CREDIT_CARD / Gem Visa / v1 (product.repository.js).",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{seedProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "GET"
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "ba9317b3-40e7-4cc8-8800-04a1eb5fc025",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 200', function () {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "",
+                        "pm.test('Tra ve dung product seed 09', function () {",
+                        "    const p = pm.response.json();",
+                        "    pm.expect(p.id).to.eql('09');",
+                        "    pm.expect(p.type).to.eql('CREDIT_CARD');",
+                        "    pm.expect(p.name).to.eql('Gem Visa');",
+                        "    pm.expect(p.version).to.eql('v1');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "8923377b-6180-4080-93a4-c7484d33a576"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "06d0fa9d-cea0-421c-8939-bbfaa7ef9b8a",
+            "name": "Negative",
+            "item": [
+              {
+                "id": "9e9f3c0e-497f-462b-8c93-8ce9fd70a40f",
+                "name": "GET /product/:id - id khong ton tai -> 404",
+                "request": {
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{missingProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "GET"
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "6ba4da6b-f59d-4784-b275-2a47a7173a91",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 404', function () {",
+                        "    pm.response.to.have.status(404);",
+                        "});",
+                        "",
+                        "pm.test('Message la \"Product not found\"', function () {",
+                        "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "489c2fa8-1b93-48ea-8ab4-b2d96a9d91cb"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "6cd6e4e8-a4a2-4481-a0be-5d4e2fe27647",
+            "name": "Auth Fail",
+            "item": [
+              {
+                "id": "52d2c22b-ab00-48e0-85a2-f1c244716f7c",
+                "name": "GET /products - thieu token -> 401",
+                "request": {
+                  "description": {
+                    "content": "Ghi de auth cap Collection bang 'No Auth' -> khong gui header Authorization -> middleware tra 401.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "products"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "GET",
+                  "auth": {
+                    "type": "noauth",
+                    "noauth": []
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "27a6941f-640d-44b7-8ea9-21e4a9f875dc",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 401', function () {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "",
+                        "pm.test('Error la \"Unauthorized\"', function () {",
+                        "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "6835726f-ab51-4e4c-9f49-d5077c9922b4"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "a25d02a4-1338-427e-adbb-3c3561d199ea",
+                "name": "GET /products - token het han -> 401",
+                "request": {
+                  "description": {
+                    "content": "Token 2 gio truoc -> diff > 3600 -> 401.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "products"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "GET",
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "type": "string",
+                        "value": "{{expiredToken}}",
+                        "key": "token"
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "a1f19282-2e1a-4041-9e77-a08207524487",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 401', function () {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "",
+                        "pm.test('Error la \"Unauthorized\"', function () {",
+                        "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "51b048c0-4f45-4f13-bd0a-80191d8b30a4"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          }
+        ],
+        "event": []
+      },
+      {
+        "id": "da2ce24d-7786-414e-88c1-f62cce02dc23",
+        "name": "POST",
+        "item": [
+          {
+            "id": "74caeb39-7a15-4cb4-a741-e73c8c9ecbba",
+            "name": "Happy Path",
+            "item": [
+              {
+                "id": "04da45f1-42ff-4564-a022-839382d788bc",
+                "name": "POST /products - tao product -> 201",
+                "request": {
+                  "description": {
+                    "content": "Tao product moi. Repository cap id tang dan bat dau tu 12.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "products"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "method": "POST",
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"type\": \"PERSONAL_LOAN\",\n  \"name\": \"Postman Test Loan\",\n  \"version\": \"v1\"\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "da57916f-39d1-441a-accc-f0638a0b8ed7",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 201', function () {",
+                        "    pm.response.to.have.status(201);",
+                        "});",
+                        "",
+                        "pm.test('Response co du id, type, name, version', function () {",
+                        "    const p = pm.response.json();",
+                        "    pm.expect(p).to.have.property('id');",
+                        "    pm.expect(p).to.have.property('type');",
+                        "    pm.expect(p).to.have.property('name');",
+                        "    pm.expect(p).to.have.property('version');",
+                        "});",
+                        "",
+                        "pm.test('Du lieu tra ve khop payload gui len', function () {",
+                        "    const p = pm.response.json();",
+                        "    pm.expect(p.type).to.eql('PERSONAL_LOAN');",
+                        "    pm.expect(p.name).to.eql('Postman Test Loan');",
+                        "    pm.expect(p.version).to.eql('v1');",
+                        "});",
+                        "",
+                        "// API Chaining: luu id vua tao cho PUT / DELETE Happy Path dung lai.",
+                        "pm.environment.set('createdProductId', pm.response.json().id);"
+                      ],
+                      "_lastExecutionId": "4ab3135a-b3c4-4b61-b239-ecc21f1819b5"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "60acf87c-ae5e-4fa5-879e-a67841da6a7e",
+            "name": "Negative",
+            "item": [
+              {
+                "id": "cf1fda7e-3ae6-4e5d-8c3f-d19d2a390db6",
+                "name": "POST /products - thieu name -> 400",
+                "request": {
+                  "description": {
+                    "content": "Controller validate: thieu type hoac name -> 400.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "products"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "method": "POST",
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"type\": \"CREDIT_CARD\"\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "05dc374f-3cdd-4a70-9cc3-f094e5fd9953",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 400', function () {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "",
+                        "pm.test('Message la \"type and name are required\"', function () {",
+                        "    pm.expect(pm.response.json().message).to.eql('type and name are required');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "a764f3d1-098a-4356-aba7-6041f7589649"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "e4f11d6b-b0a0-4490-84a4-423e601a3788",
+                "name": "POST /products - body rong -> 400",
+                "request": {
+                  "url": {
+                    "path": [
+                      "products"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "method": "POST",
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "35447672-8896-41e0-8600-397c21ecb9a3",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 400', function () {",
+                        "    pm.response.to.have.status(400);",
+                        "});",
+                        "",
+                        "pm.test('Message la \"type and name are required\"', function () {",
+                        "    pm.expect(pm.response.json().message).to.eql('type and name are required');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "5a555812-f3ff-41f9-a406-0ea4bc4e3c1b"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "7f28f476-ad4b-4e6b-8d42-eee17cb2c0e2",
+            "name": "Auth Fail",
+            "item": [
+              {
+                "id": "b9308ec0-c0ed-40a2-957b-0d31b97c4b2a",
+                "name": "POST /products - thieu token -> 401",
+                "request": {
+                  "description": {
+                    "content": "Kich ban ghi khi chua auth. Truoc commit ec080de (auth dang ky SAU routes) case nay tra 201 - la lo hong that su da duoc sua.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "products"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "method": "POST",
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Should Not Be Created\",\n  \"version\": \"v1\"\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "auth": {
+                    "type": "noauth",
+                    "noauth": []
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "5942528a-f666-43d2-98d9-b457e9c4fa25",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 401', function () {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "",
+                        "pm.test('Error la \"Unauthorized\"', function () {",
+                        "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                        "});",
+                        "",
+                        "pm.test('Khong tao product khi chua auth (khong co id tra ve)', function () {",
+                        "    pm.expect(pm.response.json()).to.not.have.property('id');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "bbff29f1-e1b9-4dad-9071-2d593149cb32"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          }
+        ],
+        "event": []
+      },
+      {
+        "id": "9f125236-46a8-4e46-8144-efda164f2e7c",
+        "name": "PUT",
+        "item": [
+          {
+            "id": "d4de88c1-5f34-4790-9c89-53312bb6d930",
+            "name": "Happy Path",
+            "item": [
+              {
+                "id": "f5cadc11-7bbe-4a7b-8f2c-a61f86d883c5",
+                "name": "PUT /product/:id - cap nhat product vua tao -> 200",
+                "request": {
+                  "description": {
+                    "content": "Chaining: dung createdProductId do POST Happy Path set. Phai chay POST truoc.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{createdProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "method": "PUT",
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"type\": \"PERSONAL_LOAN\",\n  \"name\": \"Postman Updated Loan\",\n  \"version\": \"v2\"\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "74cdda32-b992-481f-9fcf-1cf7c14708eb",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 200', function () {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "",
+                        "pm.test('Response co du id, type, name, version', function () {",
+                        "    const p = pm.response.json();",
+                        "    pm.expect(p).to.have.property('id');",
+                        "    pm.expect(p).to.have.property('type');",
+                        "    pm.expect(p).to.have.property('name');",
+                        "    pm.expect(p).to.have.property('version');",
+                        "});",
+                        "",
+                        "pm.test('Field da duoc cap nhat dung', function () {",
+                        "    const p = pm.response.json();",
+                        "    pm.expect(p.id).to.eql(pm.environment.get('createdProductId'));",
+                        "    pm.expect(p.name).to.eql('Postman Updated Loan');",
+                        "    pm.expect(p.version).to.eql('v2');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "3e1c7815-810e-4769-ac5d-3aba43d6cbed"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "c730d57d-f87b-4a69-9f64-ee897bb73ab5",
+            "name": "Negative",
+            "item": [
+              {
+                "id": "c85eb35c-108e-468e-8833-0e2575612761",
+                "name": "PUT /product/:id - id khong ton tai -> 404",
+                "request": {
+                  "description": {
+                    "content": "LUU Y: controller PUT khong validate body, nen KHONG co kich ban 400 cho PUT. Negative duy nhat la 404.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{missingProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "method": "PUT",
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Ghost Product\",\n  \"version\": \"v1\"\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "be4ed7ec-5739-426d-8f61-5dbb741e3103",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 404', function () {",
+                        "    pm.response.to.have.status(404);",
+                        "});",
+                        "",
+                        "pm.test('Message la \"Product not found\"', function () {",
+                        "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "bcfa1bd4-b2b6-417a-8b34-d51e8b295d22"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "4863dd0e-779c-4849-a3df-bad2bc61adbe",
+            "name": "Auth Fail",
+            "item": [
+              {
+                "id": "56500ef0-cde2-4d56-a41e-72353ee32b37",
+                "name": "PUT /product/:id - thieu token -> 401",
+                "request": {
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{seedProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "method": "PUT",
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Should Not Be Updated\",\n  \"version\": \"v9\"\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "auth": {
+                    "type": "noauth",
+                    "noauth": []
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "2b806b21-477b-4fac-9164-319bf0ec6095",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 401', function () {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "",
+                        "pm.test('Error la \"Unauthorized\"', function () {",
+                        "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "57f31589-417d-4667-afd0-5bc83549e99f"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          }
+        ],
+        "event": []
+      },
+      {
+        "id": "4d6d06ae-234d-46e2-91ab-c83b77f53411",
+        "name": "DELETE",
+        "item": [
+          {
+            "id": "48caaaed-5f51-4624-8575-f8d3f78590b4",
+            "name": "Happy Path",
+            "item": [
+              {
+                "id": "cc1993d0-148f-44f1-a2fd-090096c26d4a",
+                "name": "DELETE /product/:id - xoa product vua tao -> 204",
+                "request": {
+                  "description": {
+                    "content": "Chaining: xoa dung product da tao o POST, khong dung vao du lieu seed.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{createdProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "DELETE"
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "9dde1f52-3e9c-4827-9eac-66919eb605b8",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 204', function () {",
+                        "    pm.response.to.have.status(204);",
+                        "});",
+                        "",
+                        "// Controller: res.status(204).send() -> KHONG co body, khong co chuoi xac nhan.",
+                        "pm.test('Response body rong', function () {",
+                        "    pm.expect(pm.response.text()).to.eql('');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "14500b2f-0ab2-4209-9348-f152ddbbd487"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "c63d4e39-6309-4873-b310-ec12c0154ea4",
+                "name": "GET /product/:id - xac nhan da xoa -> 404",
+                "request": {
+                  "description": {
+                    "content": "Vi DELETE tra 204 body rong, dung GET de xac nhan hieu ung xoa da that su xay ra.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{createdProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "GET"
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "6722dbf8-6005-4d08-b4be-dad75472a72f",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 404 sau khi xoa', function () {",
+                        "    pm.response.to.have.status(404);",
+                        "});",
+                        "",
+                        "pm.test('Message la \"Product not found\"', function () {",
+                        "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "bf84a812-3684-452b-a509-352a6d50fef4"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "5f9f0e0d-8542-4241-b205-97ba5a5962f7",
+            "name": "Negative",
+            "item": [
+              {
+                "id": "5f217c9d-1963-493f-9b49-edd9cb227ee8",
+                "name": "DELETE /product/:id - id khong ton tai -> 404",
+                "request": {
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{missingProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "DELETE"
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "8f1ca04e-3688-4dcb-bbe5-9ef16e887ef8",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 404', function () {",
+                        "    pm.response.to.have.status(404);",
+                        "});",
+                        "",
+                        "pm.test('Message la \"Product not found\"', function () {",
+                        "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "cec4d7b0-3ff5-415b-ad38-db5dc17fea89"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          },
+          {
+            "id": "1018bd77-2878-4a8e-9062-0f1542999d00",
+            "name": "Auth Fail",
+            "item": [
+              {
+                "id": "759f48fc-e98e-4a7a-8496-ef18dd658e5c",
+                "name": "DELETE /product/:id - thieu token -> 401",
+                "request": {
+                  "description": {
+                    "content": "Kich ban xoa khi chua auth - phai bi chan 401, du lieu seed 09 phai con nguyen.",
+                    "type": "text/plain"
+                  },
+                  "url": {
+                    "path": [
+                      "product",
+                      "{{seedProductId}}"
+                    ],
+                    "host": [
+                      "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                  },
+                  "method": "DELETE",
+                  "auth": {
+                    "type": "noauth",
+                    "noauth": []
+                  }
+                },
+                "response": [],
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "82cb76e8-becc-49aa-a0cc-4c1908cc0e18",
+                      "type": "text/javascript",
+                      "exec": [
+                        "pm.test('Status code la 401', function () {",
+                        "    pm.response.to.have.status(401);",
+                        "});",
+                        "",
+                        "pm.test('Error la \"Unauthorized\"', function () {",
+                        "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                        "});"
+                      ],
+                      "_lastExecutionId": "06be9b48-2a97-4e22-b44b-2e7904a619b3"
+                    }
+                  }
+                ]
+              }
+            ],
+            "event": []
+          }
+        ],
+        "event": []
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": [
+        {
+          "type": "string",
+          "value": "{{authToken}}",
+          "key": "token"
+        }
+      ]
+    },
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "c8ef4e06-195f-4caf-ad62-027bd878d66d",
+          "type": "text/javascript",
+          "exec": [
+            "// Token hop le = ISO 8601 timestamp trong vong 1 gio va khong o tuong lai.",
+            "// Xem provider/middleware/auth.middleware.js: diff >= 0 && diff <= 3600",
+            "// Tru 5 giay de tranh lech dong ho client/server lam diff < 0 -> 401.",
+            "const token = new Date(Date.now() - 5000).toISOString();",
+            "pm.environment.set('authToken', token);",
+            "",
+            "// Token het han dung cho nhom Auth Fail (2 gio truoc -> diff > 3600).",
+            "pm.environment.set('expiredToken', new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString());"
+          ],
+          "_lastExecutionId": "049b6620-6426-46f5-9f44-5ecaed96ad0c"
+        }
+      }
+    ],
+    "variable": [],
+    "info": {
+      "_postman_id": "a7c1e900-0002-4b20-8e10-9c1d2e3f4a5b",
+      "name": "Product Service - API Tests",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "description": {
+        "content": "Bo test API cho Product Service (pact-workshop-js/provider).\n\nCau truc: folder theo HTTP Method (GET/POST/PUT/DELETE), moi method chia 3 nhom kich ban: Happy Path, Negative, Auth Fail.\n\nAuth: middleware yeu cau header `Authorization: Bearer <ISO8601 timestamp>` voi timestamp nam trong vong 1 gio va KHONG o tuong lai. Token duoc sinh tu dong o Pre-request script cap Collection va ke thua xuong moi request.\n\nChaining: POST /products luu `createdProductId` -> PUT va DELETE Happy Path dung lai id do. Vi vay khi chay Collection Runner phai giu thu tu GET -> POST -> PUT -> DELETE.\n\nYeu cau: provider chay tai http://localhost:8080 (cd provider && npm start).",
+        "type": "text/plain"
+      }
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment",
+      "postman_exported_using": "Postman/11.x"
+    },
+    "id": "b1f2c3d4-0001-4a10-9f00-6d7e8f9a0b1c",
+    "name": "Product Service - Local",
+    "values": [
+      {
+        "type": "any",
+        "value": "http://localhost:8080",
+        "key": "baseUrl"
+      },
+      {
+        "type": "any",
+        "value": "2026-07-25T15:58:49.076Z",
+        "key": "authToken"
+      },
+      {
+        "type": "any",
+        "value": "2026-07-25T13:58:54.076Z",
+        "key": "expiredToken"
+      },
+      {
+        "type": "any",
+        "value": "09",
+        "key": "seedProductId"
+      },
+      {
+        "type": "any",
+        "value": "99999",
+        "key": "missingProductId"
+      },
+      {
+        "type": "any",
+        "value": "12",
+        "key": "createdProductId"
+      }
+    ]
+  },
+  "globals": {
+    "id": "ded79cc3-69a5-4e86-a120-9798d5a116bb",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 16,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 32,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 16,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 16,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 16,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 37,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 16,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 16,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 8.1875,
+      "responseMin": 3,
+      "responseMax": 27,
+      "responseSd": 7.316238360660486,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1784995132662,
+      "completed": 1784995134139
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 16,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "7461ec78-f500-43ed-ad56-3e7d4a54c899",
+          "httpRequestId": "86a2dca4-27a5-4c48-8704-143f7e152e0f"
+        },
+        "item": {
+          "id": "9d9e2ca0-ee19-4720-8255-ce2c0eb02078",
+          "name": "GET /products - lay toan bo product",
+          "request": {
+            "description": {
+              "content": "Happy path: tra ve mang product seed (id 09, 10, 11).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "2de30e47-9ace-4dab-951a-05f167a46621",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Body la mang khong rong', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "",
+                  "// LUU Y HOP DONG: chi id/type/name la BAT BUOC.",
+                  "// POST /products khong yeu cau 'version' -> product tao ra co the thieu han field nay",
+                  "// (JSON.stringify bo qua undefined). Vi vay khong the assert 'version' cho MOI product.",
+                  "// Xem muc 'Van de da phat hien' trong AI_Audit_Report tuan 6.",
+                  "pm.test('Moi product co du id, type, name', function () {",
+                  "    pm.response.json().forEach(function (p) {",
+                  "        pm.expect(p).to.have.property('id');",
+                  "        pm.expect(p).to.have.property('type');",
+                  "        pm.expect(p).to.have.property('name');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('Product seed (09/10/11) co field version', function () {",
+                  "    pm.response.json()",
+                  "        .filter(function (p) { return ['09', '10', '11'].indexOf(p.id) !== -1; })",
+                  "        .forEach(function (p) { pm.expect(p).to.have.property('version'); });",
+                  "});"
+                ],
+                "_lastExecutionId": "99db4107-dda8-4cd0-8543-5397f4966a0c"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Happy path: tra ve mang product seed (id 09, 10, 11).",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "products"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:47.702Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "9558cdbd-222d-453c-ab8e-3f58cb84af7e",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:47.702Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "134cc343-bf19-4009-9183-a453e8365564",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "205"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"cd-Myldgy5DGqIax6MVJt80aw+6xi0\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:52 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              48,
+              57,
+              34,
+              44,
+              34,
+              116,
+              121,
+              112,
+              101,
+              34,
+              58,
+              34,
+              67,
+              82,
+              69,
+              68,
+              73,
+              84,
+              95,
+              67,
+              65,
+              82,
+              68,
+              34,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              71,
+              101,
+              109,
+              32,
+              86,
+              105,
+              115,
+              97,
+              34,
+              44,
+              34,
+              118,
+              101,
+              114,
+              115,
+              105,
+              111,
+              110,
+              34,
+              58,
+              34,
+              118,
+              49,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              49,
+              48,
+              34,
+              44,
+              34,
+              116,
+              121,
+              112,
+              101,
+              34,
+              58,
+              34,
+              67,
+              82,
+              69,
+              68,
+              73,
+              84,
+              95,
+              67,
+              65,
+              82,
+              68,
+              34,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              50,
+              56,
+              32,
+              68,
+              101,
+              103,
+              114,
+              101,
+              101,
+              115,
+              34,
+              44,
+              34,
+              118,
+              101,
+              114,
+              115,
+              105,
+              111,
+              110,
+              34,
+              58,
+              34,
+              118,
+              49,
+              34,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              49,
+              49,
+              34,
+              44,
+              34,
+              116,
+              121,
+              112,
+              101,
+              34,
+              58,
+              34,
+              80,
+              69,
+              82,
+              83,
+              79,
+              78,
+              65,
+              76,
+              95,
+              76,
+              79,
+              65,
+              78,
+              34,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              77,
+              121,
+              70,
+              108,
+              101,
+              120,
+              105,
+              80,
+              97,
+              121,
+              34,
+              44,
+              34,
+              118,
+              101,
+              114,
+              115,
+              105,
+              111,
+              110,
+              34,
+              58,
+              34,
+              118,
+              50,
+              34,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 27,
+          "responseSize": 205
+        },
+        "id": "9d9e2ca0-ee19-4720-8255-ce2c0eb02078",
+        "assertions": [
+          {
+            "assertion": "Status code la 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Body la mang khong rong",
+            "skipped": false
+          },
+          {
+            "assertion": "Moi product co du id, type, name",
+            "skipped": false
+          },
+          {
+            "assertion": "Product seed (09/10/11) co field version",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "7878d2ce-4651-4767-9eb2-e360e4c7ee7a",
+          "length": 16,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "b0622437-a4e0-4eda-bcca-09443fddbdba"
+        },
+        "item": {
+          "id": "3a816210-c8ad-4364-808d-b3bf56756393",
+          "name": "GET /product/:id - lay product theo id",
+          "request": {
+            "description": {
+              "content": "Happy path: product seed 09 = CREDIT_CARD / Gem Visa / v1 (product.repository.js).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                "{{seedProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ba9317b3-40e7-4cc8-8800-04a1eb5fc025",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Tra ve dung product seed 09', function () {",
+                  "    const p = pm.response.json();",
+                  "    pm.expect(p.id).to.eql('09');",
+                  "    pm.expect(p.type).to.eql('CREDIT_CARD');",
+                  "    pm.expect(p.name).to.eql('Gem Visa');",
+                  "    pm.expect(p.version).to.eql('v1');",
+                  "});"
+                ],
+                "_lastExecutionId": "8923377b-6180-4080-93a4-c7484d33a576"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Happy path: product seed 09 = CREDIT_CARD / Gem Visa / v1 (product.repository.js).",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "09"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:47.793Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "448b8eee-dd4a-4dcd-a29e-4fc474592094",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:47.793Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "2ac37ed0-18de-434a-8b15-c85a7fd5a5dc",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "65"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"41-KA9zGEHkAYSRLYEdvuXQHe5IBOk\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:52 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              48,
+              57,
+              34,
+              44,
+              34,
+              116,
+              121,
+              112,
+              101,
+              34,
+              58,
+              34,
+              67,
+              82,
+              69,
+              68,
+              73,
+              84,
+              95,
+              67,
+              65,
+              82,
+              68,
+              34,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              71,
+              101,
+              109,
+              32,
+              86,
+              105,
+              115,
+              97,
+              34,
+              44,
+              34,
+              118,
+              101,
+              114,
+              115,
+              105,
+              111,
+              110,
+              34,
+              58,
+              34,
+              118,
+              49,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 10,
+          "responseSize": 65
+        },
+        "id": "3a816210-c8ad-4364-808d-b3bf56756393",
+        "assertions": [
+          {
+            "assertion": "Status code la 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Tra ve dung product seed 09",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "256a444a-4e70-4473-9cb0-7d51de07e667",
+          "length": 16,
+          "cycles": 1,
+          "position": 2,
+          "iteration": 0,
+          "httpRequestId": "f98ac6ad-0cad-45c9-9c16-599ebc924785"
+        },
+        "item": {
+          "id": "9e9f3c0e-497f-462b-8c93-8ce9fd70a40f",
+          "name": "GET /product/:id - id khong ton tai -> 404",
+          "request": {
+            "url": {
+              "path": [
+                "product",
+                "{{missingProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "6ba4da6b-f59d-4784-b275-2a47a7173a91",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test('Message la \"Product not found\"', function () {",
+                  "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                  "});"
+                ],
+                "_lastExecutionId": "489c2fa8-1b93-48ea-8ab4-b2d96a9d91cb"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "99999"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:47.830Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "43ced540-060e-4f6f-acaa-98cb9193ed66",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:47.830Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "a7fdee02-9476-45d5-8d70-31d3946b22c2",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "31"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1f-Zkgaox/LmBaRs1Ofkuc8bu8COvo\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:52 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              80,
+              114,
+              111,
+              100,
+              117,
+              99,
+              116,
+              32,
+              110,
+              111,
+              116,
+              32,
+              102,
+              111,
+              117,
+              110,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 3,
+          "responseSize": 31
+        },
+        "id": "9e9f3c0e-497f-462b-8c93-8ce9fd70a40f",
+        "assertions": [
+          {
+            "assertion": "Status code la 404",
+            "skipped": false
+          },
+          {
+            "assertion": "Message la \"Product not found\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "5557eb56-421a-44e4-8724-83e93419cc88",
+          "length": 16,
+          "cycles": 1,
+          "position": 3,
+          "iteration": 0,
+          "httpRequestId": "f6dca7a1-0cdb-4941-ab65-ebed3fa48d63"
+        },
+        "item": {
+          "id": "52d2c22b-ab00-48e0-85a2-f1c244716f7c",
+          "name": "GET /products - thieu token -> 401",
+          "request": {
+            "description": {
+              "content": "Ghi de auth cap Collection bang 'No Auth' -> khong gui header Authorization -> middleware tra 401.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "27a6941f-640d-44b7-8ea9-21e4a9f875dc",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Error la \"Unauthorized\"', function () {",
+                  "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                  "});"
+                ],
+                "_lastExecutionId": "6835726f-ab51-4e4c-9f49-d5077c9922b4"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Ghi de auth cap Collection bang 'No Auth' -> khong gui header Authorization -> middleware tra 401.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "products"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "966675ad-5ab7-400c-85bf-f7fff06c7352",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "f93a3706-00c2-4bef-b36e-6e36f6114a1a",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "24"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:52 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              110,
+              97,
+              117,
+              116,
+              104,
+              111,
+              114,
+              105,
+              122,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 7,
+          "responseSize": 24
+        },
+        "id": "52d2c22b-ab00-48e0-85a2-f1c244716f7c",
+        "assertions": [
+          {
+            "assertion": "Status code la 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Error la \"Unauthorized\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "27acc17b-13bc-4a52-aa8a-2f9c813d7a75",
+          "length": 16,
+          "cycles": 1,
+          "position": 4,
+          "iteration": 0,
+          "httpRequestId": "82af7a62-6c28-4946-a17d-06272e4d6b36"
+        },
+        "item": {
+          "id": "a25d02a4-1338-427e-adbb-3c3561d199ea",
+          "name": "GET /products - token het han -> 401",
+          "request": {
+            "description": {
+              "content": "Token 2 gio truoc -> diff > 3600 -> 401.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "type": "string",
+                  "value": "{{expiredToken}}",
+                  "key": "token"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "a1f19282-2e1a-4041-9e77-a08207524487",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Error la \"Unauthorized\"', function () {",
+                  "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                  "});"
+                ],
+                "_lastExecutionId": "51b048c0-4f45-4f13-bd0a-80191d8b30a4"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Token 2 gio truoc -> diff > 3600 -> 401.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "products"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T13:58:53.011Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "cda15022-548f-40c0-9b8f-8ef9a0ac5f30",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T13:58:53.011Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "358cb4b5-c6fb-41be-bfaf-76cd6f138579",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "24"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              110,
+              97,
+              117,
+              116,
+              104,
+              111,
+              114,
+              105,
+              122,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 24
+        },
+        "id": "a25d02a4-1338-427e-adbb-3c3561d199ea",
+        "assertions": [
+          {
+            "assertion": "Status code la 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Error la \"Unauthorized\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "05208ba4-a092-48ea-9fab-7dd10137a917",
+          "length": 16,
+          "cycles": 1,
+          "position": 5,
+          "iteration": 0,
+          "httpRequestId": "7942c872-5900-4db4-b8bc-bd6ba70c373a"
+        },
+        "item": {
+          "id": "04da45f1-42ff-4564-a022-839382d788bc",
+          "name": "POST /products - tao product -> 201",
+          "request": {
+            "description": {
+              "content": "Tao product moi. Repository cap id tang dan bat dau tu 12.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"PERSONAL_LOAN\",\n  \"name\": \"Postman Test Loan\",\n  \"version\": \"v1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "da57916f-39d1-441a-accc-f0638a0b8ed7",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 201', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test('Response co du id, type, name, version', function () {",
+                  "    const p = pm.response.json();",
+                  "    pm.expect(p).to.have.property('id');",
+                  "    pm.expect(p).to.have.property('type');",
+                  "    pm.expect(p).to.have.property('name');",
+                  "    pm.expect(p).to.have.property('version');",
+                  "});",
+                  "",
+                  "pm.test('Du lieu tra ve khop payload gui len', function () {",
+                  "    const p = pm.response.json();",
+                  "    pm.expect(p.type).to.eql('PERSONAL_LOAN');",
+                  "    pm.expect(p.name).to.eql('Postman Test Loan');",
+                  "    pm.expect(p.version).to.eql('v1');",
+                  "});",
+                  "",
+                  "// API Chaining: luu id vua tao cho PUT / DELETE Happy Path dung lai.",
+                  "pm.environment.set('createdProductId', pm.response.json().id);"
+                ],
+                "_lastExecutionId": "4ab3135a-b3c4-4b61-b239-ecc21f1819b5"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Tao product moi. Repository cap id tang dan bat dau tu 12.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "products"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.111Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "122dfb71-3341-4da9-a2eb-9ae021969ffc",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "79",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"type\": \"PERSONAL_LOAN\",\n  \"name\": \"Postman Test Loan\",\n  \"version\": \"v1\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.111Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "a1a592cf-de7e-4dad-8360-d4d70d46306d",
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "76"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"4c-mH4KRCn/VZiTthKjPr48qRdvHTE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              49,
+              50,
+              34,
+              44,
+              34,
+              116,
+              121,
+              112,
+              101,
+              34,
+              58,
+              34,
+              80,
+              69,
+              82,
+              83,
+              79,
+              78,
+              65,
+              76,
+              95,
+              76,
+              79,
+              65,
+              78,
+              34,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              80,
+              111,
+              115,
+              116,
+              109,
+              97,
+              110,
+              32,
+              84,
+              101,
+              115,
+              116,
+              32,
+              76,
+              111,
+              97,
+              110,
+              34,
+              44,
+              34,
+              118,
+              101,
+              114,
+              115,
+              105,
+              111,
+              110,
+              34,
+              58,
+              34,
+              118,
+              49,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 27,
+          "responseSize": 76
+        },
+        "id": "04da45f1-42ff-4564-a022-839382d788bc",
+        "assertions": [
+          {
+            "assertion": "Status code la 201",
+            "skipped": false
+          },
+          {
+            "assertion": "Response co du id, type, name, version",
+            "skipped": false
+          },
+          {
+            "assertion": "Du lieu tra ve khop payload gui len",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "368eef29-23fd-44fb-8c37-bde74a064d8c",
+          "length": 16,
+          "cycles": 1,
+          "position": 6,
+          "iteration": 0,
+          "httpRequestId": "52987847-bc46-4ba6-ba07-1a3e796577fa"
+        },
+        "item": {
+          "id": "cf1fda7e-3ae6-4e5d-8c3f-d19d2a390db6",
+          "name": "POST /products - thieu name -> 400",
+          "request": {
+            "description": {
+              "content": "Controller validate: thieu type hoac name -> 400.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "05dc374f-3cdd-4a70-9cc3-f094e5fd9953",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Message la \"type and name are required\"', function () {",
+                  "    pm.expect(pm.response.json().message).to.eql('type and name are required');",
+                  "});"
+                ],
+                "_lastExecutionId": "a764f3d1-098a-4356-aba7-6041f7589649"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Controller validate: thieu type hoac name -> 400.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "products"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.230Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "74bb2ac1-7dfc-44f6-8288-b85e192d9cef",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "27",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"type\": \"CREDIT_CARD\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.230Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "8ca2566d-db47-415c-aa55-bb0d19707df5",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "40"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"28-XXmK9NhzsFLRcXZpWZ0ceUA96NU\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              116,
+              121,
+              112,
+              101,
+              32,
+              97,
+              110,
+              100,
+              32,
+              110,
+              97,
+              109,
+              101,
+              32,
+              97,
+              114,
+              101,
+              32,
+              114,
+              101,
+              113,
+              117,
+              105,
+              114,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 7,
+          "responseSize": 40
+        },
+        "id": "cf1fda7e-3ae6-4e5d-8c3f-d19d2a390db6",
+        "assertions": [
+          {
+            "assertion": "Status code la 400",
+            "skipped": false
+          },
+          {
+            "assertion": "Message la \"type and name are required\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "fea30a55-5e63-4ae9-abc2-b1b162caa7d2",
+          "length": 16,
+          "cycles": 1,
+          "position": 7,
+          "iteration": 0,
+          "httpRequestId": "c1d6a6c6-7f7a-4e95-8527-eed61e6c6b83"
+        },
+        "item": {
+          "id": "e4f11d6b-b0a0-4490-84a4-423e601a3788",
+          "name": "POST /products - body rong -> 400",
+          "request": {
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "35447672-8896-41e0-8600-397c21ecb9a3",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Message la \"type and name are required\"', function () {",
+                  "    pm.expect(pm.response.json().message).to.eql('type and name are required');",
+                  "});"
+                ],
+                "_lastExecutionId": "5a555812-f3ff-41f9-a406-0ea4bc4e3c1b"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "products"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.323Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "c66374eb-4df6-49b4-8b27-f4fa8384015d",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "2",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.323Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "205222c1-551c-46bc-9ebe-2ea0e0529560",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "40"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"28-XXmK9NhzsFLRcXZpWZ0ceUA96NU\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              116,
+              121,
+              112,
+              101,
+              32,
+              97,
+              110,
+              100,
+              32,
+              110,
+              97,
+              109,
+              101,
+              32,
+              97,
+              114,
+              101,
+              32,
+              114,
+              101,
+              113,
+              117,
+              105,
+              114,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 6,
+          "responseSize": 40
+        },
+        "id": "e4f11d6b-b0a0-4490-84a4-423e601a3788",
+        "assertions": [
+          {
+            "assertion": "Status code la 400",
+            "skipped": false
+          },
+          {
+            "assertion": "Message la \"type and name are required\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "90af5fbf-ab43-44cc-9b70-d23ce8d0e835",
+          "length": 16,
+          "cycles": 1,
+          "position": 8,
+          "iteration": 0,
+          "httpRequestId": "4d6fbb1b-6735-42be-8da9-6ed5ca26dc05"
+        },
+        "item": {
+          "id": "b9308ec0-c0ed-40a2-957b-0d31b97c4b2a",
+          "name": "POST /products - thieu token -> 401",
+          "request": {
+            "description": {
+              "content": "Kich ban ghi khi chua auth. Truoc commit ec080de (auth dang ky SAU routes) case nay tra 201 - la lo hong that su da duoc sua.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Should Not Be Created\",\n  \"version\": \"v1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "5942528a-f666-43d2-98d9-b457e9c4fa25",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Error la \"Unauthorized\"', function () {",
+                  "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                  "});",
+                  "",
+                  "pm.test('Khong tao product khi chua auth (khong co id tra ve)', function () {",
+                  "    pm.expect(pm.response.json()).to.not.have.property('id');",
+                  "});"
+                ],
+                "_lastExecutionId": "bbff29f1-e1b9-4dad-9071-2d593149cb32"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Kich ban ghi khi chua auth. Truoc commit ec080de (auth dang ky SAU routes) case nay tra 201 - la lo hong that su da duoc sua.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "products"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "363da449-7e47-4a7a-8cd4-d8d2abbc13e8",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "81",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Should Not Be Created\",\n  \"version\": \"v1\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "095fb9b5-2e63-4aaf-a3b3-3443f9e1472a",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "24"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              110,
+              97,
+              117,
+              116,
+              104,
+              111,
+              114,
+              105,
+              122,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 24
+        },
+        "id": "b9308ec0-c0ed-40a2-957b-0d31b97c4b2a",
+        "assertions": [
+          {
+            "assertion": "Status code la 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Error la \"Unauthorized\"",
+            "skipped": false
+          },
+          {
+            "assertion": "Khong tao product khi chua auth (khong co id tra ve)",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "b9bf728d-2a2d-4045-84c0-5ca3c9420f95",
+          "length": 16,
+          "cycles": 1,
+          "position": 9,
+          "iteration": 0,
+          "httpRequestId": "f46f3ea6-38e4-4703-8fdb-ca4285f86ee9"
+        },
+        "item": {
+          "id": "f5cadc11-7bbe-4a7b-8f2c-a61f86d883c5",
+          "name": "PUT /product/:id - cap nhat product vua tao -> 200",
+          "request": {
+            "description": {
+              "content": "Chaining: dung createdProductId do POST Happy Path set. Phai chay POST truoc.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                "{{createdProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"PERSONAL_LOAN\",\n  \"name\": \"Postman Updated Loan\",\n  \"version\": \"v2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "74cdda32-b992-481f-9fcf-1cf7c14708eb",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response co du id, type, name, version', function () {",
+                  "    const p = pm.response.json();",
+                  "    pm.expect(p).to.have.property('id');",
+                  "    pm.expect(p).to.have.property('type');",
+                  "    pm.expect(p).to.have.property('name');",
+                  "    pm.expect(p).to.have.property('version');",
+                  "});",
+                  "",
+                  "pm.test('Field da duoc cap nhat dung', function () {",
+                  "    const p = pm.response.json();",
+                  "    pm.expect(p.id).to.eql(pm.environment.get('createdProductId'));",
+                  "    pm.expect(p.name).to.eql('Postman Updated Loan');",
+                  "    pm.expect(p.version).to.eql('v2');",
+                  "});"
+                ],
+                "_lastExecutionId": "3e1c7815-810e-4769-ac5d-3aba43d6cbed"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Chaining: dung createdProductId do POST Happy Path set. Phai chay POST truoc.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "12"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.512Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "cab267b5-490b-4085-8cd2-2fdfa46f8a95",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "82",
+              "system": true
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"type\": \"PERSONAL_LOAN\",\n  \"name\": \"Postman Updated Loan\",\n  \"version\": \"v2\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.512Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "11a405d4-449a-46e4-84bb-eba00151338d",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "79"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"4f-xoc7DgiE0k1aX70BxEgKVCtWiE4\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              49,
+              50,
+              34,
+              44,
+              34,
+              116,
+              121,
+              112,
+              101,
+              34,
+              58,
+              34,
+              80,
+              69,
+              82,
+              83,
+              79,
+              78,
+              65,
+              76,
+              95,
+              76,
+              79,
+              65,
+              78,
+              34,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              80,
+              111,
+              115,
+              116,
+              109,
+              97,
+              110,
+              32,
+              85,
+              112,
+              100,
+              97,
+              116,
+              101,
+              100,
+              32,
+              76,
+              111,
+              97,
+              110,
+              34,
+              44,
+              34,
+              118,
+              101,
+              114,
+              115,
+              105,
+              111,
+              110,
+              34,
+              58,
+              34,
+              118,
+              50,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 6,
+          "responseSize": 79
+        },
+        "id": "f5cadc11-7bbe-4a7b-8f2c-a61f86d883c5",
+        "assertions": [
+          {
+            "assertion": "Status code la 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Response co du id, type, name, version",
+            "skipped": false
+          },
+          {
+            "assertion": "Field da duoc cap nhat dung",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "449f8e7c-16fb-43dc-8bdf-210434ee43dc",
+          "length": 16,
+          "cycles": 1,
+          "position": 10,
+          "iteration": 0,
+          "httpRequestId": "6d518ea7-234d-4740-9be8-4bff25dfef62"
+        },
+        "item": {
+          "id": "c85eb35c-108e-468e-8833-0e2575612761",
+          "name": "PUT /product/:id - id khong ton tai -> 404",
+          "request": {
+            "description": {
+              "content": "LUU Y: controller PUT khong validate body, nen KHONG co kich ban 400 cho PUT. Negative duy nhat la 404.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                "{{missingProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Ghost Product\",\n  \"version\": \"v1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "be4ed7ec-5739-426d-8f61-5dbb741e3103",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test('Message la \"Product not found\"', function () {",
+                  "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                  "});"
+                ],
+                "_lastExecutionId": "bcfa1bd4-b2b6-417a-8b34-d51e8b295d22"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "LUU Y: controller PUT khong validate body, nen KHONG co kich ban 400 cho PUT. Negative duy nhat la 404.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "99999"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.595Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "47e16b76-58a2-48ce-a292-c3ff4eb17301",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "73",
+              "system": true
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Ghost Product\",\n  \"version\": \"v1\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.595Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "928b6e40-253f-4db3-9881-f634364dff78",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "31"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1f-Zkgaox/LmBaRs1Ofkuc8bu8COvo\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              80,
+              114,
+              111,
+              100,
+              117,
+              99,
+              116,
+              32,
+              110,
+              111,
+              116,
+              32,
+              102,
+              111,
+              117,
+              110,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 7,
+          "responseSize": 31
+        },
+        "id": "c85eb35c-108e-468e-8833-0e2575612761",
+        "assertions": [
+          {
+            "assertion": "Status code la 404",
+            "skipped": false
+          },
+          {
+            "assertion": "Message la \"Product not found\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "32717869-0760-434a-81c0-cdc47400a082",
+          "length": 16,
+          "cycles": 1,
+          "position": 11,
+          "iteration": 0,
+          "httpRequestId": "240233b3-2f4b-49aa-93b8-b4351925938a"
+        },
+        "item": {
+          "id": "56500ef0-cde2-4d56-a41e-72353ee32b37",
+          "name": "PUT /product/:id - thieu token -> 401",
+          "request": {
+            "url": {
+              "path": [
+                "product",
+                "{{seedProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Should Not Be Updated\",\n  \"version\": \"v9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "2b806b21-477b-4fac-9164-319bf0ec6095",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Error la \"Unauthorized\"', function () {",
+                  "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                  "});"
+                ],
+                "_lastExecutionId": "57f31589-417d-4667-afd0-5bc83549e99f"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "09"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "4d5850a7-26a0-4923-a680-3106ceb33a1d",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "81",
+              "system": true
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"type\": \"CREDIT_CARD\",\n  \"name\": \"Should Not Be Updated\",\n  \"version\": \"v9\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "99ca7693-39ad-44a3-ad47-4ef4d36c4779",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "24"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              110,
+              97,
+              117,
+              116,
+              104,
+              111,
+              114,
+              105,
+              122,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 5,
+          "responseSize": 24
+        },
+        "id": "56500ef0-cde2-4d56-a41e-72353ee32b37",
+        "assertions": [
+          {
+            "assertion": "Status code la 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Error la \"Unauthorized\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "180db70c-3740-4de5-8f25-d5e8a140cacb",
+          "length": 16,
+          "cycles": 1,
+          "position": 12,
+          "iteration": 0,
+          "httpRequestId": "f8fa6868-c7c3-4e9c-9a88-c9185bfd11c8"
+        },
+        "item": {
+          "id": "cc1993d0-148f-44f1-a2fd-090096c26d4a",
+          "name": "DELETE /product/:id - xoa product vua tao -> 204",
+          "request": {
+            "description": {
+              "content": "Chaining: xoa dung product da tao o POST, khong dung vao du lieu seed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                "{{createdProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "DELETE"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "9dde1f52-3e9c-4827-9eac-66919eb605b8",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 204', function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "// Controller: res.status(204).send() -> KHONG co body, khong co chuoi xac nhan.",
+                  "pm.test('Response body rong', function () {",
+                  "    pm.expect(pm.response.text()).to.eql('');",
+                  "});"
+                ],
+                "_lastExecutionId": "14500b2f-0ab2-4209-9348-f152ddbbd487"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Chaining: xoa dung product da tao o POST, khong dung vao du lieu seed.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "12"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.779Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "a65b4618-708c-4c13-bbe0-e8abd03e1457",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "DELETE",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.779Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "fcc41129-e438-4448-8bb3-c87dbe59bd04",
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": []
+          },
+          "cookie": [],
+          "responseTime": 6,
+          "responseSize": 0
+        },
+        "id": "cc1993d0-148f-44f1-a2fd-090096c26d4a",
+        "assertions": [
+          {
+            "assertion": "Status code la 204",
+            "skipped": false
+          },
+          {
+            "assertion": "Response body rong",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "9a979196-489c-4c23-8e90-76c7589d035a",
+          "length": 16,
+          "cycles": 1,
+          "position": 13,
+          "iteration": 0,
+          "httpRequestId": "2ed9351a-3a9f-4ea1-a0df-bd520afc8e72"
+        },
+        "item": {
+          "id": "c63d4e39-6309-4873-b310-ec12c0154ea4",
+          "name": "GET /product/:id - xac nhan da xoa -> 404",
+          "request": {
+            "description": {
+              "content": "Vi DELETE tra 204 body rong, dung GET de xac nhan hieu ung xoa da that su xay ra.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                "{{createdProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "6722dbf8-6005-4d08-b4be-dad75472a72f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 404 sau khi xoa', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test('Message la \"Product not found\"', function () {",
+                  "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                  "});"
+                ],
+                "_lastExecutionId": "bf84a812-3684-452b-a509-352a6d50fef4"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Vi DELETE tra 204 body rong, dung GET de xac nhan hieu ung xoa da that su xay ra.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "12"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.879Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "4b18d75b-74bf-48d4-8485-f4047c888d45",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.879Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "c8dc7814-78fb-47ec-a83c-15adb433090e",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "31"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1f-Zkgaox/LmBaRs1Ofkuc8bu8COvo\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              80,
+              114,
+              111,
+              100,
+              117,
+              99,
+              116,
+              32,
+              110,
+              111,
+              116,
+              32,
+              102,
+              111,
+              117,
+              110,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 31
+        },
+        "id": "c63d4e39-6309-4873-b310-ec12c0154ea4",
+        "assertions": [
+          {
+            "assertion": "Status code la 404 sau khi xoa",
+            "skipped": false
+          },
+          {
+            "assertion": "Message la \"Product not found\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "7c5161d0-8999-4ad4-b6de-ed0b64c8aded",
+          "length": 16,
+          "cycles": 1,
+          "position": 14,
+          "iteration": 0,
+          "httpRequestId": "4a2ac0c5-027e-4093-98cd-e10e80766b73"
+        },
+        "item": {
+          "id": "5f217c9d-1963-493f-9b49-edd9cb227ee8",
+          "name": "DELETE /product/:id - id khong ton tai -> 404",
+          "request": {
+            "url": {
+              "path": [
+                "product",
+                "{{missingProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "DELETE"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "8f1ca04e-3688-4dcb-bbe5-9ef16e887ef8",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 404', function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test('Message la \"Product not found\"', function () {",
+                  "    pm.expect(pm.response.json().message).to.eql('Product not found');",
+                  "});"
+                ],
+                "_lastExecutionId": "cec4d7b0-3ff5-415b-ad38-db5dc17fea89"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "99999"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer 2026-07-25T15:58:48.978Z",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "5d7b1693-9747-464e-884a-4d3843b8e198",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "DELETE",
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "type": "string",
+                "value": "2026-07-25T15:58:48.978Z",
+                "key": "token"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "9722bff0-537e-4a28-81cf-dfab2a9dc4c9",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "31"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1f-Zkgaox/LmBaRs1Ofkuc8bu8COvo\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:54 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              80,
+              114,
+              111,
+              100,
+              117,
+              99,
+              116,
+              32,
+              110,
+              111,
+              116,
+              32,
+              102,
+              111,
+              117,
+              110,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 5,
+          "responseSize": 31
+        },
+        "id": "5f217c9d-1963-493f-9b49-edd9cb227ee8",
+        "assertions": [
+          {
+            "assertion": "Status code la 404",
+            "skipped": false
+          },
+          {
+            "assertion": "Message la \"Product not found\"",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "87a80927-d1ca-4e4d-9b80-4db89108f862",
+          "length": 16,
+          "cycles": 1,
+          "position": 15,
+          "iteration": 0,
+          "httpRequestId": "5c02f3a2-6baf-44bc-a557-9d7154afe7f5"
+        },
+        "item": {
+          "id": "759f48fc-e98e-4a7a-8496-ef18dd658e5c",
+          "name": "DELETE /product/:id - thieu token -> 401",
+          "request": {
+            "description": {
+              "content": "Kich ban xoa khi chua auth - phai bi chan 401, du lieu seed 09 phai con nguyen.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product",
+                "{{seedProductId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "82cb76e8-becc-49aa-a0cc-4c1908cc0e18",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code la 401', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Error la \"Unauthorized\"', function () {",
+                  "    pm.expect(pm.response.json().error).to.eql('Unauthorized');",
+                  "});"
+                ],
+                "_lastExecutionId": "06be9b48-2a97-4e22-b44b-2e7904a619b3"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Kich ban xoa khi chua auth - phai bi chan 401, du lieu seed 09 phai con nguyen.",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "http",
+            "port": "8080",
+            "path": [
+              "product",
+              "09"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "290832f6-4f58-4a62-8596-48e0aa5200b0",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:8080",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "DELETE",
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "9209299a-ffac-474a-95d7-dac2a58135f6",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "24"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 25 Jul 2026 15:58:54 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              110,
+              97,
+              117,
+              116,
+              104,
+              111,
+              114,
+              105,
+              122,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 3,
+          "responseSize": 24
+        },
+        "id": "759f48fc-e98e-4a7a-8496-ef18dd658e5c",
+        "assertions": [
+          {
+            "assertion": "Status code la 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Error la \"Unauthorized\"",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 749
+    },
+    "failures": [],
+    "error": null
+  }
+}
