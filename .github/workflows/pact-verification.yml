@@ -95,7 +95,7 @@ jobs:
           CI: true
           PACT_BROKER_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
           PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
-          PACT_PUBLISH_RESULTS: 'true'
+          PACT_PUBLISH_RESULTS: "true"
           PACT_FILE: ${{ github.workspace }}/src/sample-api/pact-workshop-js/consumer/pacts/FrontendWebsite-ProductService.json
           GIT_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
@@ -127,22 +127,22 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/pact-foundation/pact-ruby-standalone/master/install.sh | bash
           echo "${HOME}/.pact/bin" >> "$GITHUB_PATH"
 
-      # Kiểm tra consumer (FrontendWebsite) có thể deploy không (so với phiên bản mới nhất).
+      # Kiểm tra consumer (FrontendWebsite) có thể deploy không (so với branch main).
       - name: Can-I-Deploy — FrontendWebsite (consumer)
         run: |
           pact-broker can-i-deploy \
             --pacticipant FrontendWebsite \
             --version "$GIT_COMMIT" \
-            --latest \
+            --to main \
             --broker-base-url "$PACT_BROKER_BASE_URL" \
             --broker-token "$PACT_BROKER_TOKEN"
 
-      # Kiểm tra provider (ProductService) có thể deploy không (so với phiên bản mới nhất).
+      # Kiểm tra provider (ProductService) có thể deploy không (so với branch main).
       - name: Can-I-Deploy — ProductService (provider)
         run: |
           pact-broker can-i-deploy \
             --pacticipant ProductService \
             --version "$GIT_COMMIT" \
-            --latest \
+            --to main \
             --broker-base-url "$PACT_BROKER_BASE_URL" \
             --broker-token "$PACT_BROKER_TOKEN"
