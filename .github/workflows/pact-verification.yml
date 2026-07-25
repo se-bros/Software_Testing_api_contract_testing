@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch: {}
 
 permissions:
   contents: read
@@ -87,3 +88,50 @@ jobs:
           GIT_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           GIT_BRANCH: ${{ github.head_ref || github.ref_name }}
         run: npm run test:pact
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Quality Gate: can-i-deploy
+  # ─────────────────────────────────────────────────────────────────────────────
+  can-i-deploy:
+    name: Can-I-Deploy quality gate
+    needs: provider-verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      # Pact Broker credentials — set trong GitHub → Settings → Secrets → Actions
+      PACT_BROKER_BASE_URL: ${{ secrets.PACT_BROKER_BASE_URL }}
+      PACT_BROKER_TOKEN: ${{ secrets.PACT_BROKER_TOKEN }}
+      # SHA của commit hiện tại — dùng làm pacticipant version
+      GIT_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Cài Pact CLI standalone (Ruby-based) từ GitHub releases.
+      - name: Install Pact CLI standalone
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/pact-foundation/pact-ruby-standalone/master/install.sh | bash
+          echo "${HOME}/.pact/bin" >> "$GITHUB_PATH"
+
+      # Kiểm tra consumer (FrontendWebsite) có thể deploy lên production không.
+      # --to-environment production: so sánh với các version đang chạy ở production.
+      - name: Can-I-Deploy — FrontendWebsite (consumer)
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant FrontendWebsite \
+            --version "$GIT_COMMIT" \
+            --to-environment production \
+            --broker-base-url "$PACT_BROKER_BASE_URL" \
+            --broker-token "$PACT_BROKER_TOKEN"
+
+      # Kiểm tra provider (ProductService) có thể deploy lên production không.
+      - name: Can-I-Deploy — ProductService (provider)
+        run: |
+          pact-broker can-i-deploy \
+            --pacticipant ProductService \
+            --version "$GIT_COMMIT" \
+            --to-environment production \
+            --broker-base-url "$PACT_BROKER_BASE_URL" \
+            --broker-token "$PACT_BROKER_TOKEN"
