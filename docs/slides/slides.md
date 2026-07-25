@@ -21,34 +21,76 @@ defaults:
   transition: fade
 ---
 
-<div class="eyebrow">Software Testing · Group 03 — SEBros</div>
+<div class="hub-header">
+  <div>
+    <div class="eyebrow">Group 03</div>
+    <h1><span class="accent">Contract Testing</span> · Consumer ↔ Provider</h1>
+  </div>
+</div>
 
-# <span class="accent">Contract Testing</span><br>Consumer ↔ Provider
+<div class="hub-grid">
+  <div class="hub-section">
+    <div class="hub-label">Nội dung</div>
+    <div class="hub-links">
+      <Link to="contract-basics" class="nav-card">
+        <span class="nav-index">07</span>
+        <span><strong>Contract Testing là gì?</strong><small>Vấn đề · Định nghĩa · Phạm vi</small></span>
+      </Link>
+      <Link to="consumer-provider" class="nav-card">
+        <span class="nav-index">07B</span>
+        <span><strong>Consumer ↔ Provider</strong><small>Kiến trúc và quyền sở hữu contract</small></span>
+      </Link>
+      <Link to="pact-consumer" class="nav-card">
+        <span class="nav-index">08A</span>
+        <span><strong>Consumer tạo Pact</strong><small>Mock Provider · Matcher · Pact JSON</small></span>
+      </Link>
+      <Link to="pact-provider" class="nav-card">
+        <span class="nav-index">08B</span>
+        <span><strong>Provider xác minh</strong><small>Provider State · Real API · Diff</small></span>
+      </Link>
+      <Link to="pact-ci" class="nav-card">
+        <span class="nav-index">CI</span>
+        <span><strong>Broker & CI/CD</strong><small>Version matrix · can-i-deploy</small></span>
+      </Link>
+      <Link to="limitations" class="nav-card">
+        <span class="nav-index">!</span>
+        <span><strong>Giới hạn & kết luận</strong><small>Điểm mù · Adoption · Takeaway</small></span>
+      </Link>
+    </div>
+  </div>
 
-<div class="glow-line" />
-
-<p class="hero-subtitle">
-Kiểm chứng khả năng giao tiếp giữa các dịch vụ — nhanh, cô lập và đủ sớm để bảo vệ CI/CD.
-</p>
-
-<div class="mt-10 flex gap-3 text-sm text-slate-300">
-  <span class="px-3 py-1 rounded-full border border-cyan-400/30">Consumer-Driven</span>
-  <span class="px-3 py-1 rounded-full border border-cyan-400/30">Pact workflow</span>
-  <span class="px-3 py-1 rounded-full border border-cyan-400/30">Architecture</span>
+  <div class="hub-section artifacts">
+    <div class="hub-label">Artifacts</div>
+    <div class="artifact-links">
+      <a class="artifact-card video" href="https://drive.google.com/file/d/1l6bO6fog1eM6K4_10oMshg5GawmEkr_o/view?usp=sharing" target="_blank" rel="noreferrer">
+        <span class="artifact-icon">▶</span><span><strong>Video 1 · Lý thuyết</strong><small>API & Contract Testing ↗</small></span>
+      </a>
+      <a class="artifact-card video" href="https://drive.google.com/file/d/1rl-E7qVuIIXReSxu6dkRUto5RahVJ1TM?usp=sharing" target="_blank" rel="noreferrer">
+        <span class="artifact-icon">▶</span><span><strong>Video 4 · Pact Demo</strong><small>Consumer · Provider · CI/CD ↗</small></span>
+      </a>
+      <a class="artifact-card report" href="https://github.com/Anhnguyenk835/Software_Testing_api_contract_testing/blob/main/docs/reports/final-report.md" target="_blank" rel="noreferrer">
+        <span class="artifact-icon">≡</span><span><strong>Final Report</strong><small>Chapter 3 · 5 · 6 · 7 ↗</small></span>
+      </a>
+      <a class="artifact-card source" href="https://github.com/Anhnguyenk835/Software_Testing_api_contract_testing/tree/main/src/sample-api/pact-workshop-js" target="_blank" rel="noreferrer">
+        <span class="artifact-icon">&lt;/&gt;</span><span><strong>Source Code</strong><small>Pact Workshop JS ↗</small></span>
+      </a>
+    </div>
+  </div>
 </div>
 
 <div class="footer-tag">API & CONTRACT TESTING SEMINAR</div>
 
 <!--
-Mở đầu bằng câu hỏi: “Một API vẫn chạy, nhưng client lại hỏng — vì sao?”
-Deck này tập trung vào ranh giới giao tiếp giữa Consumer và Provider, không đi sâu vào demo code.
+Đây là Master Navigation Hub. Có thể mở thẳng từng phần nội dung hoặc artifact.
+Trong bản PDF, các liên kết ngoài vẫn có thể nhấp để mở Video, Final Report và Source Code.
 -->
 
 ---
 transition: slide-left
+routeAlias: contract-basics
 ---
 
-<div class="eyebrow">01 · The integration problem</div>
+<div class="eyebrow">7 · The integration problem</div>
 
 # Khi mỗi service đều **“xanh”**… hệ thống vẫn có thể **“đỏ”**
 
@@ -84,7 +126,7 @@ Nhấn mạnh: unit test của từng service không kiểm chứng giả địn
 transition: fade
 ---
 
-<div class="eyebrow">02 · Definition</div>
+<div class="eyebrow">7 · Definition</div>
 
 # Contract Testing kiểm tra **lời hứa giao tiếp**
 
@@ -107,7 +149,7 @@ transition: fade
     <div class="text-xs text-cyan-300 font-mono mb-3">INTERACTION</div>
     <div class="text-sm leading-7">
       <span class="text-slate-400">Given</span> product 10 exists<br>
-      <span class="text-slate-400">When</span> GET /products/10<br>
+      <span class="text-slate-400">When</span> GET /product/10<br>
       <span class="text-slate-400">Then</span> 200 + Product schema
     </div>
   </div>
@@ -126,7 +168,7 @@ Provider state mô tả trạng thái cần có trước request, ví dụ produ
 transition: slide-up
 ---
 
-<div class="eyebrow">03 · Scope</div>
+<div class="eyebrow">7 · Scope</div>
 
 # Contract Test nằm ở đâu trong chiến lược kiểm thử?
 
@@ -155,9 +197,10 @@ Thông điệp: dùng đúng lớp test cho đúng loại rủi ro.
 ---
 transition: view-transition
 comark: true
+routeAlias: consumer-provider
 ---
 
-<div class="eyebrow">04 · Consumer–Provider architecture</div>
+<div class="eyebrow">7 · Consumer–Provider architecture</div>
 
 # Ai sở hữu **lời hứa** nào?
 
@@ -166,8 +209,8 @@ comark: true
 
 ```mermaid {scale: 0.78}
 flowchart LR
-  C["Consumer\nWeb / Mobile / Service"]
-  API["Provider API\nProduct Service"]
+  C["Consumer\nFrontendWebsite"]
+  API["Provider API\nProductService"]
   DB[(Provider data)]
 
   C -->|"HTTP request"| API
@@ -199,9 +242,10 @@ Mỗi Consumer có thể tạo một pact riêng với cùng Provider.
 ---
 transition: view-transition
 comark: true
+routeAlias: pact-consumer
 ---
 
-<div class="eyebrow">05 · Consumer side</div>
+<div class="eyebrow">8 · Consumer side</div>
 
 # Bước 1 — Consumer **tạo contract**
 
@@ -220,7 +264,7 @@ sequenceDiagram
 
   T->>M: Register expected interaction
   T->>C: Exercise client behavior
-  C->>M: GET /products/10
+  C->>M: GET /product/10 + Authorization
   M-->>C: 200 + matching response
   M-->>T: Validate received request
   T->>T: Write pact.json
@@ -242,7 +286,7 @@ Pact chỉ được sinh khi interaction thực sự được thực thi đúng 
 transition: slide-left
 ---
 
-<div class="eyebrow">06 · The contract anatomy</div>
+<div class="eyebrow">8 · The contract anatomy</div>
 
 # Một interaction tốt = **ví dụ cụ thể** + **quy tắc linh hoạt**
 
@@ -252,7 +296,7 @@ transition: slide-left
   "providerState": "product 10 exists",
   "request": {
     "method": "GET",
-    "path": "/products/10"
+    "path": "/product/10"
   },
   "response": {
     "status": 200,
@@ -274,6 +318,7 @@ transition: slide-left
     <strong class="text-cyan-300">Nguyên tắc:</strong><br>
     strict với điều Consumer phụ thuộc;<br>
     linh hoạt với dữ liệu động.
+    <div class="repo-fact">Repo: 10 interactions · 10 Authorization regex matchers</div>
   </div>
 </div>
 
@@ -286,9 +331,10 @@ Không nên dùng matcher quá rộng đến mức che mất breaking change.
 ---
 transition: view-transition
 comark: true
+routeAlias: pact-provider
 ---
 
-<div class="eyebrow">07 · Provider side</div>
+<div class="eyebrow">8 · Provider side</div>
 
 # Bước 2 — Provider **xác minh contract**
 
@@ -308,7 +354,7 @@ sequenceDiagram
   B-->>V: Consumer expectations
   V->>S: Set up "product 10 exists"
   S-->>V: State ready
-  V->>P: Replay GET /products/10
+  V->>P: Replay GET /product/10
   P-->>V: Actual 200 response
   V->>V: Match status, headers, body
   V->>B: Publish verification result
@@ -327,9 +373,10 @@ Provider state handler chuẩn bị dữ liệu; không đưa logic test vào pr
 
 ---
 transition: slide-up
+routeAlias: pact-ci
 ---
 
-<div class="eyebrow">08 · End-to-end Pact workflow</div>
+<div class="eyebrow">8 · Pact workflow & CI/CD</div>
 
 # Broker biến contract thành **điểm đồng bộ**
 
@@ -367,7 +414,7 @@ can-i-deploy hỏi dữ liệu tương thích đã biết; “chưa được ver
 transition: fade
 ---
 
-<div class="eyebrow">09 · Consumer-driven contracts</div>
+<div class="eyebrow">9 · Consumer-driven contracts</div>
 
 # Vì sao gọi là **Consumer-Driven**?
 
@@ -439,6 +486,7 @@ Nhắc rằng over-specification làm contract brittle, under-specification làm
 
 ---
 transition: fade
+routeAlias: limitations
 ---
 
 <div class="eyebrow">11 · Boundaries</div>
@@ -498,6 +546,7 @@ transition: slide-up
 layout: center
 transition: fade
 class: text-center
+routeAlias: takeaway
 ---
 
 <div class="eyebrow">Takeaway</div>

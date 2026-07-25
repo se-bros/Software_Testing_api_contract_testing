@@ -102,6 +102,166 @@ html.dark {
   font-size: 1.08rem;
 }
 
+.hub-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hub-header h1 {
+  margin: 0.25rem 0 0;
+  font-size: 2rem;
+}
+
+.hub-badge {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid rgb(94 234 212 / 42%);
+  border-radius: 999px;
+  background: rgb(94 234 212 / 8%);
+  color: var(--success);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 0.85rem;
+  margin-top: 0.8rem;
+}
+
+.hub-section {
+  padding: 0.8rem;
+  border: 1px solid rgb(103 232 249 / 18%);
+  border-radius: 16px;
+  background: rgb(7 20 38 / 48%);
+}
+
+.hub-label {
+  margin-bottom: 0.55rem;
+  color: var(--cyan-300);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.61rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.hub-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.48rem;
+}
+
+.nav-card,
+.artifact-card {
+  display: flex;
+  align-items: center;
+  gap: 0.58rem;
+  min-width: 0;
+  border: 1px solid rgb(103 232 249 / 16%);
+  border-radius: 11px;
+  background: linear-gradient(145deg, rgb(12 43 79 / 74%), rgb(7 20 38 / 68%));
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.nav-card {
+  min-height: 62px;
+  padding: 0.5rem 0.58rem;
+}
+
+.nav-card:hover,
+.nav-card:focus-visible,
+.artifact-card:hover,
+.artifact-card:focus-visible {
+  border-color: var(--cyan-400);
+  box-shadow: 0 0 20px rgb(34 211 238 / 18%);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.nav-index {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9px;
+  background: rgb(34 211 238 / 12%);
+  color: var(--cyan-300);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  font-weight: 900;
+}
+
+.nav-card strong,
+.artifact-card strong {
+  display: block;
+  color: white;
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+
+.nav-card small,
+.artifact-card small {
+  display: block;
+  margin-top: 0.15rem;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.56rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artifact-links {
+  display: grid;
+  gap: 0.48rem;
+}
+
+.artifact-card {
+  min-height: 50px;
+  padding: 0.43rem 0.62rem;
+}
+
+.artifact-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.8rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 8px;
+  background: rgb(34 211 238 / 12%);
+  color: var(--cyan-300);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.65rem;
+  font-weight: 900;
+}
+
+.artifact-card.video .artifact-icon {
+  background: rgb(251 191 36 / 12%);
+  color: var(--warning);
+}
+
+.artifact-card.report .artifact-icon {
+  background: rgb(94 234 212 / 12%);
+  color: var(--success);
+}
+
+.repo-fact {
+  margin-top: 0.6rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgb(103 232 249 / 14%);
+  color: var(--success);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.58rem;
+  line-height: 1.35;
+}
+
 .glow-line {
   width: 150px;
   height: 4px;
