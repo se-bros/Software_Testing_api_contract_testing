@@ -60,19 +60,25 @@ defaults:
   </div>
 
   <div class="hub-section artifacts">
-    <div class="hub-label">Artifacts</div>
+    <div class="hub-label">Artifacts & Videos (Thứ tự trình chiếu)</div>
     <div class="artifact-links">
       <a class="artifact-card video" href="https://drive.google.com/file/d/1l6bO6fog1eM6K4_10oMshg5GawmEkr_o/view?usp=sharing" target="_blank" rel="noreferrer">
-        <span class="artifact-icon">▶</span><span><strong>Video 1 · Lý thuyết</strong><small>API & Contract Testing ↗</small></span>
+        <span class="artifact-icon">▶</span><span><strong>Video 1 · Lý thuyết</strong><small>Tổng quan & Thuật ngữ API / Contract Testing ↗</small></span>
       </a>
-      <a class="artifact-card video" href="https://drive.google.com/file/d/1rl-E7qVuIIXReSxu6dkRUto5RahVJ1TM?usp=sharing" target="_blank" rel="noreferrer">
-        <span class="artifact-icon">▶</span><span><strong>Video 4 · Pact Demo</strong><small>Consumer · Provider · CI/CD ↗</small></span>
+      <a class="artifact-card video" href="https://drive.google.com/file/d/1KsyOwPu4-tC7bQkgwtswyPCMfd-r902T/view?usp=sharing" target="_blank" rel="noreferrer">
+        <span class="artifact-icon">▶</span><span><strong>Video 2 · Hướng dẫn cài đặt</strong><small>Node.js · Postman · Pact Broker Setup ↗</small></span>
+      </a>
+      <a class="artifact-card video" href="https://drive.google.com/file/d/1P2TrQNy9ruGZEnvL20lqkF2GlLJvOigA?usp=sharing" target="_blank" rel="noreferrer">
+        <span class="artifact-icon">▶</span><span><strong>Video 3 · Demo thực hành</strong><small>Postman + Pact CI/CD & Agent Skill (PetStore API) ↗</small></span>
+      </a>
+      <a class="artifact-card report" href="https://github.com/Anhnguyenk835/Software_Testing_api_contract_testing/blob/main/docs/Activity_Worksheet.md" target="_blank" rel="noreferrer">
+        <span class="artifact-icon">📝</span><span><strong>Activity Worksheet</strong><small>Bài thực hành 90 phút trên lớp ↗</small></span>
       </a>
       <a class="artifact-card report" href="https://github.com/Anhnguyenk835/Software_Testing_api_contract_testing/blob/main/docs/reports/final-report.md" target="_blank" rel="noreferrer">
-        <span class="artifact-icon">≡</span><span><strong>Final Report</strong><small>Chapter 3 · 5 · 6 · 7 ↗</small></span>
+        <span class="artifact-icon">≡</span><span><strong>Final Report</strong><small>Báo cáo Seminar đầy đủ ↗</small></span>
       </a>
       <a class="artifact-card source" href="https://github.com/Anhnguyenk835/Software_Testing_api_contract_testing/tree/main/src/sample-api/pact-workshop-js" target="_blank" rel="noreferrer">
-        <span class="artifact-icon">&lt;/&gt;</span><span><strong>Source Code</strong><small>Pact Workshop JS ↗</small></span>
+        <span class="artifact-icon">&lt;/&gt;</span><span><strong>Source Code</strong><small>Lab Template & Pact Workshop ↗</small></span>
       </a>
     </div>
   </div>

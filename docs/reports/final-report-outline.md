@@ -14,22 +14,20 @@
 - 2.2 Các loại test case & cách thiết kế
 - 2.3 Công cụ Postman (Environment, Collection, Variable, Script, Data-driven testing)
 - 2.4 Phương án thay thế: REST Client (`.http`/`.rest`) trên VS Code
+- 2.5 API mẫu sử dụng (eShop, PetStore)
 
 ### 3. Contract Testing
 - 3.1 Khái niệm & mô hình consumer–provider
 - 3.2 So sánh với API testing thông thường
 - 3.3 Công cụ Pact
 
-### 4. Postman
-- 4.1 API mẫu sử dụng
-- 4.2 Các kịch bản test đã thực hiện (dẫn tới [`demo-scenarios.md`](../demo/demo-scenarios.md))
+### 4. Automation / CI-CD
+- 4.1 Newman
+- 4.2 Tích hợp GitHub Actions
+- 4.3 Chạy Pact trong CI
 
-### 5. Automation / CI-CD
-- 5.1 Newman
-- 5.2 Tích hợp GitHub Actions
-- 5.3 Chạy Pact trong CI
+### 5. Kết luận & Đánh giá tính tái sử dụng
 
-### 6. Kết luận & hướng phát triển
-
-### 7. Tài liệu tham khảo
+### 6. Tài liệu tham khảo
 - _(Tổng hợp nguồn tham khảo — điền dần trong quá trình làm báo cáo.)_
+
