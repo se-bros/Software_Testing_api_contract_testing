@@ -25,7 +25,7 @@
 - Phối hợp thiết kế bài **Mini Exercise** cho buổi thực hành 90 phút tại lớp, lấy cảm hứng từ HW06 nhưng phù hợp với thời gian làm bài tại lớp
 - Rà soát chất lượng nội dung/định dạng PDF & Markdown của Final Report lần cuối trước khi nộp.
 
-Evidence: Video 2 (MP4 / Drive Link), Final Report reviewed, Mini exercise.
+Evidence: Video 2 (MP4 / Drive Link), Final Report reviewed, `evidences/KhoaNgo/Mini_Exercise.md`, `evidences/KhoaNgo/Mini_Exercise.pdf`, `evidences/KhoaNgo/mini-exercise-verification.md`, `AI Usage/KhoaNgo/AI_Audit_Report.md`, `AI Usage/KhoaNgo/prompt.png`.
 
 #### 23127148 – Ân Tiến Nguyên An
 
@@ -95,7 +95,7 @@ Link: Expected deliverable: `AI_Audit_Report.md` (tổng hợp đầy đủ minh
 ### 3. Tài liệu Thực hành trên lớp (Activity Worksheet & Mini Exercise)
 
 - **Activity Worksheet (`Activity_Worksheet.md`)**: Hướng dẫn từng bước bài thực hành 90 phút cho sinh viên tại lớp (API Functional Test, Newman CLI, Pact Contract Test, Breaking Change Simulation, AI Skill).
-- **Mini Exercise**: Bài tập thực hành rút gọn từ HW06, tập trung 1 Feature (Login API) với test script + data-driven + Newman + Pact contract, phù hợp cho 90 phút tại lớp.
+- **Mini Exercise**: Bài tập thực hành rút gọn từ HW06, tập trung `GET /product/:id` của Product Service với AI-assisted test design, human audit, data-driven Postman/Newman và Pact breaking change, phù hợp cho 90 phút tại lớp. Artifacts: [`Mini_Exercise.md`](evidences/KhoaNgo/Mini_Exercise.md), [`Mini_Exercise.pdf`](evidences/KhoaNgo/Mini_Exercise.pdf), [`verification evidence`](evidences/KhoaNgo/mini-exercise-verification.md).
 
 ### 4. Yêu cầu các công cụ cần cài đặt trước buổi seminar (Prerequisites)
 
