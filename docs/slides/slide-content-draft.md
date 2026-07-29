@@ -842,7 +842,7 @@ Mời câu hỏi & thảo luận.
 ## Video chèn vào slide
 - Sau Slide 12: chiếu Video 3 (đoạn Postman demo) hoặc demo trực tiếp
 - Sau Slide 16: chiếu Video 3 (đoạn Newman CI/CD)
-- Sau Slide 26: chiếu Video 3 (đoạn Pact + Breaking Change)
+- Sau Slide 26: chiếu Video 3 (đoạn Pac demo)
 
 ## Demo trực tiếp tại lớp (nếu có thời gian)
 1. Khởi động Provider → gửi GET /products bằng Postman
