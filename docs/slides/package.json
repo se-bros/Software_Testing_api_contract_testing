@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "slidev slides.md --open",
     "build": "slidev build slides.md",
-    "export": "slidev export slides.md --output api-contract-testing.pdf"
+    "export": "slidev export slides.md --output api-contract-testing.pdf",
+    "verify": "node scripts/verify-slides.mjs"
   },
   "devDependencies": {
-    "@slidev/cli": "52.18.0",
+    "@slidev/cli": "^52.6.0",
     "@slidev/theme-seriph": "0.25.0",
     "playwright-chromium": "^1.61.1"
   },
