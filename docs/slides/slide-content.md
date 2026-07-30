@@ -6,13 +6,13 @@
 
 Học phần: Kiểm thử phần mềm
 
-| MSSV | Họ tên |
-|------|--------|
-| 23127115 | Mạch Quốc Tấn |
-| 23127065 | Ngô Nguyễn Thế Khoa |
+| MSSV     | Họ tên                |
+| -------- | --------------------- |
+| 23127115 | Mạch Quốc Tấn         |
+| 23127065 | Ngô Nguyễn Thế Khoa   |
 | 23127211 | Nguyễn Lê Hồ Anh Khoa |
-| 23127148 | Ân Tiến Nguyên An |
-| 23127152 | Nguyễn Tuấn Anh |
+| 23127148 | Ân Tiến Nguyên An     |
+| 23127152 | Nguyễn Tuấn Anh       |
 
 ---
 
@@ -36,17 +36,20 @@ Học phần: Kiểm thử phần mềm
 ## Giới thiệu & Mục tiêu
 
 **Bối cảnh**
+
 - Hệ thống hiện đại → nhiều service độc lập (microservices)
 - Mỗi service có API riêng → cần kiểm thử ở nhiều lớp
 - Kiểm thử thủ công không đủ → cần automation & CI/CD
 
 **Mục tiêu seminar**
+
 - Hiểu & thực hành **API Testing** (functional testing ở tầng API)
 - Hiểu & thực hành **Contract Testing** (tương thích Consumer–Provider)
 - Tự động hóa bằng **Newman + GitHub Actions**
 - Trải nghiệm **AI-assisted testing**
 
 **Phạm vi**
+
 - API mẫu: Product Service (Node.js/Express) — CRUD 5 endpoints
 - Công cụ: Postman, Newman, Pact, GitHub Actions
 
@@ -68,12 +71,12 @@ Request:  Method + URL + Headers + Body
 Response: Status Code + Headers + Body
 ```
 
-| Method | Ý nghĩa | Ví dụ |
-|--------|----------|-------|
-| GET | Đọc dữ liệu | `GET /products` |
-| POST | Tạo mới | `POST /products` |
-| PUT | Cập nhật | `PUT /product/10` |
-| DELETE | Xóa | `DELETE /product/10` |
+| Method | Ý nghĩa     | Ví dụ                |
+| ------ | ----------- | -------------------- |
+| GET    | Đọc dữ liệu | `GET /products`      |
+| POST   | Tạo mới     | `POST /products`     |
+| PUT    | Cập nhật    | `PUT /product/10`    |
+| DELETE | Xóa         | `DELETE /product/10` |
 
 ---
 
@@ -81,14 +84,14 @@ Response: Status Code + Headers + Body
 
 ## HTTP Status Codes
 
-| Mã | Ý nghĩa |
-|----|----------|
-| 200 | OK — thành công |
-| 201 | Created — tạo mới thành công |
-| 204 | No Content — xóa thành công |
+| Mã  | Ý nghĩa                            |
+| --- | ---------------------------------- |
+| 200 | OK — thành công                    |
+| 201 | Created — tạo mới thành công       |
+| 204 | No Content — xóa thành công        |
 | 400 | Bad Request — dữ liệu không hợp lệ |
-| 401 | Unauthorized — thiếu/sai token |
-| 404 | Not Found — không tồn tại |
+| 401 | Unauthorized — thiếu/sai token     |
+| 404 | Not Found — không tồn tại          |
 
 ---
 
@@ -97,17 +100,21 @@ Response: Status Code + Headers + Body
 ## Authentication
 
 **Không authenticate:**
+
 - Truy cập tự do, không cần token
 - VD: public API, health check
 
 **Có authenticate (Token-based):**
+
 - Header: `Authorization: Bearer <token>`
 - Thiếu / sai / hết hạn → `401 Unauthorized`
 
 **Product Service:**
+
 ```
 Authorization: Bearer 2026-07-15T10:00:00.000Z
 ```
+
 - Timestamp ISO-8601, trong vòng 1 giờ
 - Sai định dạng hoặc hết hạn → 401
 
@@ -117,14 +124,14 @@ Authorization: Bearer 2026-07-15T10:00:00.000Z
 
 ## Các loại Test Case cho API
 
-| Loại | Mô tả | Ví dụ |
-|------|--------|-------|
-| Happy Path | Request hợp lệ → đúng | GET /product/10 → 200 |
-| Negative | Input sai → lỗi đúng | GET /product/99999 → 404 |
-| Authentication | Thiếu/sai token → 401 | Không gửi header |
-| Validation | Body thiếu field → 400 | POST thiếu "name" |
-| Schema | Đúng cấu trúc kỳ vọng | Có đủ id, type, name |
-| Boundary | Giá trị biên | Token vừa hết hạn |
+| Loại           | Mô tả                  | Ví dụ                    |
+| -------------- | ---------------------- | ------------------------ |
+| Happy Path     | Request hợp lệ → đúng  | GET /product/10 → 200    |
+| Negative       | Input sai → lỗi đúng   | GET /product/99999 → 404 |
+| Authentication | Thiếu/sai token → 401  | Không gửi header         |
+| Validation     | Body thiếu field → 400 | POST thiếu "name"        |
+| Schema         | Đúng cấu trúc kỳ vọng  | Có đủ id, type, name     |
+| Boundary       | Giá trị biên           | Token vừa hết hạn        |
 
 **Kỹ thuật:** Domain Partitioning · Boundary Value Analysis · State Transition
 
@@ -134,15 +141,15 @@ Authorization: Bearer 2026-07-15T10:00:00.000Z
 
 ## Postman — Tổng quan
 
-| Khái niệm | Vai trò |
-|-----------|---------|
-| **Collection** | Gom nhóm request theo chức năng |
-| **Environment** | Bộ biến môi trường (baseUrl, token...) |
-| **Variable** | Giá trị động dùng lại |
-| **Pre-request Script** | Chạy trước request (sinh token) |
-| **Test Script** | Assertion kiểm tra response |
-| **Collection Runner** | Chạy nhiều request + data file |
-| **Data-driven** | 1 request × nhiều bộ dữ liệu |
+| Khái niệm              | Vai trò                                |
+| ---------------------- | -------------------------------------- |
+| **Collection**         | Gom nhóm request theo chức năng        |
+| **Environment**        | Bộ biến môi trường (baseUrl, token...) |
+| **Variable**           | Giá trị động dùng lại                  |
+| **Pre-request Script** | Chạy trước request (sinh token)        |
+| **Test Script**        | Assertion kiểm tra response            |
+| **Collection Runner**  | Chạy nhiều request + data file         |
+| **Data-driven**        | 1 request × nhiều bộ dữ liệu           |
 
 ---
 
@@ -174,16 +181,17 @@ Product Service - Data Driven Tests
 **Pre-request Script:** tự sinh Bearer token mỗi iteration
 
 **Test Script:**
+
 ```javascript
-pm.test("Status is 200", () => {
-    pm.response.to.have.status(200);
+pm.test('Status is 200', () => {
+  pm.response.to.have.status(200);
 });
 
-pm.test("Has required fields", () => {
-    const json = pm.response.json();
-    pm.expect(json).to.have.property("id");
-    pm.expect(json).to.have.property("name");
-    pm.expect(json).to.have.property("type");
+pm.test('Has required fields', () => {
+  const json = pm.response.json();
+  pm.expect(json).to.have.property('id');
+  pm.expect(json).to.have.property('name');
+  pm.expect(json).to.have.property('type');
 });
 ```
 
@@ -207,6 +215,7 @@ pm.test("Has required fields", () => {
 ```
 
 **Lợi ích:**
+
 - Tách logic khỏi data
 - Thêm case không sửa script
 - Phù hợp automation (Newman)
@@ -226,13 +235,13 @@ GET {{baseUrl}}/products
 Authorization: Bearer {{token}}
 ```
 
-| Tiêu chí | Postman | REST Client |
-|----------|---------|-------------|
-| GUI | Đầy đủ | Tối giản |
-| Data-driven | ✓ | ✗ |
-| Script | JS đầy đủ | Hạn chế |
-| CI/CD | Newman | ✗ |
-| Tiện lợi | Mở app riêng | Ngay trong editor |
+| Tiêu chí    | Postman      | REST Client       |
+| ----------- | ------------ | ----------------- |
+| GUI         | Đầy đủ       | Tối giản          |
+| Data-driven | ✓            | ✗                 |
+| Script      | JS đầy đủ    | Hạn chế           |
+| CI/CD       | Newman       | ✗                 |
+| Tiện lợi    | Mở app riêng | Ngay trong editor |
 
 ---
 
@@ -244,13 +253,13 @@ Authorization: Bearer {{token}}
 - Auth: Bearer ISO-8601 (trong 1 giờ)
 - Data: In-memory (reset khi restart)
 
-| Method | Path | Success | Error |
-|--------|------|---------|-------|
-| GET | /products | 200 + array | 401 |
-| GET | /product/:id | 200 + object | 401, 404 |
-| POST | /products | 201 + created | 400, 401 |
-| PUT | /product/:id | 200 + updated | 401, 404 |
-| DELETE | /product/:id | 204 | 401, 404 |
+| Method | Path         | Success       | Error    |
+| ------ | ------------ | ------------- | -------- |
+| GET    | /products    | 200 + array   | 401      |
+| GET    | /product/:id | 200 + object  | 401, 404 |
+| POST   | /products    | 201 + created | 400, 401 |
+| PUT    | /product/:id | 200 + updated | 401, 404 |
+| DELETE | /product/:id | 204           | 401, 404 |
 
 ```json
 { "id": "10", "type": "CREDIT_CARD", "name": "28 Degrees", "version": "v1" }
@@ -276,6 +285,7 @@ newman run product-service.postman_collection.json \
 ```
 
 **Luồng:**
+
 1. Khởi động Provider (`localhost:8080`)
 2. Readiness probe → `/health` = 200
 3. Chạy Newman + collection + environment
@@ -326,10 +336,10 @@ Checkout → Node 20 → Install → Start Provider
 
 ## Giá trị của Automation
 
-| Lớp | Công cụ | Phát hiện |
-|-----|---------|-----------|
-| Functional | Newman | Lỗi chức năng, validation, auth |
-| Compatibility | Pact | Breaking change tại biên C–P |
+| Lớp           | Công cụ | Phát hiện                       |
+| ------------- | ------- | ------------------------------- |
+| Functional    | Newman  | Lỗi chức năng, validation, auth |
+| Compatibility | Pact    | Breaking change tại biên C–P    |
 
 - Phản hồi sớm trên mỗi push/PR
 - Log + artifact tái lập được
@@ -365,6 +375,7 @@ Integration/E2E phát hiện muộn, chi phí cao.
 > Contract = đặc tả **có thể thực thi** về request Consumer gửi và response Provider cam kết đáp ứng.
 
 **Nội dung:**
+
 - Request: method, path, headers, body
 - Response: status, schema, matching rules
 - Context: provider state
@@ -383,13 +394,13 @@ Xác minh **tính tương thích** — không chứng minh nghiệp vụ đúng.
 
 ## So sánh các lớp kiểm thử
 
-| | API Test | Contract Test | Integration | E2E |
-|---|---|---|---|---|
-| Hỏi | Đúng? | Tương thích? | Phối hợp? | Journey? |
-| Phạm vi | Endpoint | Cặp C–P | Nhóm | Toàn hệ thống |
-| Feedback | Nhanh | Nhanh, rõ | TB | Chậm |
-| Mạnh | Chức năng | Breaking change | Wiring | User flow |
-| Mù | Consumer-specific | Business logic | Ngoài scope | Flaky |
+|          | API Test          | Contract Test   | Integration | E2E           |
+| -------- | ----------------- | --------------- | ----------- | ------------- |
+| Hỏi      | Đúng?             | Tương thích?    | Phối hợp?   | Journey?      |
+| Phạm vi  | Endpoint          | Cặp C–P         | Nhóm        | Toàn hệ thống |
+| Feedback | Nhanh             | Nhanh, rõ       | TB          | Chậm          |
+| Mạnh     | Chức năng         | Breaking change | Wiring      | User flow     |
+| Mù       | Consumer-specific | Business logic  | Ngoài scope | Flaky         |
 
 Contract Test **bổ sung** — không thay thế tất cả.
 
@@ -400,12 +411,15 @@ Contract Test **bổ sung** — không thay thế tất cả.
 ## Mô hình Consumer–Provider
 
 **Consumer** (FrontendWebsite)
+
 - Gọi API → mô tả phần API sử dụng → sinh pact.json
 
 **Provider** (ProductService)
+
 - Cung cấp API → chứng minh đáp ứng mọi interaction
 
 **Pact Broker / Pactflow**
+
 - Lưu contract + version + kết quả verification
 - Compatibility matrix · `can-i-deploy` gate
 
@@ -415,13 +429,14 @@ Contract Test **bổ sung** — không thay thế tất cả.
 
 ## Consumer-Driven: Vì sao?
 
-| Provider-Driven | Consumer-Driven |
-|---|---|
-| Provider công bố toàn bộ schema | Mỗi Consumer nêu nhu cầu thực tế |
-| Consumer phải thích nghi | Provider xác minh tập hợp nhu cầu |
-| Khó biết phần nào được dùng | Provider biết field nào đang dùng |
+| Provider-Driven                 | Consumer-Driven                   |
+| ------------------------------- | --------------------------------- |
+| Provider công bố toàn bộ schema | Mỗi Consumer nêu nhu cầu thực tế  |
+| Consumer phải thích nghi        | Provider xác minh tập hợp nhu cầu |
+| Khó biết phần nào được dùng     | Provider biết field nào đang dùng |
 
 **Quy trình:**
+
 1. Consumer nêu nhu cầu (pact)
 2. Provider xác minh
 3. Hai đội cùng tiến hóa API có kiểm soát
@@ -432,12 +447,12 @@ Contract Test **bổ sung** — không thay thế tất cả.
 
 ## Giới hạn của Contract Testing
 
-| Không nhìn thấy | Giải thích |
-|---|---|
-| Business logic | Đúng schema nhưng tính sai vẫn pass |
-| Hạ tầng | DNS, TLS, timeout cần lớp khác |
-| Multi-service journey | Một pact = một ranh giới |
-| API design quality | Tương thích ≠ dễ dùng |
+| Không nhìn thấy       | Giải thích                          |
+| --------------------- | ----------------------------------- |
+| Business logic        | Đúng schema nhưng tính sai vẫn pass |
+| Hạ tầng               | DNS, TLS, timeout cần lớp khác      |
+| Multi-service journey | Một pact = một ranh giới            |
+| API design quality    | Tương thích ≠ dễ dùng               |
 
 **Chiến lược cân bằng:**
 Unit → logic · Contract → compatibility · Integration → wiring · E2E → journeys
@@ -519,6 +534,7 @@ Provider → 200 response → Verifier → Match → Publish result
 **Broker:** version C + version P + kết quả verify → compatibility matrix
 
 **Quy trình:**
+
 1. Consumer CI → sinh pact → publish
 2. Provider CI → tải pact → verify → publish result
 3. `can-i-deploy` → compatible? → Deploy / Stop
@@ -537,13 +553,13 @@ can-i-deploy?
 
 Consumer: `FrontendWebsite` · Provider: `ProductService`
 
-| API | Interactions | Trạng thái |
-|-----|:---:|---|
-| GET /products | 2 | Có data + rỗng |
-| GET /product/:id | 2 | Tồn tại + không |
-| POST /products | 2 | Tạo + validation error |
-| PUT /product/:id | 2 | Update + không tồn tại |
-| DELETE /product/:id | 2 | Xóa + không tồn tại |
+| API                 | Interactions | Trạng thái             |
+| ------------------- | :----------: | ---------------------- |
+| GET /products       |      2       | Có data + rỗng         |
+| GET /product/:id    |      2       | Tồn tại + không        |
+| POST /products      |      2       | Tạo + validation error |
+| PUT /product/:id    |      2       | Update + không tồn tại |
+| DELETE /product/:id |      2       | Xóa + không tồn tại    |
 
 **10/10 interactions pass** (25/07/2026)
 
@@ -576,6 +592,7 @@ Consumer: `FrontendWebsite` · Provider: `ProductService`
 ## AI trong quy trình Testing
 
 **Vai trò:**
+
 - Sinh test case từ API spec
 - Gợi ý cấu trúc Collection
 - Review contract, phát hiện thiếu sót
@@ -583,6 +600,7 @@ Consumer: `FrontendWebsite` · Provider: `ProductService`
 **Công cụ:** Claude · ChatGPT · Gemini · Postman Postbot · Agent Skill
 
 **Nguyên tắc:**
+
 1. Hướng dẫn AI từng bước — không prompt chung chung
 2. Human review mọi output — VALID / INVALID / INCOMPLETE
 3. AI Audit Report — ghi log toàn bộ
@@ -603,6 +621,7 @@ Output: Collection JSON + data files + test scripts
 ```
 
 **Reusability > 80%:**
+
 - 100%: Skill script, prompt templates, workflows, Newman runner
 - Cấu hình lại: API spec, env vars, test data
 
@@ -618,13 +637,13 @@ Output: Collection JSON + data files + test scripts
 
 ## API Testing vs Contract Testing
 
-| | API Testing | Contract Testing |
-|---|---|---|
-| **Hỏi** | Endpoint đúng? | Còn tương thích? |
-| **Công cụ** | Postman + Newman | Pact |
-| **Phạm vi** | Nhiều endpoint | Cặp Consumer–Provider |
-| **Automation** | Newman + GH Actions | Pact verify + can-i-deploy |
-| **Phát hiện** | Chức năng, auth, validation | Breaking change tại biên |
+|                | API Testing                 | Contract Testing           |
+| -------------- | --------------------------- | -------------------------- |
+| **Hỏi**        | Endpoint đúng?              | Còn tương thích?           |
+| **Công cụ**    | Postman + Newman            | Pact                       |
+| **Phạm vi**    | Nhiều endpoint              | Cặp Consumer–Provider      |
+| **Automation** | Newman + GH Actions         | Pact verify + can-i-deploy |
+| **Phát hiện**  | Chức năng, auth, validation | Breaking change tại biên   |
 
 **Cả hai bổ sung cho nhau.**
 
@@ -635,11 +654,13 @@ Output: Collection JSON + data files + test scripts
 ## Khi nào dùng gì?
 
 **API Testing:**
+
 - Kiểm tra chức năng endpoint
 - Validation, Authentication
 - Regression suite
 
 **Contract Testing:**
+
 - Service phát triển độc lập
 - Hay có breaking change
 - Cần deployment gate
@@ -665,11 +686,11 @@ Output: Collection JSON + data files + test scripts
 
 ## Takeaway
 
-| | |
-|---|---|
-| **Fast** | Feedback sớm tại local và CI |
+|             |                                         |
+| ----------- | --------------------------------------- |
+| **Fast**    | Feedback sớm tại local và CI            |
 | **Focused** | Khoanh đúng ranh giới Consumer–Provider |
-| **Safe** | Service tiến hóa độc lập có kiểm soát |
+| **Safe**    | Service tiến hóa độc lập có kiểm soát   |
 
 - API Testing + Contract Testing = hai lớp rủi ro khác nhau
 - Newman + GitHub Actions = regression suite tự động
@@ -683,11 +704,13 @@ Output: Collection JSON + data files + test scripts
 ## Resources
 
 **Videos:**
+
 - Video 1: Lý thuyết & Thuật ngữ
 - Video 2: Cài đặt môi trường
 - Video 3: Demo thực hành (Postman + Newman + Pact + AI Skill)
 
 **Thực hành:**
+
 - Activity Worksheet (90 phút)
 - Mini Exercise: API Test → Contract Breaking Change
 

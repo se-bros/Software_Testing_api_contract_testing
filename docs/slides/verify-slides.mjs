@@ -1,8 +1,62 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
 import MarkdownIt from 'markdown-it';
 import { parse } from '@vue/compiler-dom';
 
-const content = readFileSync('slides.md', 'utf8');
+function getFullContent(entryFile) {
+  const content = readFileSync(entryFile, 'utf8');
+  const lines = content.split('\n');
+  let start = 0;
+  if (lines[0].trim() === '---') {
+    for (let i = 1; i < lines.length; i++) {
+      if (lines[i].trim() === '---') { start = i + 1; break; }
+    }
+  }
+  const headmatter = lines.slice(0, start).join('\n');
+  const remaining = lines.slice(start);
+  
+  const chunks = [];
+  let cur = [];
+  let inFence = false;
+  for (let i = 0; i < remaining.length; i++) {
+    const line = remaining[i];
+    if (/^\s*```/.test(line)) inFence = !inFence;
+    if (!inFence && /^---\s*$/.test(line)) {
+      chunks.push(cur.join('\n'));
+      cur = [];
+    } else {
+      cur.push(line);
+    }
+  }
+  if (cur.length) chunks.push(cur.join('\n'));
+  
+  const resolvedChunks = [];
+  for (const chunk of chunks) {
+    const linesOfChunk = chunk.split('\n');
+    let srcFile = null;
+    for (const line of linesOfChunk) {
+      const match = line.match(/^\s*src:\s*(\S+)/);
+      if (match) {
+        srcFile = match[1];
+        break;
+      }
+    }
+    
+    if (srcFile) {
+      const absoluteSrcPath = join(dirname(entryFile), srcFile);
+      if (existsSync(absoluteSrcPath)) {
+        resolvedChunks.push(readFileSync(absoluteSrcPath, 'utf8'));
+      } else {
+        resolvedChunks.push(chunk);
+      }
+    } else {
+      resolvedChunks.push(chunk);
+    }
+  }
+  return headmatter + '\n' + resolvedChunks.join('\n---\n');
+}
+
+const content = getFullContent('slides.md');
 const lines = content.split('\n');
 
 // Strip headmatter
