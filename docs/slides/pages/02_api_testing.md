@@ -73,7 +73,7 @@ Nhắc lại kiến thức nền: API, REST, HTTP methods và status codes.
   <v-clicks>
 
   - Yêu cầu header: `Authorization: Bearer <token>`
-  - Token có thể là JWT, OAuth2, hoặc custom (ISO-8601)
+  - Token có thể là JWT, OAuth2, hoặc custom (ISO-8601)<sup>1</sup>
   - Thiếu/sai/hết hạn token → `401 Unauthorized`
 
   </v-clicks>
@@ -88,6 +88,10 @@ Nhắc lại kiến thức nền: API, REST, HTTP methods và status codes.
   <div class="mt-2 text-sm text-gray-600">
     Timestamp phải trong vòng <strong>1 giờ</strong> so với server · Sai định dạng hoặc hết hạn → <code>401</code>
   </div>
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Bearer ISO-8601</strong> — Token dạng timestamp theo chuẩn ISO-8601 (vd: 2026-07-15T10:00:00.000Z), hợp lệ trong 1 giờ.</div>
 </div>
 
 <!--
@@ -110,7 +114,7 @@ Test API phải bao gồm cả test authentication — không chỉ happy path.
       </tr>
   </thead>
   <tbody>
-      <tr v-click class="border-b border-gray-100"><td class="py-2 font-bold">Happy Path</td><td>Request hợp lệ → response đúng</td><td class="text-gray-500">GET /product/10 + valid token → 200</td></tr>
+      <tr v-click class="border-b border-gray-100"><td class="py-2 font-bold">Happy Path<sup>1</sup></td><td>Request hợp lệ → response đúng</td><td class="text-gray-500">GET /product/10 + valid token → 200</td></tr>
       <tr v-click class="border-b border-gray-100"><td class="py-2 font-bold">Negative</td><td>Input sai → xử lý lỗi đúng</td><td class="text-gray-500">GET /product/99999 → 404</td></tr>
       <tr v-click class="border-b border-gray-100"><td class="py-2 font-bold">Authentication</td><td>Thiếu/sai/hết hạn token → 401</td><td class="text-gray-500">Không gửi Authorization header</td></tr>
       <tr v-click class="border-b border-gray-100"><td class="py-2 font-bold">Validation</td><td>Body thiếu field → 400</td><td class="text-gray-500">POST thiếu "name" → 400</td></tr>
@@ -122,6 +126,10 @@ Test API phải bao gồm cả test authentication — không chỉ happy path.
 
 <div v-click class="mt-4 text-sm text-gray-500">
   <strong>Kỹ thuật:</strong> Domain Partitioning · Boundary Value Analysis · State Transition
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Happy Path</strong> — Kịch bản với dữ liệu hợp lệ, đi qua luồng thành công.</div>
 </div>
 
 <!--
@@ -153,7 +161,7 @@ Test API phải bao gồm cả test authentication — không chỉ happy path.
   - **Environment** — Bộ biến môi trường (baseUrl, token...)
   - **Variable** — Giá trị động dùng lại
   - **Pre-request Script** — Chạy trước mỗi request
-  - **Test Script** — Assertion kiểm tra response
+  - **Test Script** — Assertion<sup>1</sup> kiểm tra response
 
   </v-clicks>
   </div>
@@ -171,6 +179,10 @@ Test API phải bao gồm cả test authentication — không chỉ happy path.
   </div>
 </div>
 
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Assertion</strong> — Câu lệnh kiểm tra tự động (vd: status = 200) chạy sau mỗi request.</div>
+</div>
+
 <!--
 Postman: GUI + automation. Các khái niệm: Collection, Environment, Variable, Scripts.
 -->
@@ -181,7 +193,7 @@ Postman: GUI + automation. Các khái niệm: Collection, Environment, Variable,
 
 # Postman — Tổ chức Collection
 
-<div class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg font-mono text-sm leading-7">
+<div class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg font-mono text-sm leading-6">
   <div class="text-gray-700 font-bold">Product Service — Data Driven Tests</div>
   <div class="text-gray-500">├── <span class="text-cyan-600">_Setup (Pre-flight)</span>          ← sinh token</div>
   <div class="text-gray-500">├── <span class="text-green-600">GET — Happy Path</span>            ← 4 iterations</div>
@@ -224,7 +236,7 @@ Tách theo HTTP method. Tách Happy Path / Negative riêng.
   <h3 class="text-base font-bold text-cyan-700 mb-2">Pre-request Script (Collection level)</h3>
   <div class="text-sm text-gray-600 mb-2">Tự động sinh Bearer token hợp lệ mỗi iteration:</div>
   <div class="text-xs text-gray-500">
-      - `"{{validToken}}"` → Bearer hợp lệ<br>
+      - <code v-pre>"{{validToken}}"</code> → Bearer hợp lệ<br>
       - `"Bearer 2020-..."` → token hết hạn (negative)<br>
       - `""` → xóa header (no token case)
   </div>

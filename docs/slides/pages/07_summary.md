@@ -51,7 +51,7 @@ Cả hai giải quyết hai nhóm rủi ro khác nhau.
   - Kiểm tra **chức năng** endpoint
   - **Validation** input/output
   - **Authentication** & Authorization
-  - **Regression suite** cho API
+  - **Regression suite**<sup>1</sup> cho API
 
   </v-clicks>
   </div>
@@ -71,6 +71,10 @@ Cả hai giải quyết hai nhóm rủi ro khác nhau.
 <div v-click class="mt-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
   <strong class="text-gray-700">Chiến lược tối ưu:</strong>
   <span class="text-sm text-gray-500 ml-2">Unit → logic · Contract → compatibility · API/Integration → chức năng & wiring · Ít E2E → critical journeys</span>
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Regression suite</strong> — Bộ test chạy lại mỗi khi có thay đổi để phát hiện lỗi cũ tái phát.</div>
 </div>
 
 <!--

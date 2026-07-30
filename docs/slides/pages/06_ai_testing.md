@@ -17,7 +17,7 @@ layout: section
   <h3 class="text-lg font-bold text-cyan-700 mb-3">Vai trò AI</h3>
   <v-clicks>
 
-  - Sinh test case từ **API specification**
+  - Sinh test case từ **API specification**<sup>1</sup>
   - Gợi ý cấu trúc **Postman Collection**
   - Review contract, phát hiện **thiếu sót**
   - Tạo sơ đồ, tài liệu, **workflow mẫu**
@@ -29,7 +29,7 @@ layout: section
 
   - **Claude, ChatGPT, Gemini** — research & drafting
   - **Postman Postbot** — sinh test script
-  - **Agent Skill** — tự động sinh test từ API spec
+  - **Agent Skill**<sup>2</sup> — tự động sinh test từ API spec
 
   </v-clicks>
   </div>
@@ -52,6 +52,11 @@ layout: section
   </div>
 </div>
 
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>API specification</strong> — Tài liệu mô tả cấu trúc API (endpoint, tham số, response).</div>
+<div class="fn-item"><sup>2</sup><strong>Agent Skill</strong> — Tập hướng dẫn đóng gói để AI tự động sinh test.</div>
+</div>
+
 <!--
 AI-First: hướng dẫn từng bước, human review, audit report.
 -->
@@ -65,7 +70,7 @@ AI-First: hướng dẫn từng bước, human review, audit report.
 <div class="grid grid-cols-3 gap-4 mt-6">
   <div v-click class="p-4 bg-cyan-50 border border-cyan-200 rounded-xl text-center">
   <div class="text-sm font-bold text-cyan-700 mb-2">INPUT</div>
-  <div class="text-sm text-gray-600">API Specification<br>(OpenAPI / Markdown)</div>
+  <div class="text-sm text-gray-600">API Specification<br>(OpenAPI<sup>1</sup> / Markdown)</div>
   </div>
   <div v-click class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-center">
   <div class="text-sm font-bold text-blue-700 mb-2">PROCESS</div>
@@ -93,6 +98,10 @@ AI-First: hướng dẫn từng bước, human review, audit report.
 
 <div v-click class="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-lg text-sm">
   <strong>Demo:</strong> Chạy Agent Skill trên Swagger PetStore API → chứng minh reusability
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>OpenAPI</strong> — Chuẩn mô tả API phổ biến (file YAML/JSON).</div>
 </div>
 
 <!--

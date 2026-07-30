@@ -14,11 +14,11 @@ layout: section
 
 <div class="grid grid-cols-3 gap-4 mt-8">
   <div v-click class="p-4 bg-red-50 border border-red-200 rounded-xl">
-  <div class="text-2xl font-bold text-red-500 mb-2">Consumer</div>
+  <div class="text-2xl font-bold text-red-500 mb-2">Consumer<sup>1</sup></div>
   <div class="text-sm text-gray-600">Kỳ vọng field <code>product.name</code>, nhưng Provider đổi thành <code>displayName</code></div>
   </div>
   <div v-click class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
-  <div class="text-2xl font-bold text-yellow-600 mb-2">Provider</div>
+  <div class="text-2xl font-bold text-yellow-600 mb-2">Provider<sup>2</sup></div>
   <div class="text-sm text-gray-600">Unit test vẫn pass — logic và schema mới đều đúng theo góc nhìn backend</div>
   </div>
   <div v-click class="p-4 bg-red-50 border border-red-200 rounded-xl">
@@ -30,6 +30,11 @@ layout: section
 <div v-click class="mt-8 p-4 bg-cyan-50 border border-cyan-200 rounded-lg text-center">
   <div class="text-lg text-cyan-700 font-bold">"Hai phía có còn hiểu cùng một giao thức hay không?"</div>
   <div class="text-sm text-gray-500 mt-2">Unit test kiểm tra logic nội bộ — không kiểm chứng giả định xuyên biên giới</div>
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Consumer</strong> — Bên gọi API (vd: FrontendWebsite).</div>
+<div class="fn-item"><sup>2</sup><strong>Provider</strong> — Bên cung cấp API (vd: ProductService).</div>
 </div>
 
 <!--
@@ -45,21 +50,21 @@ Motivation slide: unit test không đủ.
 <div class="grid grid-cols-5 gap-8 mt-6 items-start">
   <div class="col-span-3">
   <div class="p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg text-lg italic text-gray-700">
-      Contract là đặc tả <strong>có thể thực thi</strong> về những request Consumer gửi và response Provider cam kết đáp ứng.
+      Contract<sup>1</sup> là đặc tả <strong>có thể thực thi</strong> về những request Consumer gửi và response Provider cam kết đáp ứng.
   </div>
 
   <v-clicks>
 
   - **Request:** method, path, query, headers, body
   - **Response:** status, headers, schema và matching rules
-  - **Context:** provider state — điều kiện trước của interaction
+  - **Context:** provider state<sup>2</sup> — điều kiện trước của interaction<sup>3</sup>
 
   </v-clicks>
   </div>
 
   <div class="col-span-2 p-4 bg-gray-50 border border-gray-200 rounded-lg">
   <div class="text-xs font-mono text-cyan-600 mb-3 font-bold">INTERACTION</div>
-  <div class="text-sm leading-7">
+  <div class="text-sm leading-6">
       <span class="text-gray-400">Given</span> product 10 exists<br>
       <span class="text-gray-400">When</span> GET /product/10<br>
       <span class="text-gray-400">Then</span> 200 + Product schema
@@ -69,6 +74,12 @@ Motivation slide: unit test không đủ.
 
 <div v-click class="mt-6 text-sm text-gray-500">
   Contract Testing xác minh <strong class="text-cyan-700">tính tương thích</strong> — không chứng minh toàn bộ nghiệp vụ đúng.
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Contract</strong> — Bản cam kết bằng máy về cách hai bên giao tiếp.</div>
+<div class="fn-item"><sup>2</sup><strong>Provider state</strong> — Điều kiện dữ liệu cần có trước khi chạy interaction (vd: "product 10 exists").</div>
+<div class="fn-item"><sup>3</sup><strong>Interaction</strong> — Một cặp request–response cụ thể trong contract.</div>
 </div>
 
 <!--
@@ -88,8 +99,8 @@ Contract = đặc tả có thể thực thi.
         <th class="text-left py-2 text-cyan-700">Tiêu chí</th>
         <th class="text-left py-2 text-cyan-700">API Testing</th>
         <th class="text-left py-2 text-cyan-700">Contract Testing</th>
-        <th class="text-left py-2 text-cyan-700">Integration</th>
-        <th class="text-left py-2 text-cyan-700">E2E</th>
+        <th class="text-left py-2 text-cyan-700">Integration<sup>1</sup></th>
+        <th class="text-left py-2 text-cyan-700">E2E<sup>2</sup></th>
       </tr>
   </thead>
   <tbody>
@@ -105,6 +116,11 @@ Contract = đặc tả có thể thực thi.
 
 <div v-click class="mt-4 p-3 bg-cyan-50 border border-cyan-200 rounded-lg text-sm">
   Contract Test <strong>bổ sung</strong> Unit / Integration / E2E — không thay thế tất cả.
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Integration</strong> — Kiểm thử nhiều thành phần phối hợp với nhau.</div>
+<div class="fn-item"><sup>2</sup><strong>E2E</strong> — Kiểm thử toàn bộ hành trình người dùng qua nhiều service.</div>
 </div>
 
 <!--
@@ -140,7 +156,12 @@ flowchart LR
 </div>
 
 <div v-click class="mt-4 p-3 bg-indigo-50 border border-indigo-200 rounded-lg text-sm">
-  <strong class="text-indigo-700">Pact Broker:</strong> Lưu contract + version + kết quả verification → Compatibility matrix → <code>can-i-deploy</code> gate
+  <strong class="text-indigo-700">Pact Broker:<sup>1</sup></strong> Lưu contract + version + kết quả verification → Compatibility matrix<sup>2</sup> → <code>can-i-deploy</code> gate
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Pact Broker</strong> — Kho trung tâm lưu contract + kết quả verification.</div>
+<div class="fn-item"><sup>2</sup><strong>Compatibility matrix</strong> — Bảng tra cứu phiên bản Consumer nào tương thích phiên bản Provider nào.</div>
 </div>
 
 <!--

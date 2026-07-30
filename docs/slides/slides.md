@@ -22,7 +22,6 @@ defaults:
   transition: fade
 class: text-gray-800
 ---
-
 ---
 src: ./pages/01_introduction.md
 ---

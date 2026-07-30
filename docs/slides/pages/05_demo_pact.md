@@ -28,7 +28,11 @@ sequenceDiagram
 ```
 
 <div v-click class="mt-4 p-3 bg-cyan-50 border border-cyan-200 rounded-lg text-sm">
-  Mock Provider không thay thế code Consumer — test phải gọi <strong>API client thật</strong> của Consumer.
+  Mock Provider<sup>1</sup> không thay thế code Consumer — test phải gọi <strong>API client thật</strong> của Consumer.
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Mock provider</strong> — Server giả do Pact dựng lên để Consumer test chạy mà không cần Provider thật.</div>
 </div>
 
 <!--
@@ -77,9 +81,9 @@ Click 1: provider state + request/response. Click 2: matching rules.
 
 <div class="text-sm font-mono tracking-widest text-cyan-600 uppercase mb-4">08 · Provider Side</div>
 
-# Bước 2 — Provider **xác minh contract**
+# Bước 2 — Provider **xác minh contract**<sup>1</sup>
 
-```mermaid {scale: 0.65}
+```mermaid {scale: 0.62}
 %%{init: { "sequence": { "mirrorActors": false }}}%%
 sequenceDiagram
   participant V as Pact verifier
@@ -103,6 +107,10 @@ sequenceDiagram
   <div v-click class="p-3 bg-indigo-50 border border-indigo-200 rounded-lg"><strong class="text-indigo-700">Precise diff</strong><br>Mismatch chỉ rõ field bị gãy</div>
 </div>
 
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Verifier</strong> — Công cụ Pact chạy phía Provider, replay từng request trong contract.</div>
+</div>
+
 <!--
 Provider verification KHÔNG gọi Consumer. Verifier đóng vai Consumer.
 -->
@@ -111,7 +119,7 @@ Provider verification KHÔNG gọi Consumer. Verifier đóng vai Consumer.
 
 <div class="text-sm font-mono tracking-widest text-cyan-600 uppercase mb-4">08 · Broker & CI/CD</div>
 
-# Broker & Deployment Gate
+# Broker & Deployment Gate<sup>1</sup>
 
 ```mermaid {scale: 0.62}
 flowchart TB
@@ -133,6 +141,10 @@ flowchart TB
 
 <div v-click class="mt-4 p-3 bg-cyan-50 border border-cyan-200 rounded-lg text-sm text-center">
   Broker liên kết <strong>version Consumer</strong> + <strong>version Provider</strong> + <strong>kết quả verification</strong> → Compatibility matrix
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Deployment gate</strong> — Điểm kiểm soát quyết định có được deploy hay không.</div>
 </div>
 
 <!--
@@ -218,12 +230,16 @@ Consumer: FrontendWebsite. Provider: ProductService.
   <div class="p-5 bg-red-50 border-2 border-red-300 rounded-xl">
       <div class="text-sm font-bold text-red-600 mb-3">BÀI HỌC</div>
       <div class="text-sm text-gray-700 space-y-2">
-        <div>Đổi tên field là <strong>breaking change</strong> dù HTTP status không đổi.</div>
+        <div>Đổi tên field là <strong>breaking change</strong><sup>1</sup> dù HTTP status không đổi.</div>
         <div>Functional test có thể <strong>không phát hiện</strong> nếu không assert đúng field.</div>
         <div>Contract test phát hiện <strong class="text-red-600">ngay tại provider verification</strong>.</div>
       </div>
   </div>
   </div>
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>Breaking change</strong> — Thay đổi làm Consumer cũ bị gãy (vd: đổi tên field).</div>
 </div>
 
 <!--

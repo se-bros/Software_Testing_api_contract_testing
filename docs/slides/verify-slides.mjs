@@ -122,7 +122,8 @@ slides.forEach((slide, idx) => {
   const errs = [];
   parse(html, { onError: (e) => errs.push(e) });
   const missingEnd = errs.filter(e => /end tag|missing|Invalid|element/i.test(String(e.message || e)));
-  const codeTrapped = /&lt;\/?[a-zA-Z]/.test(html);
+  // Ignore intentional placeholders like "Bearer <token>" that render as &lt;token&gt;
+  const codeTrapped = /&lt;\/?[a-zA-Z]/.test(html.replace(/&lt;token&gt;/g, ''));
 
   if (idx === debugSlide) {
     console.log(`\n########## GENERATED HTML FOR SLIDE ${idx + 1} ##########\n`);

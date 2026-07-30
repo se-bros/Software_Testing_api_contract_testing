@@ -17,7 +17,7 @@ layout: section
   <h3 class="text-lg font-bold text-cyan-700 mb-3">Newman là gì</h3>
   <v-clicks>
 
-  - Command-line runner cho **Postman Collection**
+  - Command-line runner<sup>1</sup> cho **Postman Collection**
   - Chạy test **không cần mở Postman GUI**
   - Xuất báo cáo: **CLI, HTML, JSON**
 
@@ -27,10 +27,10 @@ layout: section
   <v-clicks>
 
   1. Khởi động Provider tại `localhost:8080`
-  2. Readiness probe: gọi `/health`
+  2. Readiness probe<sup>2</sup>: gọi `/health`
   3. Chạy Newman với collection + environment
   4. Xuất báo cáo HTML + JSON
-  5. Upload artifact (kể cả khi test fail)
+  5. Upload artifact<sup>3</sup> (kể cả khi test fail)
 
   </v-clicks>
   </div>
@@ -46,6 +46,12 @@ newman run collection.json \
 ```
 
   </div>
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>CLI runner</strong> — Công cụ chạy test trực tiếp từ dòng lệnh, không cần giao diện.</div>
+<div class="fn-item"><sup>2</sup><strong>readiness probe</strong> — Request kiểm tra service đã khởi động sẵn sàng (vd: /health).</div>
+<div class="fn-item"><sup>3</sup><strong>artifact</strong> — File đầu ra (report, log) được CI lưu lại để xem sau.</div>
 </div>
 
 <!--
@@ -64,7 +70,7 @@ Newman = CLI runner cho Postman Collection.
   <span class="text-gray-500">Trigger:</span> <span class="text-blue-700">push/PR vào main + manual dispatch</span>
 </div>
 
-<div class="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg font-mono text-sm leading-7">
+<div class="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg font-mono text-sm leading-6">
   <div class="text-gray-600">Checkout → Setup Node 20 → Install deps → Start Provider</div>
   <div class="text-gray-600">→ Wait <span class="text-cyan-600">/health</span> (30s timeout) → Install Newman</div>
   <div class="text-gray-600">→ <span class="text-blue-600">Run Newman</span> → Upload report artifact</div>
@@ -117,8 +123,8 @@ Không cần secret vì token do Pre-request script tự sinh.
   </div>
   <div class="text-2xl text-gray-300">→</div>
   <div class="p-4 bg-indigo-50 border-2 border-indigo-300 rounded-xl text-center w-56">
-  <div class="text-sm font-bold text-indigo-700">can-i-deploy</div>
-  <div class="text-xs text-gray-500 mt-1">Quality gate</div>
+  <div class="text-sm font-bold text-indigo-700">can-i-deploy<sup>1</sup></div>
+  <div class="text-xs text-gray-500 mt-1">Quality gate<sup>2</sup></div>
   <div class="text-xs text-gray-400 mt-1">Chặn nếu incompatible</div>
   </div>
 </div>
@@ -136,6 +142,11 @@ Không cần secret vì token do Pre-request script tự sinh.
   <strong class="text-indigo-700">Job 3 — can-i-deploy</strong>
   <div class="text-gray-500 text-xs mt-1">Kiểm tra compatibility matrix → chặn deploy nếu chưa tương thích</div>
   </div>
+</div>
+
+<div class="footnotes">
+<div class="fn-item"><sup>1</sup><strong>can-i-deploy</strong> — Lệnh của Pact Broker: kiểm tra phiên bản này có an toàn để deploy.</div>
+<div class="fn-item"><sup>2</sup><strong>quality gate</strong> — Cổng kiểm tra tự động — chặn pipeline nếu không đạt.</div>
 </div>
 
 <!--
