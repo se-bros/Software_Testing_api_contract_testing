@@ -17,16 +17,18 @@
 .slidev-layout {
   background: #ffffff;
   color: var(--gray-800);
-  font-size: 1.15rem;
-  line-height: 1.7;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  padding: 1.4rem 2.6rem;
 }
 
 .slidev-layout h1 {
   color: var(--gray-800);
-  font-size: 2.25rem;
+  font-size: 1.85rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.2;
+  margin-bottom: 0.4rem;
 }
 
 .slidev-layout h2,
@@ -35,7 +37,20 @@
 }
 
 .slidev-layout h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
+}
+
+.slidev-layout p {
+  margin: 0.35rem 0;
+}
+
+.slidev-layout ul,
+.slidev-layout ol {
+  margin: 0.3rem 0;
+}
+
+.slidev-layout li {
+  margin: 0.12rem 0;
 }
 
 .slidev-layout p,
@@ -59,7 +74,8 @@
   background: var(--gray-50) !important;
   border: 1px solid var(--gray-200);
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
 }
 
 .slidev-layout pre code {
@@ -76,7 +92,13 @@
 }
 
 .slidev-layout table {
-  font-size: 0.95rem;
+  font-size: 0.8rem;
+}
+
+.slidev-layout th,
+.slidev-layout td {
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.3rem !important;
 }
 
 .slidev-layout th {
@@ -93,7 +115,7 @@
 }
 
 .slidev-layout .mermaid svg {
-  max-height: 400px;
+  max-height: 300px;
 }
 
 /* Section layout */
@@ -219,6 +241,34 @@
   background: linear-gradient(90deg, var(--cyan-600), var(--blue-600), transparent);
 }
 
+/* Footnote annotations */
+.slidev-layout sup {
+  color: var(--cyan-600);
+  font-weight: 700;
+  font-size: 0.6em;
+}
+
+.slidev-layout .footnotes {
+  margin-top: 0.7rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--gray-200);
+  font-size: 0.7rem;
+  line-height: 1.45;
+  color: var(--gray-500);
+}
+
+.slidev-layout .footnotes .fn-item {
+  margin: 0.12rem 0;
+}
+
+.slidev-layout .footnotes sup {
+  margin-right: 3px;
+}
+
+.slidev-layout .footnotes strong {
+  color: var(--gray-700);
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -226,3 +276,18 @@
     transition-duration: 1ms !important;
   }
 }
+
+/* Hide top-right nav select / controls overlay and all select elements */
+#slidev-goto-dialog,
+.slidev-controls,
+.slidev-nav-select,
+.slidev-page-select,
+select {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+
+

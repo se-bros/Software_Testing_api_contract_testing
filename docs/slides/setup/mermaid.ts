@@ -1,36 +1,60 @@
 import { defineMermaidSetup } from '@slidev/types'
 
+// Light, high-contrast theme matching the deck's cyan/blue palette.
+// Goal: light fills, dark readable text, soft borders — no dark backgrounds.
 export default defineMermaidSetup(() => ({
   theme: 'base',
   themeVariables: {
-    background: '#071426',
-    primaryColor: '#0c2b4f',
-    primaryTextColor: '#e8f7ff',
-    primaryBorderColor: '#22d3ee',
-    secondaryColor: '#102f50',
-    secondaryTextColor: '#e8f7ff',
-    secondaryBorderColor: '#38bdf8',
-    tertiaryColor: '#13233d',
-    tertiaryTextColor: '#cceeff',
-    tertiaryBorderColor: '#3b82f6',
-    lineColor: '#67e8f9',
-    textColor: '#e8f7ff',
-    mainBkg: '#0c2b4f',
-    nodeBorder: '#22d3ee',
-    clusterBkg: '#0a1f38',
-    clusterBorder: '#256b8a',
-    edgeLabelBackground: '#071426',
-    actorBkg: '#0c2b4f',
-    actorBorder: '#22d3ee',
-    actorTextColor: '#e8f7ff',
-    actorLineColor: '#4f8caf',
-    signalColor: '#67e8f9',
-    signalTextColor: '#dff8ff',
-    noteBkgColor: '#12365d',
-    noteBorderColor: '#38bdf8',
-    noteTextColor: '#e8f7ff',
-    labelBoxBkgColor: '#0c2b4f',
-    labelBoxBorderColor: '#22d3ee',
-    labelTextColor: '#e8f7ff',
+    // Canvas
+    background: '#ffffff',
+    fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
+    fontSize: '15px',
+
+    // Flowchart nodes (primary = cyan, secondary = blue, tertiary = indigo)
+    primaryColor: '#e0f2fe',
+    primaryTextColor: '#155e75',
+    primaryBorderColor: '#0891b2',
+    secondaryColor: '#eff6ff',
+    secondaryTextColor: '#1e40af',
+    secondaryBorderColor: '#2563eb',
+    tertiaryColor: '#eef2ff',
+    tertiaryTextColor: '#4338ca',
+    tertiaryBorderColor: '#4f46e5',
+
+    // Edges & labels
+    lineColor: '#64748b',
+    edgeLabelBackground: '#ffffff',
+    textColor: '#334155',
+
+    // Flowchart misc
+    mainBkg: '#e0f2fe',
+    nodeBorder: '#0891b2',
+    nodeTextColor: '#155e75',
+
+    // Subgraphs (clusters)
+    clusterBkg: '#f8fafc',
+    clusterBorder: '#94a3b8',
+
+    // Sequence diagram
+    actorBkg: '#e0f2fe',
+    actorBorder: '#0891b2',
+    actorTextColor: '#155e75',
+    actorLineColor: '#94a3b8',
+    signalColor: '#475569',
+    signalTextColor: '#1f2937',
+    activationBkgColor: '#cffafe',
+    activationBorderColor: '#0891b2',
+
+    // Notes
+    noteBkgColor: '#fef9c3',
+    noteBorderColor: '#eab308',
+    noteTextColor: '#713f12',
+
+    // Labels / loops / title
+    labelBoxBkgColor: '#e0f2fe',
+    labelBoxBorderColor: '#0891b2',
+    labelTextColor: '#155e75',
+    loopTextColor: '#1f2937',
+    titleColor: '#1f2937',
   },
 }))
