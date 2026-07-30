@@ -276,3 +276,18 @@
     transition-duration: 1ms !important;
   }
 }
+
+/* Hide top-right nav select / controls overlay and all select elements */
+#slidev-goto-dialog,
+.slidev-controls,
+.slidev-nav-select,
+.slidev-page-select,
+select {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+
+
