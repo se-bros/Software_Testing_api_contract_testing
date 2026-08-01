@@ -28,15 +28,11 @@ src: ./pages/1.intro/1.1.cover.md
 ---
 
 ---
-src: ./pages/1.intro/1.2.members.md
+src: ./pages/1.intro/1.2.agenda.md
 ---
 
 ---
-src: ./pages/1.intro/1.3.agenda.md
----
-
----
-src: ./pages/1.intro/1.4.intro_section.md
+src: ./pages/1.intro/1.3.intro_section.md
 ---
 
 ---
