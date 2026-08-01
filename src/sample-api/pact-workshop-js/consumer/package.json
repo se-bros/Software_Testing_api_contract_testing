@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test",
     "eject": "react-scripts eject",
-    "pretest:pact": "rimraf pacts/*.json",
+    "pretest:pact": "node -e \"const fs = require('fs'); const dir = './pacts'; if (fs.existsSync(dir)) fs.readdirSync(dir).forEach(f => f.endsWith('.json') && fs.unlinkSync(require('path').join(dir, f)))\"",
     "test:pact": "cross-env CI=true react-scripts test --testTimeout=30000 pact.spec.js",
     "test:unit": "cross-env CI=true react-scripts test api.spec.js",
     "pact:publish": "pact-broker publish ./pacts --consumer-app-version=\"1.0.0\" --auto-detect-version-properties --broker-base-url=http://127.0.0.1:8000 --broker-username pact_workshop --broker-password pact_workshop"
