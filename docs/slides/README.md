@@ -11,32 +11,30 @@ docs/slides/
 ├── slides.md               # Entry point chính của Slidev
 ├── pages/                  # [MỚI] Tách theo từng phần & từng file slide riêng
 │   ├── 1.intro/
-│   │   ├── 1.1.cover.md
-│   │   ├── 1.2.members.md
-│   │   ├── 1.3.agenda.md
-│   │   ├── 1.4.intro_section.md
+│   │   ├── 1.1.cover.md ... 1.3.intro_section.md
 │   │   └── main.md
 │   ├── 2.api_testing/
-│   │   ├── 2.1.section.md ... 2.10.product_service.md
+│   │   ├── 2.1.section.md ... 2.15.product_endpoints.md
 │   │   └── main.md
 │   ├── 3.automation_cicd/
-│   │   ├── 3.1.section.md ... 3.5.automation_value.md
+│   │   ├── 3.1.section.md ... 3.6.automation_value.md
 │   │   └── main.md
 │   ├── 4.contract_testing/
 │   │   ├── 4.1.section.md ... 4.7.limitations.md
 │   │   └── main.md
 │   ├── 5.demo_pact/
-│   │   ├── 5.1.section.md ... 5.7.breaking_change.md
+│   │   ├── 5.1.section.md ... 5.8.breaking_change.md
 │   │   └── main.md
 │   ├── 6.ai_testing/
-│   │   ├── 6.1.section.md ... 6.3.agent_skill.md
+│   │   ├── 6.1.section.md ... 6.4.agent_skill.md
 │   │   └── main.md
 │   └── 7.summary/
-│       ├── 7.1.section.md ... 7.7.qna.md
+│       ├── 7.1.section.md ... 7.9.thank_you.md
 │       └── main.md
 ├── styles/                 # CSS tùy chỉnh giao diện (index.css)
 ├── setup/                  # Cấu hình plugin (Mermaid,...)
 ├── scripts/                # Script kiểm tra cú pháp slide (verify-slides.mjs)
+├── presentation/           # Script thuyết trình theo từng slide / section
 ├── drafts/                 # Bản nháp nội dung & outline tham khảo
 ├── README.md               # Hướng dẫn sử dụng
 └── package.json            # Cấu hình dự án & scripts
