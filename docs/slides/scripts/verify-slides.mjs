@@ -3,126 +3,93 @@ import { join, dirname } from 'node:path';
 import MarkdownIt from 'markdown-it';
 import { parse } from '@vue/compiler-dom';
 
-function getFullContent(entryFile) {
-  const content = readFileSync(entryFile, 'utf8');
+const slidesPath = 'slides.md';
+if (!existsSync(slidesPath)) {
+  console.error('slides.md not found');
+  process.exit(1);
+}
+
+function getSlidesOfFile(filePath) {
+  const content = readFileSync(filePath, 'utf8').replace(/^\uFEFF/, '');
   const lines = content.split('\n');
-  let start = 0;
-  if (lines[0].trim() === '---') {
-    for (let i = 1; i < lines.length; i++) {
-      if (lines[i].trim() === '---') { start = i + 1; break; }
-    }
-  }
-  const headmatter = lines.slice(0, start).join('\n');
-  const remaining = lines.slice(start);
   
-  const chunks = [];
+  const parts = [];
   let cur = [];
   let inFence = false;
-  for (let i = 0; i < remaining.length; i++) {
-    const line = remaining[i];
+  for (const line of lines) {
     if (/^\s*```/.test(line)) inFence = !inFence;
     if (!inFence && /^---\s*$/.test(line)) {
-      chunks.push(cur.join('\n'));
+      parts.push(cur.join('\n'));
       cur = [];
     } else {
       cur.push(line);
     }
   }
-  if (cur.length) chunks.push(cur.join('\n'));
+  if (cur.length) parts.push(cur.join('\n'));
+
+  const slides = [];
+  let i = 0;
+  const startsWithDashes = content.trimStart().startsWith('---');
+  if (startsWithDashes) {
+    i = 1;
+  }
   
-  const resolvedChunks = [];
-  for (const chunk of chunks) {
-    const linesOfChunk = chunk.split('\n');
+  while (i < parts.length) {
+    let frontmatter = '';
+    let slideContent = '';
+    
+    if (startsWithDashes || i > 0) {
+      frontmatter = parts[i] || '';
+      slideContent = parts[i + 1] || '';
+      i += 2;
+    } else {
+      slideContent = parts[i] || '';
+      i += 1;
+    }
+    
     let srcFile = null;
-    for (const line of linesOfChunk) {
+    const fmLines = frontmatter.split('\n');
+    for (const line of fmLines) {
       const match = line.match(/^\s*src:\s*(\S+)/);
-      if (match) {
-        srcFile = match[1];
-        break;
+      if (match) { srcFile = match[1]; break; }
+    }
+    if (!srcFile) {
+      const cLines = slideContent.split('\n');
+      for (const line of cLines) {
+        const match = line.match(/^\s*src:\s*(\S+)/);
+        if (match) { srcFile = match[1]; break; }
       }
     }
     
     if (srcFile) {
-      const absoluteSrcPath = join(dirname(entryFile), srcFile);
-      if (existsSync(absoluteSrcPath)) {
-        resolvedChunks.push(getFullContent(absoluteSrcPath));
+      const absolutePath = join(dirname(filePath), srcFile);
+      if (existsSync(absolutePath)) {
+        slides.push(...getSlidesOfFile(absolutePath));
       } else {
-        resolvedChunks.push(chunk);
+        console.warn('Not found: ' + srcFile);
       }
-    } else {
-      resolvedChunks.push(chunk);
+    } else if (frontmatter.trim() || slideContent.trim()) {
+      slides.push({ filePath, frontmatter, content: slideContent });
     }
   }
-  return headmatter + '\n' + resolvedChunks.join('\n---\n');
+  return slides;
 }
 
-const content = getFullContent('slides.md');
-const lines = content.split('\n');
-
-// Strip headmatter
-let start = 0;
-if (lines[0].trim() === '---') {
-  for (let i = 1; i < lines.length; i++) {
-    if (lines[i].trim() === '---') { start = i + 1; break; }
-  }
-}
-
-// Split into chunks on '---' at line start, IGNORING --- inside code fences
-const chunks = [];
-let cur = [];
-let inFence = false;
-for (let i = start; i < lines.length; i++) {
-  const line = lines[i];
-  if (/^\s*```/.test(line)) inFence = !inFence;
-  if (!inFence && /^---\s*$/.test(line)) {
-    chunks.push(cur.join('\n'));
-    cur = [];
-  } else {
-    cur.push(line);
-  }
-}
-if (cur.length) chunks.push(cur.join('\n'));
-
-// A chunk that is ONLY frontmatter (key: value lines) belongs to the NEXT slide.
-const isFrontmatterOnly = (c) => {
-  const t = c.trim();
-  if (!t) return false;
-  return t.split('\n').every(l => l.trim() === '' || /^[a-zA-Z][\w-]*:/.test(l.trim()));
-};
-const slides = [];
-for (let i = 0; i < chunks.length; i++) {
-  if (isFrontmatterOnly(chunks[i]) && i + 1 < chunks.length) {
-    slides.push(chunks[i] + '\n---\n' + chunks[i + 1]);
-    i++;
-  } else if (chunks[i].trim()) {
-    slides.push(chunks[i]);
-  }
-}
+const slides = getSlidesOfFile(slidesPath);
+console.log(`Analyzing ${slides.length} slides for Vue/HTML syntax issues...\n`);
 
 const md = new MarkdownIt({ html: true, linkify: true });
 const debugSlide = parseInt(process.argv[2] || '-1', 10);
 
 let totalErrors = 0;
-slides.forEach((slide, idx) => {
-  let s = slide;
-  const sl = s.split('\n');
-  // Strip leading frontmatter: either '---\n...\n---' or 'key: value\n---'
-  if (sl[0].trim() === '---') {
-    for (let i = 1; i < sl.length; i++) {
-      if (sl[i].trim() === '---') { s = sl.slice(i + 1).join('\n'); break; }
-    }
-  } else if (/^[a-zA-Z][\w-]*:/.test(sl[0].trim())) {
-    for (let i = 0; i < sl.length; i++) {
-      if (sl[i].trim() === '---') { s = sl.slice(i + 1).join('\n'); break; }
-    }
-  }
+slides.forEach((slideObj, idx) => {
+  let s = slideObj.content;
   s = s.replace(/<!--[\s\S]*?-->/g, '');
 
   const html = md.render(s);
   const errs = [];
   parse(html, { onError: (e) => errs.push(e) });
   const missingEnd = errs.filter(e => /end tag|missing|Invalid|element/i.test(String(e.message || e)));
-  // Ignore intentional placeholders like "Bearer <token>" that render as &lt;token&gt;
   const codeTrapped = /&lt;\/?[a-zA-Z]/.test(html.replace(/&lt;token&gt;/g, ''));
 
   if (idx === debugSlide) {
@@ -133,7 +100,7 @@ slides.forEach((slide, idx) => {
 
   if (missingEnd.length || codeTrapped) {
     totalErrors++;
-    console.log(`\n=== SLIDE ${idx + 1} ===`);
+    console.log(`\n=== SLIDE ${idx + 1} (${slideObj.filePath}) ===`);
     missingEnd.forEach(e => console.log('  VUE ERROR:', e.message, `(loc ~line ${e.loc?.start?.line})`));
     if (codeTrapped) console.log('  WARNING: tag trapped inside <pre><code>');
   }
@@ -143,3 +110,4 @@ console.log(`\n========================================`);
 console.log(`Total slides: ${slides.length}`);
 console.log(`Slides with problems: ${totalErrors}`);
 console.log(totalErrors === 0 ? 'ALL SLIDES OK ✓' : 'PROBLEMS FOUND ✗');
+process.exit(totalErrors === 0 ? 0 : 1);
