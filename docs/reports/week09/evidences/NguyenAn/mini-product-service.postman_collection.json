@@ -1,0 +1,1120 @@
+{
+  "info": {
+    "_postman_id": "c3c4d5e6-1234-4b5c-8d9e-1f2a3b4c5d6e",
+    "name": "Product Service - Data Driven Tests",
+    "description": "Collection data-driven testing cho Product Provider API.\nNhóm 3 — SEBros | Tuần W06 | API & Contract Testing Seminar\n\nCấu trúc folder:\n- _Setup: Smoke test kiểm tra server đang chạy\n- GET — Happy Path / Negative\n- POST — Happy Path / Negative\n- PUT — Happy Path / Negative\n- DELETE — Happy Path / Negative\n\nCách chạy:\n1. Import collection và environment local.postman_environment.json\n2. Khởi động Provider: cd src/sample-api/pact-workshop-js && npm start\n3. Mở Collection Runner → chọn folder → load data file tương ứng → Run",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "validToken",
+      "value": "",
+      "type": "string",
+      "description": "Bearer token sinh động trong Pre-request Script — không hardcode tại đây"
+    },
+    {
+      "key": "currentAuthHeader",
+      "value": "",
+      "type": "string",
+      "description": "Auth header được map từ iteration data sau khi resolve {{validToken}}"
+    },
+    {
+      "key": "productId",
+      "value": "",
+      "type": "string",
+      "description": "Path variable :id — được set từ Pre-request Script của từng request"
+    },
+    {
+      "key": "requestBody",
+      "value": "{}",
+      "type": "string",
+      "description": "JSON body được ghép từ các cột CSV trong Pre-request Script"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// ─── Pre-request Script (Collection level) ───────────────────────────────────",
+          "// Sinh Bearer token là ISO-8601 timestamp hiện tại (múi giờ UTC)",
+          "// Auth middleware yêu cầu timestamp trong vòng 1 giờ so với server clock.",
+          "",
+          "const now = new Date().toISOString(); // vd: \"2026-07-18T05:00:00.000Z\"",
+          "pm.variables.set(\"validToken\", `Bearer ${now}`);",
+          "",
+          "// Map auth_header từ iteration data:",
+          "// - Nếu auth_header rỗng  → không gắn Authorization header (negative case)",
+          "// - Nếu auth_header = \"{{validToken}}\" → resolve thành Bearer <now>",
+          "// - Nếu auth_header là giá trị cụ thể (expired/invalid) → dùng nguyên văn",
+          "",
+          "const authFromData = pm.iterationData.get(\"auth_header\");",
+          "",
+          "if (authFromData !== undefined && authFromData !== null && authFromData !== \"\") {",
+          "    // Resolve {{validToken}} nếu data dùng placeholder",
+          "    const resolved = authFromData.replace(\"{{validToken}}\", `Bearer ${now}`);",
+          "    pm.variables.set(\"currentAuthHeader\", resolved);",
+          "    // Gắn header Authorization",
+          "    pm.request.headers.upsert({",
+          "        key: \"Authorization\",",
+          "        value: resolved",
+          "    });",
+          "} else if (authFromData === undefined) {",
+          "    // Chạy mặc định không data file → gán Token hợp lệ",
+          "    pm.variables.set(\"currentAuthHeader\", `Bearer ${now}`);",
+          "    pm.request.headers.upsert({",
+          "        key: \"Authorization\",",
+          "        value: `Bearer ${now}`",
+          "    });",
+          "} else {",
+          "    // auth_header rỗng → xóa header Authorization — giả lập thiếu token",
+          "    pm.variables.set(\"currentAuthHeader\", \"\");",
+          "    pm.request.headers.remove(\"Authorization\");",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "_Setup (Pre-flight)",
+      "description": "Smoke test kiểm tra server đang chạy trước khi chạy các test case chính.",
+      "item": [
+        {
+          "name": "GET /products [smoke test]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Smoke test — dùng token hợp lệ (sinh động)",
+                  "const now = new Date().toISOString();",
+                  "pm.request.headers.upsert({",
+                  "    key: \"Authorization\",",
+                  "    value: `Bearer ${now}`",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"[SMOKE] Server đang chạy — status 200\", () => {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "",
+                  "pm.test(\"[SMOKE] Response là array sản phẩm\", () => {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.be.an(\"array\");",
+                  "    pm.expect(body.length).to.be.at.least(1);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{validToken}}",
+                "description": "Override bởi Pre-request Script"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "Smoke test — kiểm tra Provider service đang hoạt động. Chạy trước tất cả test."
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET — Happy Path",
+      "description": "Data file: get-products.data.json (row GET_PRODUCTS_01) và get-product-by-id.data.json (rows GET_BY_ID_01 đến GET_BY_ID_03).\nChạy folder này để kiểm tra business logic khi auth token hợp lệ và resource tồn tại.",
+      "item": [
+        {
+          "name": "GET /products [list all]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Skip GET /products nếu data file là get-product-by-id (có cột product_id)",
+                  "// Điều này tránh false failure khi chạy folder với data file không phải của request này.",
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid !== undefined && pid !== null && pid !== \"\") {",
+                  "    pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — GET /products ────────────────────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectArray    = pm.iterationData.get(\"expect_array\") === true",
+                  "                   || pm.iterationData.get(\"expect_array\") === \"true\";",
+                  "const expectMinLen   = parseInt(pm.iterationData.get(\"expect_min_length\")) || 0;",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "// ── Test 1: Status Code ──────────────────────────────────────────────────────",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "// ── Test 2: Happy path — response là array ────────────────────────────────────",
+                  "if (expectArray) {",
+                  "    pm.test(`[${tcId}] Response là array với ít nhất ${expectMinLen} phần tử`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.be.an(\"array\");",
+                  "        pm.expect(body.length).to.be.at.least(expectMinLen);",
+                  "    });",
+                  "",
+                  "    pm.test(`[${tcId}] Mỗi sản phẩm có đủ fields: id, type, name`, () => {",
+                  "        const body = pm.response.json();",
+                  "        body.forEach((product, idx) => {",
+                  "            pm.expect(product, `product[${idx}]`).to.have.property(\"id\");",
+                  "            pm.expect(product, `product[${idx}]`).to.have.property(\"type\");",
+                  "            pm.expect(product, `product[${idx}]`).to.have.property(\"name\");",
+                  "        });",
+                  "    });",
+                  "}",
+                  "",
+                  "// ── Test 3: Error response ────────────────────────────────────────────────────",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] Error response có field \"${expectErrField}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}",
+                "description": "Được set bởi Collection Pre-request Script từ iteration data"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "Data file: get-products.data.json\nChỉ load row GET_PRODUCTS_01 khi chạy Happy Path folder.\nCollection Runner → Data → get-products.data.json → Iterations: 1"
+          }
+        },
+        {
+          "name": "GET /product/:id [by id]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Map product_id từ iteration data vào URL variable",
+                  "// Nếu data file không có cột product_id (ví dụ: get-products.data.json),",
+                  "// skip request này để tránh gửi GET /product/ (URL không hợp lệ).",
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid === undefined || pid === null || pid === \"\") {",
+                  "    pm.execution.skipRequest();",
+                  "} else {",
+                  "    pm.variables.set(\"productId\", String(pid));",
+                  "}",
+                  "",
+                  "// [MINI] Inject studentId header",
+                  "pm.request.headers.upsert({",
+                  "    key: \"X-Student-Id\",",
+                  "    value: pm.environment.get(\"studentId\")",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — GET /product/:id ─────────────────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectId       = pm.iterationData.get(\"expect_field_id\");",
+                  "const expectName     = pm.iterationData.get(\"expect_field_name\");",
+                  "const expectType     = pm.iterationData.get(\"expect_field_type\");",
+                  "const expectMsgField = pm.iterationData.get(\"expect_message_field\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "// ── Test 1: Status Code ──────────────────────────────────────────────────────",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "// ── Test 2: Happy path — kiểm tra fields product ─────────────────────────────",
+                  "if (expectedStatus === 200) {",
+                  "    pm.test(`[${tcId}] Response có đủ fields: id, type, name`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"id\");",
+                  "        pm.expect(body).to.have.property(\"type\");",
+                  "        pm.expect(body).to.have.property(\"name\");",
+                  "    });",
+                  "",
+                  "    if (expectId) {",
+                  "        pm.test(`[${tcId}] id = \"${expectId}\"`, () => {",
+                  "            pm.expect(pm.response.json().id).to.equal(String(expectId));",
+                  "        });",
+                  "    }",
+                  "    if (expectName) {",
+                  "        pm.test(`[${tcId}] name = \"${expectName}\"`, () => {",
+                  "            pm.expect(pm.response.json().name).to.equal(expectName);",
+                  "        });",
+                  "    }",
+                  "    if (expectType) {",
+                  "        pm.test(`[${tcId}] type = \"${expectType}\"`, () => {",
+                  "            pm.expect(pm.response.json().type).to.equal(expectType);",
+                  "        });",
+                  "    }",
+                  "}",
+                  "",
+                  "// ── Test 3: 404 — message field ──────────────────────────────────────────────",
+                  "if (expectMsgField && expectedStatus === 404) {",
+                  "    pm.test(`[${tcId}] 404 body có field \"${expectMsgField}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(expectMsgField);",
+                  "    });",
+                  "}",
+                  "",
+                  "// ── Test 4: 401 — error field ─────────────────────────────────────────────────",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401 body có field \"${expectErrField}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(expectErrField);",
+                  "    });",
+                  "}",
+                  "",
+                  "// [MINI] Custom assertion for Content-Type",
+                  "pm.test(\"[MINI] Response is JSON\", () => {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/product/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product",
+                "{{productId}}"
+              ]
+            },
+            "description": "Data file: get-product-by-id.data.json\nHappy Path: chạy 3 iterations (GET_BY_ID_01, 02, 03)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET — Negative",
+      "description": "Data file: get-products.data.json (rows GET_PRODUCTS_02–04) và get-product-by-id.data.json (rows GET_BY_ID_04–07).\nKiểm tra 401 Unauthorized và 404 Not Found.",
+      "item": [
+        {
+          "name": "GET /products [auth fail]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Skip nếu data file là get-product-by-id (có cột product_id)",
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid !== undefined && pid !== null && pid !== \"\") {",
+                  "    pm.execution.skipRequest();",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — GET /products (Negative) ────────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] Error body có field \"${expectErrField}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "Data file: get-products.data.json\nNegative: chạy rows GET_PRODUCTS_02, 03, 04 (3 iterations — auth fail)."
+          }
+        },
+        {
+          "name": "GET /product/:id [not found / auth fail]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid === undefined || pid === null || pid === \"\") {",
+                  "    pm.execution.skipRequest();",
+                  "} else {",
+                  "    pm.variables.set(\"productId\", String(pid));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — GET /product/:id (Negative) ─────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectMsgField = pm.iterationData.get(\"expect_message_field\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "if (expectMsgField && expectedStatus === 404) {",
+                  "    pm.test(`[${tcId}] 404 body có field \"${expectMsgField}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectMsgField);",
+                  "    });",
+                  "}",
+                  "",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401 body có field \"${expectErrField}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/product/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product",
+                "{{productId}}"
+              ]
+            },
+            "description": "Data file: get-product-by-id.data.json\nNegative: chạy rows GET_BY_ID_04, 05, 06, 07 (4 iterations — not found + auth fail)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST — Happy Path",
+      "description": "Data file: post-products.data.json (rows POST_01–02).\nKiểm tra 201 Created với resource trả về có id, type, name.",
+      "item": [
+        {
+          "name": "POST /products [create]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Pre-request — POST /products ────────────────────────────────────────────",
+                  "// Ghép body từ các cột CSV hoặc object trong JSON",
+                  "const bodyType    = pm.iterationData.get(\"body_type\");",
+                  "const bodyName    = pm.iterationData.get(\"body_name\");",
+                  "const bodyVersion = pm.iterationData.get(\"body_version\");",
+                  "",
+                  "const bodyObj = pm.iterationData.get(\"body\");",
+                  "if (bodyObj && typeof bodyObj === \"object\") {",
+                  "    pm.variables.set(\"requestBody\", JSON.stringify(bodyObj));",
+                  "} else {",
+                  "    const body = {};",
+                  "    if (bodyType)    body.type    = bodyType;",
+                  "    if (bodyName)    body.name    = bodyName;",
+                  "    if (bodyVersion) body.version = bodyVersion;",
+                  "    pm.variables.set(\"requestBody\", JSON.stringify(body));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — POST /products ───────────────────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectHasId    = pm.iterationData.get(\"expect_has_id\") === true",
+                  "                   || pm.iterationData.get(\"expect_has_id\") === \"true\";",
+                  "const expectType     = pm.iterationData.get(\"expect_field_type\");",
+                  "const expectName     = pm.iterationData.get(\"expect_field_name\");",
+                  "const expectMsg      = pm.iterationData.get(\"expect_message\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "// ── Test 1: Status Code ──────────────────────────────────────────────────────",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "// ── Test 2: 201 Created — kiểm tra resource trả về ───────────────────────────",
+                  "if (expectedStatus === 201) {",
+                  "    if (expectHasId) {",
+                  "        pm.test(`[${tcId}] 201: Response có field \"id\" (auto-generated)`, () => {",
+                  "            const body = pm.response.json();",
+                  "            pm.expect(body).to.have.property(\"id\");",
+                  "            pm.expect(body.id).to.be.a(\"string\");",
+                  "        });",
+                  "    }",
+                  "    if (expectType) {",
+                  "        pm.test(`[${tcId}] 201: type = \"${expectType}\"`, () => {",
+                  "            pm.expect(pm.response.json().type).to.equal(expectType);",
+                  "        });",
+                  "    }",
+                  "    if (expectName) {",
+                  "        pm.test(`[${tcId}] 201: name = \"${expectName}\"`, () => {",
+                  "            pm.expect(pm.response.json().name).to.equal(expectName);",
+                  "        });",
+                  "    }",
+                  "}",
+                  "",
+                  "// ── Test 3: 400 — validation error message ───────────────────────────────────",
+                  "if (expectedStatus === 400 && expectMsg) {",
+                  "    pm.test(`[${tcId}] 400: message = \"${expectMsg}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"message\");",
+                  "        pm.expect(body.message).to.equal(expectMsg);",
+                  "    });",
+                  "}",
+                  "",
+                  "// ── Test 4: 401 — error field ─────────────────────────────────────────────────",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401: body có field \"${expectErrField}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{requestBody}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "Data file: post-products.data.json\nHappy Path: chạy rows POST_01, POST_02 (2 iterations)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST — Negative",
+      "description": "Data file: post-products.data.json (rows POST_03–07).\nKiểm tra 400 Bad Request (thiếu field) và 401 Unauthorized (auth fail).",
+      "item": [
+        {
+          "name": "POST /products [missing field / auth fail]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Ghép body từ các cột CSV hoặc object trong JSON",
+                  "const bodyType    = pm.iterationData.get(\"body_type\");",
+                  "const bodyName    = pm.iterationData.get(\"body_name\");",
+                  "const bodyVersion = pm.iterationData.get(\"body_version\");",
+                  "",
+                  "const bodyObj = pm.iterationData.get(\"body\");",
+                  "if (bodyObj && typeof bodyObj === \"object\") {",
+                  "    pm.variables.set(\"requestBody\", JSON.stringify(bodyObj));",
+                  "} else {",
+                  "    const body = {};",
+                  "    if (bodyType)    body.type    = bodyType;",
+                  "    if (bodyName)    body.name    = bodyName;",
+                  "    if (bodyVersion) body.version = bodyVersion;",
+                  "    pm.variables.set(\"requestBody\", JSON.stringify(body));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — POST /products (Negative) ───────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectMsg      = pm.iterationData.get(\"expect_message\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "if (expectedStatus === 400 && expectMsg) {",
+                  "    pm.test(`[${tcId}] 400: message = \"${expectMsg.trim()}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"message\");",
+                  "        pm.expect(body.message).to.equal(expectMsg.trim());",
+                  "    });",
+                  "}",
+                  "",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401: body có field \"${expectErrField.trim()}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectErrField.trim());",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{requestBody}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "Data file: post-products.data.json\nNegative: chạy rows POST_03, 04, 05, 06, 07 (5 iterations)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "PUT — Happy Path",
+      "description": "Data file: put-product.data.json (rows PUT_01–02).\nKiểm tra 200 OK với product đã được cập nhật.",
+      "item": [
+        {
+          "name": "PUT /product/:id [update]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Map product_id vào URL variable",
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid !== undefined && pid !== null && pid !== \"\") {",
+                  "    pm.variables.set(\"productId\", String(pid));",
+                  "}",
+                  "",
+                  "// Ghép body từ các cột CSV hoặc object trong JSON",
+                  "const bodyType    = pm.iterationData.get(\"body_type\");",
+                  "const bodyName    = pm.iterationData.get(\"body_name\");",
+                  "const bodyVersion = pm.iterationData.get(\"body_version\");",
+                  "",
+                  "const bodyObj = pm.iterationData.get(\"body\");",
+                  "if (bodyObj && typeof bodyObj === \"object\") {",
+                  "    pm.variables.set(\"requestBody\", JSON.stringify(bodyObj));",
+                  "} else {",
+                  "    const body = {};",
+                  "    if (bodyType)    body.type    = bodyType;",
+                  "    if (bodyName)    body.name    = bodyName;",
+                  "    if (bodyVersion) body.version = bodyVersion;",
+                  "    pm.variables.set(\"requestBody\", JSON.stringify(body));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — PUT /product/:id ─────────────────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectFieldId  = pm.iterationData.get(\"expect_field_id\");",
+                  "const expectFieldName= pm.iterationData.get(\"expect_field_name\");",
+                  "const expectFieldVersion = pm.iterationData.get(\"expect_field_version\");",
+                  "const expectMsg      = pm.iterationData.get(\"expect_message\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "// ── Test 1: Status Code ──────────────────────────────────────────────────────",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "// ── Test 2: 200 OK — product đã cập nhật ─────────────────────────────────────",
+                  "if (expectedStatus === 200) {",
+                  "    pm.test(`[${tcId}] 200: Response có đủ fields: id, type, name`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"id\");",
+                  "        pm.expect(body).to.have.property(\"type\");",
+                  "        pm.expect(body).to.have.property(\"name\");",
+                  "    });",
+                  "",
+                  "    if (expectFieldId) {",
+                  "        pm.test(`[${tcId}] 200: id = \"${expectFieldId}\"`, () => {",
+                  "            pm.expect(pm.response.json().id).to.equal(String(expectFieldId));",
+                  "        });",
+                  "    }",
+                  "    if (expectFieldName) {",
+                  "        pm.test(`[${tcId}] 200: name = \"${expectFieldName}\" (đã update)`, () => {",
+                  "            pm.expect(pm.response.json().name).to.equal(expectFieldName);",
+                  "        });",
+                  "    }",
+                  "    if (expectFieldVersion) {",
+                  "        pm.test(`[${tcId}] 200: version = \"${expectFieldVersion}\"`, () => {",
+                  "            pm.expect(pm.response.json().version).to.equal(expectFieldVersion);",
+                  "        });",
+                  "    }",
+                  "}",
+                  "",
+                  "// ── Test 3: 404 — not found ───────────────────────────────────────────────────",
+                  "if (expectedStatus === 404 && expectMsg) {",
+                  "    pm.test(`[${tcId}] 404: message = \"${expectMsg}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"message\");",
+                  "        pm.expect(body.message).to.equal(expectMsg);",
+                  "    });",
+                  "}",
+                  "",
+                  "// ── Test 4: 401 — error field ─────────────────────────────────────────────────",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401: body có field \"${expectErrField}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{requestBody}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/product/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product",
+                "{{productId}}"
+              ]
+            },
+            "description": "Data file: put-product.data.json\nHappy Path: chạy rows PUT_01, PUT_02 (2 iterations)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "PUT — Negative",
+      "description": "Data file: put-product.data.json (rows PUT_03–06).\nKiểm tra 404 Not Found và 401 Unauthorized.",
+      "item": [
+        {
+          "name": "PUT /product/:id [not found / auth fail]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid !== undefined && pid !== null && pid !== \"\") {",
+                  "    pm.variables.set(\"productId\", String(pid));",
+                  "}",
+                  "",
+                  "const bodyType    = pm.iterationData.get(\"body_type\");",
+                  "const bodyName    = pm.iterationData.get(\"body_name\");",
+                  "const bodyVersion = pm.iterationData.get(\"body_version\");",
+                  "",
+                  "const body = {};",
+                  "if (bodyType)    body.type    = bodyType;",
+                  "if (bodyName)    body.name    = bodyName;",
+                  "if (bodyVersion) body.version = bodyVersion;",
+                  "",
+                  "pm.variables.set(\"requestBody\", JSON.stringify(body));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — PUT /product/:id (Negative) ─────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectMsg      = pm.iterationData.get(\"expect_message\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "if (expectedStatus === 404 && expectMsg) {",
+                  "    pm.test(`[${tcId}] 404: message = \"${expectMsg}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"message\");",
+                  "        pm.expect(body.message).to.equal(expectMsg);",
+                  "    });",
+                  "}",
+                  "",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401: body có field \"${expectErrField}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{requestBody}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/product/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product",
+                "{{productId}}"
+              ]
+            },
+            "description": "Data file: put-product.data.json\nNegative: chạy rows PUT_03, 04, 05, 06 (4 iterations)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE — Happy Path",
+      "description": "Data file: delete-product.data.json (row DELETE_01).\nKiểm tra 204 No Content.\n\nLƯU Ý: Chạy cuối cùng — DELETE_01 xóa id=11 (MyFlexiPay) khỏi in-memory store.\nSau khi chạy xong, restart Provider để reset về seed data nếu cần chạy lại.",
+      "item": [
+        {
+          "name": "DELETE /product/:id [remove]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid !== undefined && pid !== null && pid !== \"\") {",
+                  "    pm.variables.set(\"productId\", String(pid));",
+                  "}",
+                  "// Pre-setup: Tự động POST tạo mới sản phẩm để bài test DELETE luôn có dữ liệu thực thi",
+                  "const baseUrl = pm.variables.get(\"baseUrl\") || \"http://localhost:8080\";",
+                  "const now = new Date().toISOString();",
+                  "pm.sendRequest({",
+                  "    url: `${baseUrl}/products`,",
+                  "    method: 'POST',",
+                  "    header: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${now}` },",
+                  "    body: { mode: 'raw', raw: JSON.stringify({ type: \"gadget\", name: \"Auto Pre-setup Item\" }) }",
+                  "}, function (err, res) {});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — DELETE /product/:id ─────────────────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectEmpty    = pm.iterationData.get(\"expect_empty_body\") === true",
+                  "                   || pm.iterationData.get(\"expect_empty_body\") === \"true\";",
+                  "const expectMsg      = pm.iterationData.get(\"expect_message\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "// ── Test 1: Status Code ──────────────────────────────────────────────────────",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "// ── Test 2: 204 No Content — body rỗng ───────────────────────────────────────",
+                  "if (expectedStatus === 204 && expectEmpty) {",
+                  "    pm.test(`[${tcId}] 204: Response body rỗng (No Content)`, () => {",
+                  "        pm.expect(pm.response.text()).to.equal(\"\");",
+                  "    });",
+                  "}",
+                  "",
+                  "// ── Test 3: 404 — message field ──────────────────────────────────────────────",
+                  "if (expectedStatus === 404 && expectMsg) {",
+                  "    pm.test(`[${tcId}] 404: message = \"${expectMsg}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"message\");",
+                  "        pm.expect(body.message).to.equal(expectMsg);",
+                  "    });",
+                  "}",
+                  "",
+                  "// ── Test 4: 401 — error field ─────────────────────────────────────────────────",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401: body có field \"${expectErrField}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/product/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product",
+                "{{productId}}"
+              ]
+            },
+            "description": "Data file: delete-product.data.json\nHappy Path: chạy row DELETE_01 (1 iteration — xóa id=11)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE — Negative",
+      "description": "Data file: delete-product.data.json (rows DELETE_02–05).\nKiểm tra 404 Not Found và 401 Unauthorized.",
+      "item": [
+        {
+          "name": "DELETE /product/:id [not found / auth fail]",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const pid = pm.iterationData.get(\"product_id\");",
+                  "if (pid !== undefined && pid !== null && pid !== \"\") {",
+                  "    pm.variables.set(\"productId\", String(pid));",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// ─── Tests — DELETE /product/:id (Negative) ─────────────────────────────────",
+                  "const tcId           = pm.iterationData.get(\"tc_id\") || \"(no tc_id)\";",
+                  "const desc           = pm.iterationData.get(\"description\") || \"\";",
+                  "const expectedStatus = parseInt(pm.iterationData.get(\"expected_status\"));",
+                  "const expectMsg      = pm.iterationData.get(\"expect_message\");",
+                  "const expectErrField = pm.iterationData.get(\"expect_error_field\");",
+                  "",
+                  "pm.test(`[${tcId}] Status code = ${expectedStatus} | ${desc}`, () => {",
+                  "    pm.expect(pm.response.code).to.equal(expectedStatus);",
+                  "});",
+                  "",
+                  "if (expectedStatus === 404 && expectMsg) {",
+                  "    pm.test(`[${tcId}] 404: message = \"${expectMsg}\"`, () => {",
+                  "        const body = pm.response.json();",
+                  "        pm.expect(body).to.have.property(\"message\");",
+                  "        pm.expect(body.message).to.equal(expectMsg);",
+                  "    });",
+                  "}",
+                  "",
+                  "if (expectErrField) {",
+                  "    pm.test(`[${tcId}] 401: body có field \"${expectErrField}\"`, () => {",
+                  "        pm.expect(pm.response.json()).to.have.property(expectErrField);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{currentAuthHeader}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/product/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product",
+                "{{productId}}"
+              ]
+            },
+            "description": "Data file: delete-product.data.json\nNegative: chạy rows DELETE_02, 03, 04, 05 (4 iterations)."
+          }
+        }
+      ]
+    }
+  ]
+}

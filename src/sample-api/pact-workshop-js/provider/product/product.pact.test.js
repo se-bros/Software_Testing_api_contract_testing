@@ -5,14 +5,14 @@ const Product = require('./product');
 const { createApp } = require('../server');
 
 // Setup provider server to verify
-const server = createApp().listen("8080");
+const server = createApp().listen("8083");
 
 describe("Pact Verification", () => {
-    it("validates the expectations of ProductService", () => {
+    it("validates the expectations of eShopProductService", () => {
         const opts = {
             logLevel: "INFO",
-            providerBaseUrl: "http://127.0.0.1:8080",
-            provider: "ProductService",
+            providerBaseUrl: "http://127.0.0.1:8083",
+            provider: "eShopProductService",
             providerVersion: process.env.GIT_COMMIT || "local",
             providerVersionBranch: process.env.GIT_BRANCH || "local",
             stateHandlers: {
@@ -67,7 +67,7 @@ describe("Pact Verification", () => {
             opts.pactUrls = [
                 path.resolve(
                     process.env.PACT_FILE ||
-                    "../consumer/pacts/FrontendWebsite-ProductService.json"
+                    "../consumer/pacts/eShopConsumer-eShopProductService.json"
                 ),
             ];
         }
