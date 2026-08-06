@@ -1045,7 +1045,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 **Chú thích dựng phim**
 
-- Không quay slide `7.8.qna` và `7.9.thank_you` trong video — hai slide đó dành cho buổi trình bày trực tiếp.
+- Không quay slide `7.7.qna` và `7.8.thank_you` trong video — hai slide đó dành cho buổi trình bày trực tiếp.
 - End card 6 giây: logo nhóm + "Tiếp theo: Video 2 — Cài đặt môi trường".
 
 ## 7. Bảng thuật ngữ Việt–Anh
@@ -1146,7 +1146,7 @@ Dùng nhất quán bảng này trong cả ba video. Cột "Cách đọc lần đ
 
 Slide được thiết kế **cố tình thưa** để dành thời gian thực hành. Nếu người quay chỉ đọc lại chữ trên slide, video không thêm giá trị nào. Nguyên tắc: **slide nêu _cái gì_, lời thoại giải thích _vì sao_ và _hỏng thì ra sao_.**
 
-### Giảng sâu ở slide `3.4.pact_pipeline & 3.5.pact_verification`
+### Giảng sâu ở slide `3.4.pact_pipeline`
 
 Slide này đứng trước phần Contract Testing trong deck. Nếu giảng sâu tại đây, người xem sẽ nghe một loạt thuật ngữ chưa được định nghĩa và mất mạch. Giữ đúng vai trò "xem trước bản đồ" như kịch bản Cảnh A17.
 
@@ -1181,9 +1181,9 @@ Ba điểm phát hiện khi soạn kịch bản, gửi lại cho hai bạn phụ
 
 1. **`pages/1.intro/1.2.members.md` chỉ chứa đúng một dòng `layout: center`, không có dấu `---` bao quanh.** Vì không phải frontmatter hợp lệ, dòng này bị coi là nội dung và sẽ hiển thị thành chữ "layout: center" trên một slide trống. Danh sách thành viên hiện đã nằm sẵn trong slide bìa `1.1.cover.md`, nên nhiều khả năng đây là file thừa. Đề xuất: xóa dòng khai báo trong `slides.md` hoặc bổ sung nội dung cho slide này. Kịch bản hiện tại xử lý tạm bằng cách **bấm qua không dừng lại**.
 
-2. **Speaker note của `pages/7.summary/7.6.resources.md & 7.7.official_docs.md` ghi repository là `github.com/Anhnguyenk835/Software_Testing_api_contract_testing`**, trong khi kịch bản Video 2 và remote thực tế của repo là `github.com/se-bros/Software_Testing_api_contract_testing`. Cần thống nhất một địa chỉ. Kịch bản này dùng bản `se-bros`.
+2. **Speaker note của `pages/7.summary/7.6.resources.md` ghi repository là `github.com/Anhnguyenk835/Software_Testing_api_contract_testing`**, trong khi kịch bản Video 2 và remote thực tế của repo là `github.com/se-bros/Software_Testing_api_contract_testing`. Cần thống nhất một địa chỉ. Kịch bản này dùng bản `se-bros`.
 
-3. **Agenda ở `1.2.agenda.md` có 10 mục nhưng deck lại chia thành 6 phần A–F.** Hai cách đánh số này không ánh xạ một-một, nên nếu người xem đối chiếu sẽ hơi rối. Không phải lỗi, nhưng nếu còn thời gian thì nên gộp agenda về đúng 6 phần cho khớp với các slide phân đoạn.
+3. **Agenda ở `1.3.agenda.md` có 10 mục nhưng deck lại chia thành 6 phần A–F.** Hai cách đánh số này không ánh xạ một-một, nên nếu người xem đối chiếu sẽ hơi rối. Không phải lỗi, nhưng nếu còn thời gian thì nên gộp agenda về đúng 6 phần cho khớp với các slide phân đoạn.
 
 ## 11. Tài liệu tham khảo
 

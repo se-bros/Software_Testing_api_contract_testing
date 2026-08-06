@@ -1,0 +1,46 @@
+[
+  {
+    "tc_id": "GET_BY_ID_01",
+    "description": "Happy path — id=09 (Gem Visa) tồn tại",
+    "product_id": "09",
+    "auth_header": "{{validToken}}",
+    "expected_status": 200,
+    "expect_field_id": "09",
+    "expect_field_type": "CREDIT_CARD",
+    "expect_field_name": "Gem Visa"
+  },
+  {
+    "tc_id": "GET_BY_ID_02",
+    "description": "Happy path — id=10 (28 Degrees) tồn tại",
+    "product_id": "10",
+    "auth_header": "{{validToken}}",
+    "expected_status": 200,
+    "expect_field_id": "10",
+    "expect_field_type": "CREDIT_CARD",
+    "expect_field_name": "28 Degrees"
+  },
+  {
+    "tc_id": "GET_BY_ID_03",
+    "description": "Not found — id=99 không tồn tại",
+    "product_id": "99",
+    "auth_header": "{{validToken}}",
+    "expected_status": 404,
+    "expect_message_field": "message"
+  },
+  {
+    "tc_id": "GET_BY_ID_04",
+    "description": "Not found — id=abc (chuỗi không phải số)",
+    "product_id": "abc",
+    "auth_header": "{{validToken}}",
+    "expected_status": 404,
+    "expect_message_field": "message"
+  },
+  {
+    "tc_id": "GET_BY_ID_05",
+    "description": "Auth fail — Bearer timestamp đã hết hạn",
+    "product_id": "10",
+    "auth_header": "Bearer 2020-06-01T10:00:00.000Z",
+    "expected_status": 401,
+    "expect_error_field": "error"
+  }
+]

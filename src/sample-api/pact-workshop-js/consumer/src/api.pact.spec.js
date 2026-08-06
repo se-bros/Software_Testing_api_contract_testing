@@ -37,8 +37,8 @@ const productMatcher = {
 };
 
 const provider = new PactV3({
-  consumer: "FrontendWebsite",
-  provider: "ProductService",
+  consumer: "eShopConsumer",
+  provider: "eShopProductService",
   log: path.resolve(process.cwd(), "logs", "pact.log"),
   logLevel: "warn",
   dir: path.resolve(process.cwd(), "pacts"),
