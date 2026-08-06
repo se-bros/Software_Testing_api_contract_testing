@@ -12,11 +12,10 @@ Bộ slide có 35 slide nội dung. Nếu giảng đủ độ chi tiết mà m�
 
 Kịch bản này vì vậy chia thành hai video quay độc lập, **bám đúng thứ tự slide trong deck** để người quay chỉ cần bấm phím mũi tên, không phải nhảy slide:
 
-| Video    | Slide trong deck | Nội dung                                                | Thời lượng |
-| -------- | ---------------- | ------------------------------------------------------- | ---------- |
-| **1A**   | 1 → 19           | Nền tảng API Testing, bộ công cụ, Automation & CI/CD     | ~21 phút   |
-| **1B**   | 20 → 44          | Contract Testing, cơ chế Pact, AI hỗ trợ, Tổng kết       | ~27 phút   |
-
+| Video  | Slide trong deck | Nội dung                                             | Thời lượng |
+| ------ | ---------------- | ---------------------------------------------------- | ---------- |
+| **1A** | 1 → 19           | Nền tảng API Testing, bộ công cụ, Automation & CI/CD | ~21 phút   |
+| **1B** | 20 → 44          | Contract Testing, cơ chế Pact, AI hỗ trợ, Tổng kết   | ~27 phút   |
 
 ## Mục lục
 
@@ -55,16 +54,16 @@ Sau khi xem hết Video 1A và 1B, người học có thể:
 
 Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang ở đâu:
 
-| Video   | Tên                       | Trả lời câu hỏi                          | Hình thức                       |
-| ------- | ------------------------- | ---------------------------------------- | ------------------------------- |
-| **1**   | Lý thuyết & Thuật ngữ     | *Cái gì? Vì sao? Khác nhau chỗ nào?*     | Giảng trên slide                |
-| **2**   | Hướng dẫn cài đặt môi trường | *Máy tôi cần có gì để làm được?*      | Quay màn hình thao tác cài đặt  |
-| **3**   | Demo thực hành tổng hợp   | *Chạy thật thì trông như thế nào?*       | Quay màn hình chạy test thật    |
+| Video | Tên                          | Trả lời câu hỏi                      | Hình thức                      |
+| ----- | ---------------------------- | ------------------------------------ | ------------------------------ |
+| **1** | Lý thuyết & Thuật ngữ        | _Cái gì? Vì sao? Khác nhau chỗ nào?_ | Giảng trên slide               |
+| **2** | Hướng dẫn cài đặt môi trường | _Máy tôi cần có gì để làm được?_     | Quay màn hình thao tác cài đặt |
+| **3** | Demo thực hành tổng hợp      | _Chạy thật thì trông như thế nào?_   | Quay màn hình chạy test thật   |
 
 **Nguyên tắc chống trùng lặp khi quay:**
 
 - Video 1 **được phép** hiện code/JSON trên slide để giải thích khái niệm, nhưng **không mở IDE, không chạy lệnh**.
-- Mọi câu kiểu "bây giờ mình chạy thử" đều thuộc Video 3. Trong Video 1 dùng công thức: *"phần chạy thật các bạn sẽ thấy ở Video 3"*.
+- Mọi câu kiểu "bây giờ mình chạy thử" đều thuộc Video 3. Trong Video 1 dùng công thức: _"phần chạy thật các bạn sẽ thấy ở Video 3"_.
 - Không lặp lại hướng dẫn cài đặt. Nếu nhắc tới công cụ, chỉ nói vai trò, rồi trỏ sang Video 2.
 
 ## 3. Chuẩn bị trước khi quay
@@ -93,59 +92,59 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Video 1A — Nền tảng API Testing & Automation (~21 phút)
 
-|   Thời gian | Cảnh                                 | Slide                                   |
-| ----------: | ------------------------------------ | --------------------------------------- |
-| 00:00–00:50 | A1 · Mở đầu, giới thiệu nhóm         | `1.1.cover`                             |
-| 00:50–01:55 | A2 · Agenda & phân vai ba video      | `1.2.agenda`                            |
-| 01:55–03:15 | A3 · Bối cảnh microservices & mục tiêu | `1.3.intro_section`                   |
-| 03:15–03:30 | A4 · Chuyển phần A                   | `2.1.section`                           |
-| 03:30–06:50 | A5 · API, REST, method, status code  | `2.2.api_basics`                        |
-| 06:50–08:45 | A6 · Authentication & Authorization  | `2.3.authentication`                    |
-| 08:45–11:45 | A7 · Sáu loại test case              | `2.4.test_design`                       |
-| 11:45–13:25 | A8 · Postman — khái niệm cốt lõi     | `2.5.postman_overview`                  |
-| 13:25–14:35 | A9 · Tổ chức Collection              | `2.6.postman_collections`               |
-| 14:35–15:50 | A10 · Script & Assertion             | `2.7.postman_scripts`                   |
-| 15:50–17:05 | A11 · Data-driven testing            | `2.8.postman_datadriven`                |
-| 17:05–17:55 | A12 · VS Code REST Client            | `2.9.vscode_restclient`                 |
-| 17:55–19:05 | A13 · API mẫu Product Service        | `2.10.product_service`                  |
-| 19:05–19:20 | A14 · Chuyển phần B                  | `3.1.section`                           |
-| 19:20–20:35 | A15 · Newman                         | `3.2.newman`                            |
-| 20:35–21:25 | A16 · Newman pipeline                | `3.3.cicd_pipeline`                     |
-| 21:25–22:05 | A17 · Pact pipeline (bản đồ trước)   | `3.4.pact_pipeline & 3.5.pact_verification`                     |
-| 22:05–22:55 | A18 · Hai lớp bảo vệ & chốt 1A       | `3.6.automation_value`                  |
+|   Thời gian | Cảnh                                   | Slide                                                             |
+| ----------: | -------------------------------------- | ----------------------------------------------------------------- |
+| 00:00–00:50 | A1 · Mở đầu, giới thiệu nhóm           | `1.1.cover` (Slide 1)                                             |
+| 00:50–01:55 | A2 · Agenda & phân vai ba video        | `1.2.agenda` (Slide 2)                                            |
+| 01:55–03:15 | A3 · Bối cảnh microservices & mục tiêu | `1.3.intro_section` (Slide 3)                                     |
+| 03:15–03:30 | A4 · Chuyển phần A                     | `2.1.section` (Slide 4)                                           |
+| 03:30–06:50 | A5 · API, REST, method, status code    | `2.2.api_basics & 2.3.http_status_codes` (Slide 5–6)              |
+| 06:50–08:45 | A6 · Authentication & Authorization    | `2.4.authentication & 2.5.auth_mechanisms` (Slide 7–8)            |
+| 08:45–11:45 | A7 · Sáu loại test case                | `2.6.test_design & 2.7.advanced_test_design` (Slide 9–10)         |
+| 11:45–13:25 | A8 · Postman — khái niệm cốt lõi       | `2.8.postman_overview & 2.9.postman_advanced` (Slide 11–12)       |
+| 13:25–14:35 | A9 · Tổ chức Collection                | `2.10.postman_collections` (Slide 13)                             |
+| 14:35–15:50 | A10 · Script & Assertion               | `2.11.postman_scripts` (Slide 14)                                 |
+| 15:50–17:05 | A11 · Data-driven testing              | `2.12.postman_datadriven` (Slide 15)                              |
+| 17:05–17:55 | A12 · VS Code REST Client              | `2.13.vscode_restclient` (Slide 16)                               |
+| 17:55–19:05 | A13 · API mẫu Product Service          | `2.14.product_service & 2.15.product_endpoints` (Slide 17–18)     |
+| 19:05–19:20 | A14 · Chuyển phần B                    | `3.1.section` (Slide 19)                                          |
+| 19:20–20:35 | A15 · Newman                           | `3.2.newman` (Slide 20)                                           |
+| 20:35–21:25 | A16 · Newman pipeline                  | `3.3.cicd_pipeline` (Slide 21)                                    |
+| 21:25–22:05 | A17 · Pact pipeline (bản đồ trước)     | `3.4.pact_pipeline & 3.5.pact_verification` (Slide 22–23)         |
+| 22:05–22:55 | A18 · Hai lớp bảo vệ & chốt 1A         | `3.6.automation_value` (Slide 24)                                 |
 
 ### Video 1B — Contract Testing, Pact & Tổng kết (~27 phút)
 
-|   Thời gian | Cảnh                                   | Slide                                  |
-| ----------: | -------------------------------------- | -------------------------------------- |
-| 00:00–00:35 | B1 · Nối tiếp & chuyển phần C          | `4.1.section`                          |
-| 00:35–02:55 | B2 · Vấn đề: mỗi service xanh, hệ thống đỏ | `4.2.the_problem`                  |
-| 02:55–05:25 | B3 · Contract Testing là gì            | `4.3.definition`                       |
-| 05:25–07:25 | B4 · So sánh bốn lớp kiểm thử          | `4.4.comparison`                       |
-| 07:25–08:55 | B5 · Kiến trúc Consumer–Provider–Broker | `4.5.architecture`                    |
-| 08:55–10:25 | B6 · Vì sao consumer-driven            | `4.6.why_consumer_driven`              |
-| 10:25–11:55 | B7 · Giới hạn của Contract Testing     | `4.7.limitations`                      |
-| 11:55–12:10 | B8 · Chuyển phần D                     | `5.1.section`                          |
-| 12:10–14:00 | B9 · Consumer tạo contract             | `5.2.consumer_side`                    |
-| 14:00–16:00 | B10 · Giải phẫu pact.json & matcher    | `5.3.contract_anatomy`                 |
-| 16:00–17:50 | B11 · Provider xác minh contract       | `5.4.provider_side`                    |
-| 17:50–19:20 | B12 · Broker & deployment gate         | `5.5.broker_cicd`                      |
-| 19:20–20:10 | B13 · Case study Product Service       | `5.6.case_study & 5.7.case_study_results`                       |
-| 20:10–21:30 | B14 · Breaking change — bài học        | `5.8.breaking_change`                  |
-| 21:30–21:45 | B15 · Chuyển phần E                    | `6.1.section`                          |
-| 21:45–23:15 | B16 · AI trong quy trình testing       | `6.2.ai_in_testing & 6.3.ai_principles`                    |
-| 23:15–24:30 | B17 · Agent Skill                      | `6.4.agent_skill`                      |
-| 24:30–24:45 | B18 · Chuyển phần F                    | `7.1.section`                          |
-| 24:45–25:55 | B19 · API Testing vs Contract Testing  | `7.2.comparison_summary`               |
-| 25:55–26:55 | B20 · Khi nào dùng gì                  | `7.3.when_to_use`                      |
-| 26:55–27:50 | B21 · Adoption path                    | `7.4.adoption_path`                    |
-| 27:50–28:50 | B22 · Ba từ khóa & kết                 | `7.5.takeaways`, `7.6.resources & 7.7.official_docs`       |
+|   Thời gian | Cảnh                                       | Slide                                                                |
+| ----------: | ------------------------------------------ | -------------------------------------------------------------------- |
+| 00:00–00:35 | B1 · Nối tiếp & chuyển phần C              | `4.1.section` (Slide 25)                                             |
+| 00:35–02:55 | B2 · Vấn đề: mỗi service xanh, hệ thống đỏ | `4.2.the_problem` (Slide 26)                                         |
+| 02:55–05:25 | B3 · Contract Testing là gì                | `4.3.definition` (Slide 27)                                          |
+| 05:25–07:25 | B4 · So sánh bốn lớp kiểm thử              | `4.4.comparison` (Slide 28)                                          |
+| 07:25–08:55 | B5 · Kiến trúc Consumer–Provider–Broker    | `4.5.architecture` (Slide 29)                                        |
+| 08:55–10:25 | B6 · Vì sao consumer-driven                | `4.6.why_consumer_driven` (Slide 30)                                 |
+| 10:25–11:55 | B7 · Giới hạn của Contract Testing         | `4.7.limitations` (Slide 31)                                         |
+| 11:55–12:10 | B8 · Chuyển phần D                         | `5.1.section` (Slide 32)                                             |
+| 12:10–14:00 | B9 · Consumer tạo contract                 | `5.2.consumer_side` (Slide 33)                                       |
+| 14:00–16:00 | B10 · Giải phẫu pact.json & matcher        | `5.3.contract_anatomy` (Slide 34)                                    |
+| 16:00–17:50 | B11 · Provider xác minh contract           | `5.4.provider_side` (Slide 35)                                       |
+| 17:50–19:20 | B12 · Broker & deployment gate             | `5.5.broker_cicd` (Slide 36)                                         |
+| 19:20–20:10 | B13 · Case study Product Service           | `5.6.case_study & 5.7.case_study_results` (Slide 37–38)              |
+| 20:10–21:30 | B14 · Breaking change — bài học            | `5.8.breaking_change` (Slide 39)                                     |
+| 21:30–21:45 | B15 · Chuyển phần E                        | `6.1.section` (Slide 40)                                             |
+| 21:45–23:15 | B16 · AI trong quy trình testing           | `6.2.ai_in_testing & 6.3.ai_principles` (Slide 41–42)                |
+| 23:15–24:30 | B17 · Agent Skill                          | `6.4.agent_skill` (Slide 43)                                         |
+| 24:30–24:45 | B18 · Chuyển phần F                        | `7.1.section` (Slide 44)                                             |
+| 24:45–25:55 | B19 · API Testing vs Contract Testing      | `7.2.comparison_summary` (Slide 45)                                  |
+| 25:55–26:55 | B20 · Khi nào dùng gì                      | `7.3.when_to_use` (Slide 46)                                         |
+| 26:55–27:50 | B21 · Adoption path                        | `7.4.adoption_path` (Slide 47)                                       |
+| 27:50–28:50 | B22 · Ba từ khóa & kết                     | `7.5.takeaways`, `7.6.resources & 7.7.official_docs` (Slide 48–50)   |
 
 ## 5. Kịch bản chi tiết — Video 1A
 
 ### Cảnh A1 — Mở đầu (00:00–00:50)
 
-**Slide:** `pages/1.intro/1.1.cover.md`
+**Slide:** `pages/1.intro/1.1.cover.md` (Slide 1)
 
 **Hình ảnh trên màn hình**
 
@@ -168,7 +167,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A2 — Agenda và phân vai ba video (00:50–01:55)
 
-**Slide:** `pages/1.intro/1.2.agenda.md` (bấm qua slide `1.2` không dừng lại)
+**Slide:** `pages/1.intro/1.2.agenda.md` (Slide 2) (bấm qua slide `1.2` không dừng lại)
 
 **Hình ảnh trên màn hình**
 
@@ -180,7 +179,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Khối thứ nhất, từ mục 2 đến mục 5, là **API Testing**: kiểm thử ở tầng giao diện lập trình — một endpoint có trả về đúng thứ nó hứa hay không. Khối thứ hai, mục 6 đến mục 8, là **Contract Testing**: một câu hỏi hoàn toàn khác — hai service có còn hiểu nhau hay không. Khối thứ ba, mục 9 và 10, là AI hỗ trợ kiểm thử và tổng kết.
 >
-> Về cách phân chia video: **Video 1**, tức video này, trả lời câu hỏi *cái gì và vì sao*. **Video 2** hướng dẫn cài đặt môi trường — *máy tôi cần có gì*. **Video 3** là demo thực hành — *chạy thật thì trông như thế nào*.
+> Về cách phân chia video: **Video 1**, tức video này, trả lời câu hỏi _cái gì và vì sao_. **Video 2** hướng dẫn cài đặt môi trường — _máy tôi cần có gì_. **Video 3** là demo thực hành — _chạy thật thì trông như thế nào_.
 >
 > Cho nên trong video này, khi mình chiếu một đoạn JSON hay một đoạn script lên slide, đó là để **giải thích cấu trúc**, không phải để chạy. Các bạn chưa cần mở máy theo. Cứ xem hết rồi hãy làm theo Video 2.
 
@@ -192,7 +191,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A3 — Bối cảnh và mục tiêu seminar (01:55–03:15)
 
-**Slide:** `pages/1.intro/1.3.intro_section.md`
+**Slide:** `pages/1.intro/1.3.intro_section.md` (Slide 3)
 
 **Hình ảnh trên màn hình**
 
@@ -202,21 +201,21 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 > Trước khi vào kỹ thuật, cần hiểu vì sao hai loại kiểm thử này trở nên quan trọng đúng lúc này.
 >
-> *(bấm click 1)* Phần mềm ngày nay hiếm khi còn là một khối duy nhất. Hệ thống được chia thành nhiều **microservices** — tức là nhiều service nhỏ, chạy độc lập, mỗi service do một đội khác nhau phát triển và triển khai theo nhịp riêng, và chúng nói chuyện với nhau qua API.
+> _(bấm click 1)_ Phần mềm ngày nay hiếm khi còn là một khối duy nhất. Hệ thống được chia thành nhiều **microservices** — tức là nhiều service nhỏ, chạy độc lập, mỗi service do một đội khác nhau phát triển và triển khai theo nhịp riêng, và chúng nói chuyện với nhau qua API.
 >
-> *(bấm click 2)* Kiến trúc này đem lại tốc độ, nhưng đổi lại nó tạo ra rất nhiều **ranh giới**. Mỗi ranh giới là một chỗ có thể gãy. Và điều quan trọng là: lỗi ở ranh giới thường **không** nằm bên trong service nào cả — nên không có unit test nào bắt được nó.
+> _(bấm click 2)_ Kiến trúc này đem lại tốc độ, nhưng đổi lại nó tạo ra rất nhiều **ranh giới**. Mỗi ranh giới là một chỗ có thể gãy. Và điều quan trọng là: lỗi ở ranh giới thường **không** nằm bên trong service nào cả — nên không có unit test nào bắt được nó.
 >
-> *(bấm click 3)* Khi số service và số lần deploy tăng lên, kiểm thử thủ công không còn theo kịp. Ta cần **automation** — test tự chạy — và **CI/CD**, tức là tự động tích hợp mã và tự động triển khai mỗi khi có thay đổi.
+> _(bấm click 3)_ Khi số service và số lần deploy tăng lên, kiểm thử thủ công không còn theo kịp. Ta cần **automation** — test tự chạy — và **CI/CD**, tức là tự động tích hợp mã và tự động triển khai mỗi khi có thay đổi.
 >
-> *(bấm sang cột phải)* Từ bối cảnh đó, seminar đặt bốn mục tiêu. Một, hiểu và thực hành **API Testing**, tức kiểm thử chức năng ở tầng API. Hai, hiểu và thực hành **Contract Testing**, kiểm tra tính tương thích giữa bên gọi và bên cung cấp. Ba, tự động hóa cả hai bằng Newman và GitHub Actions. Và bốn, trải nghiệm quy trình **AI-assisted testing** — dùng AI như một trợ lý có kiểm soát trong quy trình kiểm thử.
+> _(bấm sang cột phải)_ Từ bối cảnh đó, seminar đặt bốn mục tiêu. Một, hiểu và thực hành **API Testing**, tức kiểm thử chức năng ở tầng API. Hai, hiểu và thực hành **Contract Testing**, kiểm tra tính tương thích giữa bên gọi và bên cung cấp. Ba, tự động hóa cả hai bằng Newman và GitHub Actions. Và bốn, trải nghiệm quy trình **AI-assisted testing** — dùng AI như một trợ lý có kiểm soát trong quy trình kiểm thử.
 >
-> *(bấm hộp phạm vi)* Toàn bộ seminar xoay quanh một API mẫu duy nhất: **Product Service**, viết bằng Node.js và Express, có năm endpoint CRUD. Dùng một hệ thống nhỏ và xuyên suốt giúp các bạn tập trung vào **kỹ thuật kiểm thử**, thay vì mất thời gian làm quen nghiệp vụ mới ở mỗi phần.
+> _(bấm hộp phạm vi)_ Toàn bộ seminar xoay quanh một API mẫu duy nhất: **Product Service**, viết bằng Node.js và Express, có năm endpoint CRUD. Dùng một hệ thống nhỏ và xuyên suốt giúp các bạn tập trung vào **kỹ thuật kiểm thử**, thay vì mất thời gian làm quen nghiệp vụ mới ở mỗi phần.
 
 ---
 
 ### Cảnh A4 — Chuyển phần A (03:15–03:30)
 
-**Slide:** `pages/2.api_testing/2.1.section.md`
+**Slide:** `pages/2.api_testing/2.1.section.md` (Slide 4)
 
 **Lời thoại**
 
@@ -226,7 +225,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A5 — API, REST, method và status code (03:30–06:50)
 
-**Slide:** `pages/2.api_testing/2.2.api_basics.md`
+**Slide:** `pages/2.api_testing/2.2.api_basics.md` & `pages/2.api_testing/2.3.http_status_codes.md` (Slide 5 & 6)
 
 **Hình ảnh trên màn hình**
 
@@ -240,21 +239,21 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Hãy nhìn hộp giữa slide, vì đây là thứ các bạn sẽ làm việc cùng suốt seminar. Một lần trao đổi luôn gồm hai nửa.
 >
-> Nửa đi ra là **Request**, có bốn thành phần. **Method** — động từ, cho biết ta muốn làm gì. **URL** — địa chỉ tài nguyên, trong đó thường có *path parameter*, ví dụ số 10 trong `/product/10`, và có thể có *query string* đứng sau dấu hỏi để lọc hoặc phân trang. **Headers** — phần siêu dữ liệu, ví dụ `Content-Type` mô tả định dạng dữ liệu, hay `Authorization` mang thông tin xác thực. Và **Body** — phần dữ liệu gửi kèm, thường ở định dạng JSON, chỉ có ở những method tạo hoặc sửa dữ liệu.
+> Nửa đi ra là **Request**, có bốn thành phần. **Method** — động từ, cho biết ta muốn làm gì. **URL** — địa chỉ tài nguyên, trong đó thường có _path parameter_, ví dụ số 10 trong `/product/10`, và có thể có _query string_ đứng sau dấu hỏi để lọc hoặc phân trang. **Headers** — phần siêu dữ liệu, ví dụ `Content-Type` mô tả định dạng dữ liệu, hay `Authorization` mang thông tin xác thực. Và **Body** — phần dữ liệu gửi kèm, thường ở định dạng JSON, chỉ có ở những method tạo hoặc sửa dữ liệu.
 >
 > Nửa đi về là **Response**, có ba thành phần: **Status Code** — mã số ba chữ số cho biết kết quả, **Headers**, và **Body** — dữ liệu trả về.
 >
 > Và đây là điểm mấu chốt: **kiểm thử API chính là kiểm tra ánh xạ giữa hai nửa này.** Với một request cụ thể, response có đúng như đặc tả hay không — đúng status code, đúng cấu trúc, đúng giá trị.
 >
-> *(chuyển sang bảng trái)* Bốn method chính. **GET** để đọc dữ liệu — GET không được phép làm thay đổi dữ liệu trên server; nếu một endpoint GET mà lại xóa mất thứ gì đó thì đó là lỗi thiết kế. **POST** để tạo mới. **PUT** để cập nhật toàn bộ tài nguyên — tức là thay thế cả bản ghi, chứ không phải sửa vài trường. **DELETE** để xóa.
+> _(chuyển sang bảng trái)_ Bốn method chính. **GET** để đọc dữ liệu — GET không được phép làm thay đổi dữ liệu trên server; nếu một endpoint GET mà lại xóa mất thứ gì đó thì đó là lỗi thiết kế. **POST** để tạo mới. **PUT** để cập nhật toàn bộ tài nguyên — tức là thay thế cả bản ghi, chứ không phải sửa vài trường. **DELETE** để xóa.
 >
 > Có một tính chất đáng nhớ ở đây là **idempotent** — tính bất biến khi lặp lại. GET, PUT và DELETE là idempotent: gọi một lần hay gọi mười lần thì trạng thái cuối của hệ thống như nhau. POST thì không: gọi POST ba lần sẽ tạo ra ba bản ghi. Điều này quan trọng khi ta viết test có chạy lặp, hoặc khi CI chạy lại một job bị lỗi.
 >
-> *(chuyển sang bảng phải)* Status code chia theo nhóm trăm. Nhóm **2xx** là thành công: `200 OK` cho một request thành công thông thường; `201 Created` khi vừa tạo mới một tài nguyên; `204 No Content` khi thành công nhưng không có gì để trả về — điển hình là sau khi xóa.
+> _(chuyển sang bảng phải)_ Status code chia theo nhóm trăm. Nhóm **2xx** là thành công: `200 OK` cho một request thành công thông thường; `201 Created` khi vừa tạo mới một tài nguyên; `204 No Content` khi thành công nhưng không có gì để trả về — điển hình là sau khi xóa.
 >
 > Nhóm **4xx** là **lỗi từ phía người gọi**. `400 Bad Request` — dữ liệu gửi lên không hợp lệ, ví dụ thiếu trường bắt buộc. `401 Unauthorized` — thiếu hoặc sai thông tin xác thực. `404 Not Found` — tài nguyên không tồn tại.
 >
-> Và nhóm **5xx**, tuy không có trên slide nhưng các bạn sẽ gặp, là **lỗi từ phía server**. Nguyên tắc phân biệt rất đáng nhớ: 4xx nghĩa là *"bạn gửi sai"*, 5xx nghĩa là *"tôi hỏng"*.
+> Và nhóm **5xx**, tuy không có trên slide nhưng các bạn sẽ gặp, là **lỗi từ phía server**. Nguyên tắc phân biệt rất đáng nhớ: 4xx nghĩa là _"bạn gửi sai"_, 5xx nghĩa là _"tôi hỏng"_.
 >
 > Vì sao phải thuộc mấy con số này? Vì phần lớn assertion trong bộ test của chúng ta bắt đầu bằng việc kiểm tra status code. Và vì một lỗi rất hay gặp trong thực tế là API trả về `200` cho cả trường hợp thất bại — khi đó test dựa vào status code sẽ báo xanh trong khi hệ thống thực sự đang sai.
 
@@ -267,7 +266,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A6 — Authentication và Authorization (06:50–08:45)
 
-**Slide:** `pages/2.api_testing/2.4.authentication.md & 2.5.auth_mechanisms.md`
+**Slide:** `pages/2.api_testing/2.4.authentication.md` & `pages/2.api_testing/2.5.auth_mechanisms.md` (Slide 7 & 8)
 
 **Hình ảnh trên màn hình**
 
@@ -277,17 +276,17 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 > Hầu hết API thực tế đều yêu cầu xác thực, nên đây là nhóm test case không bao giờ được bỏ qua.
 >
-> Trước hết, phân biệt hai từ rất dễ nhầm. **Authentication** — xác thực — trả lời câu hỏi *"bạn là ai?"*. **Authorization** — phân quyền — trả lời câu hỏi *"bạn được phép làm gì?"*. Tương ứng với hai mã lỗi khác nhau: thất bại ở xác thực trả về `401 Unauthorized`; xác thực thành công nhưng không đủ quyền thì trả về `403 Forbidden`. Tên của mã `401` gây hiểu nhầm vì nó có chữ "Unauthorized", nhưng thực chất nó nói về authentication.
+> Trước hết, phân biệt hai từ rất dễ nhầm. **Authentication** — xác thực — trả lời câu hỏi _"bạn là ai?"_. **Authorization** — phân quyền — trả lời câu hỏi _"bạn được phép làm gì?"_. Tương ứng với hai mã lỗi khác nhau: thất bại ở xác thực trả về `401 Unauthorized`; xác thực thành công nhưng không đủ quyền thì trả về `403 Forbidden`. Tên của mã `401` gây hiểu nhầm vì nó có chữ "Unauthorized", nhưng thực chất nó nói về authentication.
 >
-> *(cột trái)* Có những API **không yêu cầu xác thực** — ai gọi cũng được. Ví dụ API thời tiết công khai, hoặc endpoint `/health` dùng để kiểm tra service còn sống hay không.
+> _(cột trái)_ Có những API **không yêu cầu xác thực** — ai gọi cũng được. Ví dụ API thời tiết công khai, hoặc endpoint `/health` dùng để kiểm tra service còn sống hay không.
 >
-> *(cột phải)* Còn API có xác thực thì phổ biến nhất là kiểu **token-based**. Người gọi đính kèm một header có dạng `Authorization: Bearer` rồi tới chuỗi token. Từ "Bearer" nghĩa là *"người cầm"* — ai cầm token này thì được coi là chủ sở hữu, giống như vé xem phim. Đó cũng là lý do token phải được bảo vệ như mật khẩu.
+> _(cột phải)_ Còn API có xác thực thì phổ biến nhất là kiểu **token-based**. Người gọi đính kèm một header có dạng `Authorization: Bearer` rồi tới chuỗi token. Từ "Bearer" nghĩa là _"người cầm"_ — ai cầm token này thì được coi là chủ sở hữu, giống như vé xem phim. Đó cũng là lý do token phải được bảo vệ như mật khẩu.
 >
 > Token có nhiều dạng. **JWT** — JSON Web Token — là chuỗi ba phần ngăn cách bằng dấu chấm, tự mang thông tin và có chữ ký. **OAuth2** là một khung ủy quyền hoàn chỉnh. Ngoài ra hệ thống có thể tự định nghĩa dạng token riêng.
 >
 > Và khi kiểm thử, có ba tình huống hỏng cần test riêng, chứ không gộp làm một: **thiếu token** — không gửi header; **sai token** — sai định dạng; và **token hết hạn** — đúng định dạng nhưng quá thời hạn. Cả ba đều phải trả `401`.
 >
-> *(hộp ví dụ)* Trong Product Service của nhóm, token được cố ý thiết kế đơn giản để dễ dạy: nó là một **mốc thời gian theo chuẩn ISO-8601**, ví dụ `Bearer 2026-07-15T10:00:00.000Z`. Quy tắc là mốc thời gian này phải nằm trong vòng **một giờ** so với giờ server. Sai định dạng, hoặc lệch quá một giờ, đều trả về `401`.
+> _(hộp ví dụ)_ Trong Product Service của nhóm, token được cố ý thiết kế đơn giản để dễ dạy: nó là một **mốc thời gian theo chuẩn ISO-8601**, ví dụ `Bearer 2026-07-15T10:00:00.000Z`. Quy tắc là mốc thời gian này phải nằm trong vòng **một giờ** so với giờ server. Sai định dạng, hoặc lệch quá một giờ, đều trả về `401`.
 >
 > Thiết kế này có một hệ quả rất tiện: token **có thể sinh ra bằng vài dòng code ngay lúc chạy test**, không cần đăng nhập, không cần lưu mật khẩu trong repo. Đó là lý do pipeline CI của nhóm chạy được mà không cần khai báo secret nào. Đồng thời nó cho ta một test case biên rất đẹp: một token đúng **tròn một giờ** trước — vừa chạm mốc hết hạn.
 
@@ -295,7 +294,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A7 — Sáu loại test case cho API (08:45–11:45)
 
-**Slide:** `pages/2.api_testing/2.6.test_design.md & 2.7.advanced_test_design.md`
+**Slide:** `pages/2.api_testing/2.6.test_design.md` & `pages/2.api_testing/2.7.advanced_test_design.md` (Slide 9 & 10)
 
 **Hình ảnh trên màn hình**
 
@@ -303,21 +302,21 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 **Lời thoại**
 
-> Đây là slide bản lề của Phần A. Câu hỏi thực tế mà mọi người mới đều gặp là: *đứng trước một endpoint, tôi phải viết những test nào?* Slide này đưa ra một danh sách sáu nhóm để không bỏ sót.
+> Đây là slide bản lề của Phần A. Câu hỏi thực tế mà mọi người mới đều gặp là: _đứng trước một endpoint, tôi phải viết những test nào?_ Slide này đưa ra một danh sách sáu nhóm để không bỏ sót.
 >
-> *(dòng 1)* **Happy Path** — luồng thuận. Request hợp lệ hoàn toàn, và response phải đúng như đặc tả. Ví dụ: `GET /product/10` kèm token hợp lệ, kỳ vọng `200`. Đây là nhóm ai cũng viết, nhưng nếu **chỉ** có nhóm này thì bộ test gần như vô dụng, vì phần lớn lỗi thật nằm ở các luồng còn lại.
+> _(dòng 1)_ **Happy Path** — luồng thuận. Request hợp lệ hoàn toàn, và response phải đúng như đặc tả. Ví dụ: `GET /product/10` kèm token hợp lệ, kỳ vọng `200`. Đây là nhóm ai cũng viết, nhưng nếu **chỉ** có nhóm này thì bộ test gần như vô dụng, vì phần lớn lỗi thật nằm ở các luồng còn lại.
 >
-> *(dòng 2)* **Negative** — luồng nghịch. Input sai, và ta kiểm tra hệ thống **xử lý lỗi đúng cách**. Ví dụ `GET /product/99999` với một id không tồn tại, kỳ vọng `404`. Xin nhấn mạnh: negative test **không phải** là test bị fail. Nó là test kỳ vọng một lỗi cụ thể, và nó pass khi hệ thống trả về đúng lỗi đó.
+> _(dòng 2)_ **Negative** — luồng nghịch. Input sai, và ta kiểm tra hệ thống **xử lý lỗi đúng cách**. Ví dụ `GET /product/99999` với một id không tồn tại, kỳ vọng `404`. Xin nhấn mạnh: negative test **không phải** là test bị fail. Nó là test kỳ vọng một lỗi cụ thể, và nó pass khi hệ thống trả về đúng lỗi đó.
 >
-> *(dòng 3)* **Authentication** — như vừa nói ở slide trước: thiếu, sai, hết hạn token, đều kỳ vọng `401`.
+> _(dòng 3)_ **Authentication** — như vừa nói ở slide trước: thiếu, sai, hết hạn token, đều kỳ vọng `401`.
 >
-> *(dòng 4)* **Validation** — kiểm tra ràng buộc dữ liệu đầu vào. Ví dụ `POST /products` mà thiếu trường `name`, kỳ vọng `400`. Nhóm này còn bao gồm sai kiểu dữ liệu, vượt độ dài cho phép, hoặc giá trị không nằm trong tập hợp lệ.
+> _(dòng 4)_ **Validation** — kiểm tra ràng buộc dữ liệu đầu vào. Ví dụ `POST /products` mà thiếu trường `name`, kỳ vọng `400`. Nhóm này còn bao gồm sai kiểu dữ liệu, vượt độ dài cho phép, hoặc giá trị không nằm trong tập hợp lệ.
 >
-> *(dòng 5)* **Schema** — kiểm tra **cấu trúc** của response, chứ không chỉ giá trị. Body trả về có đủ các trường `id`, `type`, `name`, `version` hay không, và các trường đó có đúng kiểu hay không. Nhóm này cực kỳ quan trọng, vì nó bắt được loại lỗi mà kiểm tra status code bỏ sót — API vẫn trả `200`, nhưng thiếu mất một trường mà bên gọi đang cần. Hãy nhớ ý này, vì nó chính là cây cầu dẫn sang Contract Testing ở Video 1B.
+> _(dòng 5)_ **Schema** — kiểm tra **cấu trúc** của response, chứ không chỉ giá trị. Body trả về có đủ các trường `id`, `type`, `name`, `version` hay không, và các trường đó có đúng kiểu hay không. Nhóm này cực kỳ quan trọng, vì nó bắt được loại lỗi mà kiểm tra status code bỏ sót — API vẫn trả `200`, nhưng thiếu mất một trường mà bên gọi đang cần. Hãy nhớ ý này, vì nó chính là cây cầu dẫn sang Contract Testing ở Video 1B.
 >
-> *(dòng 6)* **Boundary** — giá trị biên. Ví dụ token đúng tròn một giờ trước, tức vừa chạm ngưỡng hết hạn. Kinh nghiệm ngành cho thấy lỗi tập trung dày đặc ở các mốc biên, vì đó là nơi lập trình viên dễ viết nhầm dấu "nhỏ hơn" thành "nhỏ hơn hoặc bằng".
+> _(dòng 6)_ **Boundary** — giá trị biên. Ví dụ token đúng tròn một giờ trước, tức vừa chạm ngưỡng hết hạn. Kinh nghiệm ngành cho thấy lỗi tập trung dày đặc ở các mốc biên, vì đó là nơi lập trình viên dễ viết nhầm dấu "nhỏ hơn" thành "nhỏ hơn hoặc bằng".
 >
-> *(dòng cuối)* Ba kỹ thuật thiết kế đứng đằng sau sáu nhóm trên.
+> _(dòng cuối)_ Ba kỹ thuật thiết kế đứng đằng sau sáu nhóm trên.
 >
 > **Domain Partitioning** — phân hoạch miền, còn gọi là phân lớp tương đương. Ý tưởng: chia miền giá trị đầu vào thành các lớp mà **mọi giá trị trong cùng một lớp cho cùng một hành vi**, rồi chỉ cần chọn một đại diện mỗi lớp. Với id sản phẩm chẳng hạn, ta có lớp "id tồn tại", lớp "id không tồn tại", lớp "id sai định dạng". Test ba giá trị đại diện là đủ; test một nghìn id tồn tại không tăng thêm khả năng phát hiện lỗi.
 >
@@ -334,7 +333,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A8 — Postman, các khái niệm cốt lõi (11:45–13:25)
 
-**Slide:** `pages/2.api_testing/2.8.postman_overview.md & 2.9.postman_advanced.md`
+**Slide:** `pages/2.api_testing/2.8.postman_overview.md` & `pages/2.api_testing/2.9.postman_advanced.md` (Slide 11 & 12)
 
 **Lời thoại**
 
@@ -352,13 +351,13 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > **Test Script** — đoạn JavaScript chạy **sau** khi có response, chứa các **assertion**. Assertion là câu lệnh khẳng định một điều kiện phải đúng; nếu sai thì test được đánh dấu là fail. Đây là nơi biến "một request gửi đi được" thành "một test case thực sự".
 >
-> *(cột phải)* Bên cạnh đó Postman còn có **Collection Runner** để chạy hàng loạt request liên tiếp, **Data-driven** để chạy một request với nhiều bộ dữ liệu, **Newman** là bản dòng lệnh dùng cho CI/CD, **Monitor** để chạy test định kỳ, và **Mock Server** để giả lập API khi backend chưa sẵn sàng. Nhóm dùng ba cái đầu; hai cái cuối chỉ giới thiệu để các bạn biết là có.
+> _(cột phải)_ Bên cạnh đó Postman còn có **Collection Runner** để chạy hàng loạt request liên tiếp, **Data-driven** để chạy một request với nhiều bộ dữ liệu, **Newman** là bản dòng lệnh dùng cho CI/CD, **Monitor** để chạy test định kỳ, và **Mock Server** để giả lập API khi backend chưa sẵn sàng. Nhóm dùng ba cái đầu; hai cái cuối chỉ giới thiệu để các bạn biết là có.
 
 ---
 
 ### Cảnh A9 — Tổ chức Collection (13:25–14:35)
 
-**Slide:** `pages/2.api_testing/2.10.postman_collections.md`
+**Slide:** `pages/2.api_testing/2.10.postman_collections.md` (Slide 13)
 
 **Lời thoại**
 
@@ -376,17 +375,17 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A10 — Script và Assertion (14:35–15:50)
 
-**Slide:** `pages/2.api_testing/2.11.postman_scripts.md`
+**Slide:** `pages/2.api_testing/2.11.postman_scripts.md` (Slide 14)
 
 **Lời thoại**
 
 > Nhìn cụ thể vào hai loại script.
 >
-> *(cột trái)* **Pre-request Script đặt ở cấp Collection** nghĩa là nó chạy trước **mọi** request trong collection. Nhóm đặt ở đây đoạn code sinh Bearer token hợp lệ, tính theo giờ hiện tại. Nhờ vậy token luôn tươi mới ở mỗi lần chạy, không bao giờ hết hạn giữa chừng, và không có token nào bị viết cứng trong repo.
+> _(cột trái)_ **Pre-request Script đặt ở cấp Collection** nghĩa là nó chạy trước **mọi** request trong collection. Nhóm đặt ở đây đoạn code sinh Bearer token hợp lệ, tính theo giờ hiện tại. Nhờ vậy token luôn tươi mới ở mỗi lần chạy, không bao giờ hết hạn giữa chừng, và không có token nào bị viết cứng trong repo.
 >
 > Kỹ thuật đáng chú ý là cách xử lý ba tình huống xác thực bằng cùng một cơ chế. Trong file dữ liệu, trường `auth_header` nhận ba dạng giá trị: nếu là biến `validToken` thì script thay bằng token hợp lệ; nếu là một chuỗi thời gian từ năm 2020 thì đó là token hết hạn, dùng cho negative test; và nếu là chuỗi rỗng thì script **gỡ hẳn header đi**, tạo ra tình huống không gửi token. Một cơ chế phục vụ cả ba nhóm test case.
 >
-> *(cột phải)* Và đây là hình dạng của một **Test Script**. Cú pháp gồm `pm.test`, nhận vào một chuỗi mô tả và một hàm chứa phần kiểm tra.
+> _(cột phải)_ Và đây là hình dạng của một **Test Script**. Cú pháp gồm `pm.test`, nhận vào một chuỗi mô tả và một hàm chứa phần kiểm tra.
 >
 > Test đầu tiên khẳng định status là 200. Test thứ hai đọc body dưới dạng JSON rồi khẳng định object đó **có** các thuộc tính `id`, `name`, `type` — đây chính là schema test mà mình nói ở slide thiết kế test case.
 >
@@ -396,7 +395,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A11 — Data-driven testing (15:50–17:05)
 
-**Slide:** `pages/2.api_testing/2.12.postman_datadriven.md`
+**Slide:** `pages/2.api_testing/2.12.postman_datadriven.md` (Slide 15)
 
 **Lời thoại**
 
@@ -416,7 +415,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A12 — VS Code REST Client (17:05–17:55)
 
-**Slide:** `pages/2.api_testing/2.13.vscode_restclient.md`
+**Slide:** `pages/2.api_testing/2.13.vscode_restclient.md` (Slide 16)
 
 **Lời thoại**
 
@@ -434,7 +433,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A13 — API mẫu Product Service (17:55–19:05)
 
-**Slide:** `pages/2.api_testing/2.14.product_service.md & 2.15.product_endpoints.md`
+**Slide:** `pages/2.api_testing/2.14.product_service.md` & `pages/2.api_testing/2.15.product_endpoints.md` (Slide 17 & 18)
 
 **Lời thoại**
 
@@ -444,9 +443,9 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Đặc điểm in-memory này là cố ý và rất có lợi cho việc dạy: mỗi lần chạy test đều bắt đầu từ một trạng thái sạch và giống hệt nhau. Đây là một khái niệm quan trọng — **test isolation**, tức sự cô lập giữa các lần chạy test. Nếu test của bạn phụ thuộc vào dữ liệu do lần chạy trước để lại, bộ test sẽ trở nên bấp bênh, lúc xanh lúc đỏ.
 >
-> *(schema)* Một `Product` có bốn trường: `id`, `type`, `name`, `version`. Hãy nhớ trường **`name`** — ở Video 1B, chính trường này sẽ bị đổi tên để minh họa một breaking change.
+> _(schema)_ Một `Product` có bốn trường: `id`, `type`, `name`, `version`. Hãy nhớ trường **`name`** — ở Video 1B, chính trường này sẽ bị đổi tên để minh họa một breaking change.
 >
-> *(bảng endpoint)* Năm endpoint CRUD. Điều mình muốn các bạn để ý là **cột bên phải** — mã lỗi. `GET /products` chỉ có thể lỗi `401`. `GET /product/:id` có thể `401` hoặc `404`. `POST /products` có thể `400` hoặc `401`.
+> _(bảng endpoint)_ Năm endpoint CRUD. Điều mình muốn các bạn để ý là **cột bên phải** — mã lỗi. `GET /products` chỉ có thể lỗi `401`. `GET /product/:id` có thể `401` hoặc `404`. `POST /products` có thể `400` hoặc `401`.
 >
 > Bảng này chính là **bản đồ để sinh test case**: mỗi ô trong cột "Success" và "Error" tương ứng ít nhất một test case cần viết. Cứ đi hết bảng là bạn có bộ khung 29 case của nhóm.
 
@@ -454,7 +453,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A14 — Chuyển phần B (19:05–19:20)
 
-**Slide:** `pages/3.automation_cicd/3.1.section.md`
+**Slide:** `pages/3.automation_cicd/3.1.section.md` (Slide 19)
 
 **Lời thoại**
 
@@ -464,7 +463,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A15 — Newman (19:20–20:35)
 
-**Slide:** `pages/3.automation_cicd/3.2.newman.md`
+**Slide:** `pages/3.automation_cicd/3.2.newman.md` (Slide 20)
 
 **Lời thoại**
 
@@ -474,9 +473,9 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Newman xuất báo cáo ở nhiều định dạng: ra thẳng màn hình dòng lệnh, ra file HTML để người đọc, và ra file JSON để máy xử lý tiếp.
 >
-> *(luồng 5 bước)* Luồng tự động hóa gồm năm bước. Một, khởi động Provider ở `localhost:8080`. Hai — bước hay bị quên — **readiness probe**: gọi liên tục vào endpoint `/health` cho tới khi service trả lời, rồi mới chạy test. Không có bước này, pipeline sẽ hỏng ngẫu nhiên vì test bắn đi trước khi server kịp lắng nghe; đây là loại lỗi **flaky** khó chịu nhất trong CI. Ba, chạy Newman với collection và environment. Bốn, xuất báo cáo. Năm, **upload artifact** — lưu file báo cáo lại — và điểm mấu chốt là phải lưu **kể cả khi test fail**, vì đó chính là lúc ta cần đọc báo cáo nhất.
+> _(luồng 5 bước)_ Luồng tự động hóa gồm năm bước. Một, khởi động Provider ở `localhost:8080`. Hai — bước hay bị quên — **readiness probe**: gọi liên tục vào endpoint `/health` cho tới khi service trả lời, rồi mới chạy test. Không có bước này, pipeline sẽ hỏng ngẫu nhiên vì test bắn đi trước khi server kịp lắng nghe; đây là loại lỗi **flaky** khó chịu nhất trong CI. Ba, chạy Newman với collection và environment. Bốn, xuất báo cáo. Năm, **upload artifact** — lưu file báo cáo lại — và điểm mấu chốt là phải lưu **kể cả khi test fail**, vì đó chính là lúc ta cần đọc báo cáo nhất.
 >
-> *(lệnh)* Lệnh cốt lõi: `newman run` kèm file collection, cờ `-e` cho environment, và các cờ reporter để xuất báo cáo.
+> _(lệnh)_ Lệnh cốt lõi: `newman run` kèm file collection, cờ `-e` cho environment, và các cờ reporter để xuất báo cáo.
 >
 > Còn một chi tiết không có trên slide nhưng rất quan trọng: **Newman trả về mã thoát khác 0 khi có test fail.** Đó là cách nó báo cho CI biết phải đánh dấu build là hỏng. Toàn bộ khả năng "chặn" của pipeline dựa trên quy ước đơn giản này.
 
@@ -484,7 +483,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A16 — Newman pipeline trên GitHub Actions (20:35–21:25)
 
-**Slide:** `pages/3.automation_cicd/3.3.cicd_pipeline.md`
+**Slide:** `pages/3.automation_cicd/3.3.cicd_pipeline.md` (Slide 21)
 
 **Lời thoại**
 
@@ -500,7 +499,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A17 — Pact pipeline, xem trước bản đồ (21:25–22:05)
 
-**Slide:** `pages/3.automation_cicd/3.4.pact_pipeline.md & 3.5.pact_verification.md`
+**Slide:** `pages/3.automation_cicd/3.4.pact_pipeline.md` & `pages/3.automation_cicd/3.5.pact_verification.md` (Slide 22 & 23)
 
 > **Lưu ý cho người quay:** slide này nằm trong deck **trước** khi Contract Testing được giải thích. Đừng cố giảng sâu ở đây. Nhiệm vụ duy nhất của cảnh này là cho người xem thấy **hình dạng** của pipeline và gieo ba thuật ngữ, để tới Video 1B họ có chỗ móc vào.
 
@@ -508,7 +507,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 > Nhóm còn một pipeline thứ hai, tên `pact-verification.yml`. Mình để slide này ở đây để các bạn thấy trước **hình dạng** của nó; toàn bộ thuật ngữ trong đó sẽ được giải thích đầy đủ ở video sau, nên bây giờ chỉ cần nhìn cấu trúc.
 >
-> Pipeline có ba job nối tiếp. Job một, phía **Consumer** — bên gọi API — chạy test và sinh ra một file gọi là pact. Job hai, phía **Provider** — bên cung cấp API — lấy file đó về và kiểm chứng xem mình có đáp ứng đúng không. Job ba, tên **`can-i-deploy`**, đóng vai một **quality gate** — cổng chất lượng — trả lời câu hỏi *"phiên bản này có an toàn để triển khai không?"* và chặn pipeline nếu câu trả lời là không.
+> Pipeline có ba job nối tiếp. Job một, phía **Consumer** — bên gọi API — chạy test và sinh ra một file gọi là pact. Job hai, phía **Provider** — bên cung cấp API — lấy file đó về và kiểm chứng xem mình có đáp ứng đúng không. Job ba, tên **`can-i-deploy`**, đóng vai một **quality gate** — cổng chất lượng — trả lời câu hỏi _"phiên bản này có an toàn để triển khai không?"_ và chặn pipeline nếu câu trả lời là không.
 >
 > Ba từ cần nhớ tạm thời: **Consumer**, **Provider**, và **`can-i-deploy`**. Nếu lúc này các bạn thấy chưa rõ vì sao cần cả một pipeline riêng cho việc này, thì đó chính là câu hỏi mà Video 1B sẽ trả lời.
 
@@ -516,7 +515,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A18 — Hai lớp bảo vệ và chốt Video 1A (22:05–22:55)
 
-**Slide:** `pages/3.automation_cicd/3.6.automation_value.md`
+**Slide:** `pages/3.automation_cicd/3.6.automation_value.md` (Slide 24)
 
 **Lời thoại**
 
@@ -540,7 +539,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B1 — Nối tiếp và chuyển phần C (00:00–00:35)
 
-**Slide:** `pages/4.contract_testing/4.1.section.md`
+**Slide:** `pages/4.contract_testing/4.1.section.md` (Slide 25)
 
 **Lời thoại**
 
@@ -552,7 +551,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B2 — Vấn đề: mỗi service xanh, hệ thống vẫn đỏ (00:35–02:55)
 
-**Slide:** `pages/4.contract_testing/4.2.the_problem.md`
+**Slide:** `pages/4.contract_testing/4.2.the_problem.md` (Slide 26)
 
 **Hình ảnh trên màn hình**
 
@@ -568,15 +567,15 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Giờ ta dựng lại một kịch bản có thật, xảy ra thường xuyên trong các đội làm microservices.
 >
-> *(thẻ 1)* Consumer — tức đội frontend — viết code đọc trường `product.name` để hiển thị tên sản phẩm lên giao diện. Trong lúc đó, đội backend quyết định đổi tên trường ấy thành `displayName`, vì họ thấy tên mới rõ nghĩa hơn.
+> _(thẻ 1)_ Consumer — tức đội frontend — viết code đọc trường `product.name` để hiển thị tên sản phẩm lên giao diện. Trong lúc đó, đội backend quyết định đổi tên trường ấy thành `displayName`, vì họ thấy tên mới rõ nghĩa hơn.
 >
-> *(thẻ 2)* Đây là phần đáng chú ý nhất. **Unit test của Provider vẫn pass toàn bộ.** Và điều đó hoàn toàn hợp lý — dưới góc nhìn của backend, logic không sai, schema mới cũng nhất quán, mọi test họ viết đều dựa trên schema mới nên đều xanh. Không ai làm gì sai theo tiêu chuẩn của chính mình.
+> _(thẻ 2)_ Đây là phần đáng chú ý nhất. **Unit test của Provider vẫn pass toàn bộ.** Và điều đó hoàn toàn hợp lý — dưới góc nhìn của backend, logic không sai, schema mới cũng nhất quán, mọi test họ viết đều dựa trên schema mới nên đều xanh. Không ai làm gì sai theo tiêu chuẩn của chính mình.
 >
 > Nếu đội frontend cũng có unit test, những test đó cũng xanh nốt — vì frontend test với dữ liệu giả do chính họ tự dựng lên, mà dữ liệu giả đó vẫn còn trường `name`. Đây là điểm mù kinh điển: **mock của bạn không tự biết là thực tế đã đổi.**
 >
-> *(thẻ 3)* Kết quả: lỗi chỉ lộ ra khi hai bên thực sự gặp nhau — trên môi trường staging, tệ hơn là trên production. Và đây là chỗ đắt tiền nhất. Lỗi tìm thấy khi đang code thì sửa mất vài phút. Lỗi tìm thấy trên production thì phải điều tra, phải rollback, phải họp, có khi có cả người dùng bị ảnh hưởng.
+> _(thẻ 3)_ Kết quả: lỗi chỉ lộ ra khi hai bên thực sự gặp nhau — trên môi trường staging, tệ hơn là trên production. Và đây là chỗ đắt tiền nhất. Lỗi tìm thấy khi đang code thì sửa mất vài phút. Lỗi tìm thấy trên production thì phải điều tra, phải rollback, phải họp, có khi có cả người dùng bị ảnh hưởng.
 >
-> *(hộp câu hỏi)* Vậy câu hỏi mà không lớp test nào ở phần trước trả lời được là: **"Hai phía có còn hiểu cùng một giao thức hay không?"**
+> _(hộp câu hỏi)_ Vậy câu hỏi mà không lớp test nào ở phần trước trả lời được là: **"Hai phía có còn hiểu cùng một giao thức hay không?"**
 >
 > Unit test kiểm tra logic bên trong một service. Nó **không** kiểm chứng những giả định vượt qua ranh giới giữa hai service. Mà chính những giả định vượt ranh giới đó — kiểu như "tôi tin rằng response sẽ có trường tên là `name`" — mới là thứ âm thầm gãy.
 >
@@ -590,7 +589,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B3 — Contract Testing là gì (02:55–05:25)
 
-**Slide:** `pages/4.contract_testing/4.3.definition.md`
+**Slide:** `pages/4.contract_testing/4.3.definition.md` (Slide 27)
 
 **Hình ảnh trên màn hình**
 
@@ -606,27 +605,27 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Một contract mô tả ba nhóm thông tin.
 >
-> *(click 1)* **Request**: method, đường dẫn, query, headers, và body. Đây là mô tả chính xác những gì Consumer sẽ gửi.
+> _(click 1)_ **Request**: method, đường dẫn, query, headers, và body. Đây là mô tả chính xác những gì Consumer sẽ gửi.
 >
-> *(click 2)* **Response**: status code, headers, cấu trúc dữ liệu, và **matching rules** — luật so khớp. Mình sẽ quay lại matching rules ở phần sau vì nó là chi tiết tinh tế nhất của Pact.
+> _(click 2)_ **Response**: status code, headers, cấu trúc dữ liệu, và **matching rules** — luật so khớp. Mình sẽ quay lại matching rules ở phần sau vì nó là chi tiết tinh tế nhất của Pact.
 >
-> *(click 3)* **Context**, hay chính xác hơn là **provider state** — trạng thái của Provider. Đây là **điều kiện tiên quyết** phải đúng thì interaction mới có nghĩa.
+> _(click 3)_ **Context**, hay chính xác hơn là **provider state** — trạng thái của Provider. Đây là **điều kiện tiên quyết** phải đúng thì interaction mới có nghĩa.
 >
 > Giải thích cho rõ, vì đây là khái niệm người mới hay bỏ qua. Nếu contract nói "gọi `GET /product/10` thì phải nhận về `200` kèm dữ liệu sản phẩm", thì câu đó chỉ đúng **với điều kiện sản phẩm số 10 tồn tại**. Nếu lúc kiểm chứng, cơ sở dữ liệu của Provider trống, API sẽ trả `404` và contract bị coi là vi phạm — trong khi thực ra code hoàn toàn đúng, chỉ là dữ liệu chưa được chuẩn bị.
 >
 > Vì vậy mỗi interaction mang theo một provider state dạng câu mô tả, ví dụ `"product 10 exists"`. Khi kiểm chứng, phía Provider có một đoạn code gọi là **state handler** đọc câu mô tả đó và dựng đúng dữ liệu cần thiết trước khi chạy. Provider state chính là thứ làm cho contract test **tái lập được** thay vì phụ thuộc may rủi vào dữ liệu có sẵn.
 >
-> *(hộp phải)* Và đây là hình dạng một **interaction** — một tương tác, tức một cặp request–response cụ thể trong contract. Nó đọc theo cấu trúc Given–When–Then, rất giống ngôn ngữ đặc tả hành vi mà có thể các bạn đã gặp: **Given** — cho trước sản phẩm 10 tồn tại; **When** — khi gọi `GET /product/10`; **Then** — thì nhận về `200` cùng cấu trúc Product.
+> _(hộp phải)_ Và đây là hình dạng một **interaction** — một tương tác, tức một cặp request–response cụ thể trong contract. Nó đọc theo cấu trúc Given–When–Then, rất giống ngôn ngữ đặc tả hành vi mà có thể các bạn đã gặp: **Given** — cho trước sản phẩm 10 tồn tại; **When** — khi gọi `GET /product/10`; **Then** — thì nhận về `200` cùng cấu trúc Product.
 >
 > Một contract là **tập hợp nhiều interaction** như vậy.
 >
-> *(dòng cuối)* Và một giới hạn phải nói ngay từ đầu để tránh kỳ vọng sai: Contract Testing xác minh **tính tương thích**. Nó **không** chứng minh nghiệp vụ đúng. Nếu Provider trả về đúng cấu trúc nhưng tính sai giá trị, contract test vẫn xanh. Mình sẽ nói kỹ hơn ở slide về giới hạn.
+> _(dòng cuối)_ Và một giới hạn phải nói ngay từ đầu để tránh kỳ vọng sai: Contract Testing xác minh **tính tương thích**. Nó **không** chứng minh nghiệp vụ đúng. Nếu Provider trả về đúng cấu trúc nhưng tính sai giá trị, contract test vẫn xanh. Mình sẽ nói kỹ hơn ở slide về giới hạn.
 
 ---
 
 ### Cảnh B4 — So sánh bốn lớp kiểm thử (05:25–07:25)
 
-**Slide:** `pages/4.contract_testing/4.4.comparison.md`
+**Slide:** `pages/4.contract_testing/4.4.comparison.md` (Slide 28)
 
 **Hình ảnh trên màn hình**
 
@@ -636,25 +635,25 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 > Bảng này định vị Contract Testing giữa các lớp kiểm thử khác. Mình đi theo hàng, và các bạn hãy chú ý cột thứ ba.
 >
-> *(hàng 1 — Câu hỏi)* Mỗi lớp trả lời một câu hỏi khác nhau. API Testing hỏi *"endpoint này có đúng không?"*. Contract Testing hỏi *"hai bên còn tương thích không?"*. Integration hỏi *"các thành phần phối hợp có đúng không?"*. E2E hỏi *"hành trình người dùng có chạy trọn không?"*. Bốn câu hỏi khác nhau, nên **không lớp nào thay được lớp nào**.
+> _(hàng 1 — Câu hỏi)_ Mỗi lớp trả lời một câu hỏi khác nhau. API Testing hỏi _"endpoint này có đúng không?"_. Contract Testing hỏi _"hai bên còn tương thích không?"_. Integration hỏi _"các thành phần phối hợp có đúng không?"_. E2E hỏi _"hành trình người dùng có chạy trọn không?"_. Bốn câu hỏi khác nhau, nên **không lớp nào thay được lớp nào**.
 >
-> *(hàng 2 — Phạm vi)* Contract Testing có phạm vi hẹp nhất và cũng rõ nhất: **đúng một cặp Consumer–Provider**. Sự hẹp này là ưu điểm, không phải nhược điểm — nó là lý do contract test chạy nhanh và chỉ ra lỗi chính xác.
+> _(hàng 2 — Phạm vi)_ Contract Testing có phạm vi hẹp nhất và cũng rõ nhất: **đúng một cặp Consumer–Provider**. Sự hẹp này là ưu điểm, không phải nhược điểm — nó là lý do contract test chạy nhanh và chỉ ra lỗi chính xác.
 >
-> *(hàng 3 — Môi trường)* Và đây là đặc điểm khiến Contract Testing đặc biệt hữu dụng: nó chạy **cô lập**. Khi Consumer chạy test, nó **không cần Provider thật** — Pact dựng một server giả. Khi Provider kiểm chứng, nó **không cần Consumer thật** — Pact phát lại các request đã ghi. Hai đội có thể kiểm tra tính tương thích mà **không bao giờ phải khởi động hệ thống của nhau**, thậm chí không cần ở cùng múi giờ. So sánh với E2E vốn đòi hỏi dựng gần như toàn bộ hệ thống, khác biệt về chi phí là rất lớn.
+> _(hàng 3 — Môi trường)_ Và đây là đặc điểm khiến Contract Testing đặc biệt hữu dụng: nó chạy **cô lập**. Khi Consumer chạy test, nó **không cần Provider thật** — Pact dựng một server giả. Khi Provider kiểm chứng, nó **không cần Consumer thật** — Pact phát lại các request đã ghi. Hai đội có thể kiểm tra tính tương thích mà **không bao giờ phải khởi động hệ thống của nhau**, thậm chí không cần ở cùng múi giờ. So sánh với E2E vốn đòi hỏi dựng gần như toàn bộ hệ thống, khác biệt về chi phí là rất lớn.
 >
-> *(hàng 4 — Feedback)* Phản hồi nhanh và rõ. "Rõ" ở đây có nghĩa cụ thể: khi fail, thông báo lỗi chỉ đúng tên trường bị lệch, chứ không phải một stack trace dài mà bạn phải tự đoán.
+> _(hàng 4 — Feedback)_ Phản hồi nhanh và rõ. "Rõ" ở đây có nghĩa cụ thể: khi fail, thông báo lỗi chỉ đúng tên trường bị lệch, chứ không phải một stack trace dài mà bạn phải tự đoán.
 >
-> *(hàng 5 — Điểm mạnh)* Điểm mạnh của Contract Testing là chống breaking change — thay đổi làm gãy bên đang dùng.
+> _(hàng 5 — Điểm mạnh)_ Điểm mạnh của Contract Testing là chống breaking change — thay đổi làm gãy bên đang dùng.
 >
-> *(hàng 6 — Điểm mù)* Và điểm mù, nói thẳng: **business logic**. Contract test không biết gì về việc phép tính của bạn có đúng hay không.
+> _(hàng 6 — Điểm mù)_ Và điểm mù, nói thẳng: **business logic**. Contract test không biết gì về việc phép tính của bạn có đúng hay không.
 >
-> *(hộp cuối)* Nên thông điệp của slide này là: Contract Test **bổ sung** cho Unit, Integration và E2E, chứ không thay thế chúng. Ai bảo bạn "có contract test rồi thì bỏ E2E đi" là đang tư vấn sai.
+> _(hộp cuối)_ Nên thông điệp của slide này là: Contract Test **bổ sung** cho Unit, Integration và E2E, chứ không thay thế chúng. Ai bảo bạn "có contract test rồi thì bỏ E2E đi" là đang tư vấn sai.
 
 ---
 
 ### Cảnh B5 — Kiến trúc Consumer–Provider–Broker (07:25–08:55)
 
-**Slide:** `pages/4.contract_testing/4.5.architecture.md`
+**Slide:** `pages/4.contract_testing/4.5.architecture.md` (Slide 29)
 
 **Hình ảnh trên màn hình**
 
@@ -666,11 +665,11 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Trong quan hệ đó, mỗi bên có một trách nhiệm riêng trong quy trình contract testing.
 >
-> *(hộp trái)* **Consumer** có trách nhiệm **mô tả chính xác phần API mà nó thực sự sử dụng** — và chỉ phần đó thôi. Kết quả của việc mô tả này là một file **pact**, định dạng JSON. Mình nhấn mạnh chữ "thực sự sử dụng": nếu API trả về hai mươi trường mà Consumer chỉ dùng ba, thì contract chỉ nên nói về ba trường ấy. Lý do sẽ rõ ở slide sau.
+> _(hộp trái)_ **Consumer** có trách nhiệm **mô tả chính xác phần API mà nó thực sự sử dụng** — và chỉ phần đó thôi. Kết quả của việc mô tả này là một file **pact**, định dạng JSON. Mình nhấn mạnh chữ "thực sự sử dụng": nếu API trả về hai mươi trường mà Consumer chỉ dùng ba, thì contract chỉ nên nói về ba trường ấy. Lý do sẽ rõ ở slide sau.
 >
-> *(hộp phải)* **Provider** có trách nhiệm **chứng minh rằng implementation của mình đáp ứng mọi interaction** trong file pact đó. Việc chứng minh này gọi là **verification** — kiểm chứng.
+> _(hộp phải)_ **Provider** có trách nhiệm **chứng minh rằng implementation của mình đáp ứng mọi interaction** trong file pact đó. Việc chứng minh này gọi là **verification** — kiểm chứng.
 >
-> *(hộp dưới)* Và thành phần thứ ba: **Pact Broker** — kho trung tâm. Nếu chỉ có hai service thì bạn có thể chép tay file pact qua lại. Nhưng khi có mười, hai mươi service, mỗi service lại có nhiều phiên bản đang chạy song song, bạn cần một nơi lưu trữ có tổ chức.
+> _(hộp dưới)_ Và thành phần thứ ba: **Pact Broker** — kho trung tâm. Nếu chỉ có hai service thì bạn có thể chép tay file pact qua lại. Nhưng khi có mười, hai mươi service, mỗi service lại có nhiều phiên bản đang chạy song song, bạn cần một nơi lưu trữ có tổ chức.
 >
 > Broker lưu ba thứ và liên kết chúng: **contract**, **phiên bản** của mỗi bên, và **kết quả verification**. Từ ba thứ đó nó dựng nên **compatibility matrix** — ma trận tương thích, một bảng tra cứu cho biết phiên bản Consumer nào đã được xác nhận là chạy được với phiên bản Provider nào.
 >
@@ -680,23 +679,23 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B6 — Vì sao consumer-driven (08:55–10:25)
 
-**Slide:** `pages/4.contract_testing/4.6.why_consumer_driven.md`
+**Slide:** `pages/4.contract_testing/4.6.why_consumer_driven.md` (Slide 30)
 
 **Lời thoại**
 
 > Tên đầy đủ của kỹ thuật này là **Consumer-Driven Contract Testing** — kiểm thử hợp đồng do bên tiêu thụ dẫn dắt. Slide này giải thích vì sao lại là "consumer-driven", vì đây là lựa chọn thiết kế có chủ đích chứ không phải ngẫu nhiên.
 >
-> *(hộp đỏ)* Cách làm trực giác hơn là **provider-driven**: Provider công bố toàn bộ schema của mình, và các Consumer phải tự thích nghi. Nghe hợp lý, và thực tế nhiều nơi làm vậy.
+> _(hộp đỏ)_ Cách làm trực giác hơn là **provider-driven**: Provider công bố toàn bộ schema của mình, và các Consumer phải tự thích nghi. Nghe hợp lý, và thực tế nhiều nơi làm vậy.
 >
 > Nhưng nó có một điểm yếu nghiêm trọng: **Provider không biết phần nào trong API của mình đang thực sự được dùng.** Đứng ở vị trí đội backend, bạn có một trường trong response mà bạn tin là không ai dùng nữa. Bạn có dám xóa không? Thường là không — vì bạn không có cách nào chứng minh. Kết quả là API phình ra theo thời gian, đầy những trường không ai dám đụng vào. Hoặc tệ hơn: có người dám xóa, và một Consumer nào đó gãy trong im lặng.
 >
-> *(hộp xanh)* Cách làm **consumer-driven** đảo ngược hướng thông tin. **Mỗi Consumer tự phát hành các interaction mà nó phụ thuộc vào.** Provider thu về tập hợp các contract đó, và tập hợp ấy chính là **bản kê khai nhu cầu thực tế** của tất cả các bên đang dùng mình.
+> _(hộp xanh)_ Cách làm **consumer-driven** đảo ngược hướng thông tin. **Mỗi Consumer tự phát hành các interaction mà nó phụ thuộc vào.** Provider thu về tập hợp các contract đó, và tập hợp ấy chính là **bản kê khai nhu cầu thực tế** của tất cả các bên đang dùng mình.
 >
 > Lợi ích rất cụ thể: Provider giờ đây **biết chính xác trường nào đang được ai dùng**. Muốn xóa một trường? Kiểm tra xem có contract nào nhắc tới nó không. Không có thì xóa an toàn. Có thì biết ngay phải nói chuyện với đội nào.
 >
 > Điều này cũng lý giải nguyên tắc mình nói ở slide trước — contract chỉ nên mô tả phần Consumer thực sự dùng. Nếu Consumer mô tả thừa những trường nó không đụng tới, nó vô tình khóa tay Provider, không cho Provider tiến hóa những phần lẽ ra được tự do thay đổi.
 >
-> *(ba bước dưới)* Ba bước tóm tắt: Consumer nêu nhu cầu, Provider xác minh, và hai đội cùng tiến hóa.
+> _(ba bước dưới)_ Ba bước tóm tắt: Consumer nêu nhu cầu, Provider xác minh, và hai đội cùng tiến hóa.
 >
 > Mình muốn nói rõ một điều để tránh hiểu sai: **consumer-driven không có nghĩa là Consumer được quyền áp đặt.** Nếu Consumer yêu cầu điều gì đó vô lý, Provider hoàn toàn có quyền từ chối và hai bên ngồi lại. Contract ở đây là **công cụ hỗ trợ cuộc hội thoại giữa hai đội**, làm cho các giả định ngầm trở nên hiện hình và kiểm tra được. Nó không thay thế việc thiết kế API cho tử tế.
 
@@ -704,27 +703,27 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B7 — Giới hạn của Contract Testing (10:25–11:55)
 
-**Slide:** `pages/4.contract_testing/4.7.limitations.md`
+**Slide:** `pages/4.contract_testing/4.7.limitations.md` (Slide 31)
 
 **Lời thoại**
 
 > Trước khi đi vào cơ chế, mình dành một slide cho **giới hạn**. Đây là phần quan trọng về mặt nghề nghiệp: hiểu công cụ **không** làm được gì thì mới dùng nó đúng chỗ.
 >
-> *(hộp 1)* **Business logic nội bộ.** Đây là giới hạn lớn nhất. Nếu API trả về đúng cấu trúc — có trường `total`, kiểu số — nhưng giá trị trong đó tính sai tổng tiền, thì contract test **vẫn xanh**. Contract kiểm tra **hình dạng** của dữ liệu, không kiểm tra **tính đúng đắn** của nó. Việc đó là của unit test và integration test.
+> _(hộp 1)_ **Business logic nội bộ.** Đây là giới hạn lớn nhất. Nếu API trả về đúng cấu trúc — có trường `total`, kiểu số — nhưng giá trị trong đó tính sai tổng tiền, thì contract test **vẫn xanh**. Contract kiểm tra **hình dạng** của dữ liệu, không kiểm tra **tính đúng đắn** của nó. Việc đó là của unit test và integration test.
 >
-> *(hộp 2)* **Hạ tầng production.** DNS, chứng chỉ TLS, cấu hình API gateway, timeout, giới hạn tốc độ — contract test chạy trong môi trường cô lập nên hoàn toàn không chạm tới những thứ này. Cần lớp giám sát và smoke test riêng trên môi trường thật.
+> _(hộp 2)_ **Hạ tầng production.** DNS, chứng chỉ TLS, cấu hình API gateway, timeout, giới hạn tốc độ — contract test chạy trong môi trường cô lập nên hoàn toàn không chạm tới những thứ này. Cần lớp giám sát và smoke test riêng trên môi trường thật.
 >
-> *(hộp 3)* **Hành trình qua nhiều service.** Một pact chỉ chứng minh **một** ranh giới. Nếu một thao tác của người dùng đi qua bốn service liên tiếp, việc từng cặp tương thích **không** bảo đảm cả chuỗi cho ra kết quả đúng. Đó vẫn là địa hạt của E2E.
+> _(hộp 3)_ **Hành trình qua nhiều service.** Một pact chỉ chứng minh **một** ranh giới. Nếu một thao tác của người dùng đi qua bốn service liên tiếp, việc từng cặp tương thích **không** bảo đảm cả chuỗi cho ra kết quả đúng. Đó vẫn là địa hạt của E2E.
 >
-> *(hộp 4)* **Chất lượng thiết kế API.** Tương thích không có nghĩa là dễ dùng, nhất quán hay an toàn. Một API đặt tên lộn xộn, trả mã lỗi tùy tiện, vẫn có thể có contract test xanh toàn bộ.
+> _(hộp 4)_ **Chất lượng thiết kế API.** Tương thích không có nghĩa là dễ dùng, nhất quán hay an toàn. Một API đặt tên lộn xộn, trả mã lỗi tùy tiện, vẫn có thể có contract test xanh toàn bộ.
 >
-> *(dòng cuối)* Nên câu tổng kết đáng nhớ nhất của cả Phần C là dòng này: **Unit lo logic · Contract lo tính tương thích · Integration lo việc đấu nối · E2E lo các hành trình trọng yếu.** Bốn lớp, bốn loại rủi ro. Đừng dùng lớp này để bắt lỗi của lớp kia.
+> _(dòng cuối)_ Nên câu tổng kết đáng nhớ nhất của cả Phần C là dòng này: **Unit lo logic · Contract lo tính tương thích · Integration lo việc đấu nối · E2E lo các hành trình trọng yếu.** Bốn lớp, bốn loại rủi ro. Đừng dùng lớp này để bắt lỗi của lớp kia.
 
 ---
 
 ### Cảnh B8 — Chuyển phần D (11:55–12:10)
 
-**Slide:** `pages/5.demo_pact/5.1.section.md`
+**Slide:** `pages/5.demo_pact/5.1.section.md` (Slide 32)
 
 **Lời thoại**
 
@@ -734,7 +733,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B9 — Bước 1: Consumer tạo contract (12:10–14:00)
 
-**Slide:** `pages/5.demo_pact/5.2.consumer_side.md`
+**Slide:** `pages/5.demo_pact/5.2.consumer_side.md` (Slide 33)
 
 **Hình ảnh trên màn hình**
 
@@ -746,21 +745,21 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Trước hết, để ý sơ đồ có **ba** đối tượng chứ không phải hai. Có **đoạn test**, có **mock provider** — server giả do Pact dựng lên — và có **code client thật của Consumer**, tức đoạn code sẽ thực sự chạy trên production.
 >
-> *(mũi tên 1)* Đoạn test bắt đầu bằng việc **đăng ký một interaction kỳ vọng** với mock provider. Nói cách khác: "tôi sắp gửi một request như thế này, và tôi cần bạn trả về một response như thế kia".
+> _(mũi tên 1)_ Đoạn test bắt đầu bằng việc **đăng ký một interaction kỳ vọng** với mock provider. Nói cách khác: "tôi sắp gửi một request như thế này, và tôi cần bạn trả về một response như thế kia".
 >
-> *(mũi tên 2)* Sau đó — và đây là điểm mấu chốt — test **gọi vào code client thật**. Không phải test tự tay tạo một HTTP request. Nó gọi đúng hàm mà ứng dụng thật sẽ gọi, ví dụ một hàm `getProduct(10)`.
+> _(mũi tên 2)_ Sau đó — và đây là điểm mấu chốt — test **gọi vào code client thật**. Không phải test tự tay tạo một HTTP request. Nó gọi đúng hàm mà ứng dụng thật sẽ gọi, ví dụ một hàm `getProduct(10)`.
 >
-> *(mũi tên 3)* Code client thật đó phát sinh request thật, gửi tới mock provider đang chạy trên một cổng cục bộ.
+> _(mũi tên 3)_ Code client thật đó phát sinh request thật, gửi tới mock provider đang chạy trên một cổng cục bộ.
 >
-> *(mũi tên 4)* Mock provider trả về response đã đăng ký.
+> _(mũi tên 4)_ Mock provider trả về response đã đăng ký.
 >
-> *(mũi tên 5)* Mock provider đồng thời **kiểm tra ngược lại**: request nó nhận được có khớp với thứ đã đăng ký không. Nếu code client gửi sai đường dẫn, thiếu header xác thực, hay sai method — test fail ngay tại đây.
+> _(mũi tên 5)_ Mock provider đồng thời **kiểm tra ngược lại**: request nó nhận được có khớp với thứ đã đăng ký không. Nếu code client gửi sai đường dẫn, thiếu header xác thực, hay sai method — test fail ngay tại đây.
 >
-> *(mũi tên 6)* Khi mọi thứ khớp, Pact ghi ra file **pact.json**.
+> _(mũi tên 6)_ Khi mọi thứ khớp, Pact ghi ra file **pact.json**.
 >
 > Vậy nên bước này làm **hai việc cùng lúc**, và cần nhìn ra cả hai. Việc thứ nhất: nó **kiểm thử code client của Consumer** — bảo đảm client gọi đúng cách. Việc thứ hai: nó **ghi lại thành hợp đồng** những gì Consumer cần.
 >
-> *(hộp dưới)* Từ đó suy ra nguyên tắc trên slide: **mock provider không thay thế code Consumer.** Nếu bạn viết test theo kiểu tự dựng một request bằng tay rồi bắn vào mock, bạn sẽ có một file pact trông rất đẹp — nhưng nó mô tả một Consumer **tưởng tượng**, không phải Consumer thật của bạn. Contract khi đó vô giá trị, vì nó chứng nhận cho một thứ không tồn tại. Đây là lỗi phổ biến nhất khi mới dùng Pact.
+> _(hộp dưới)_ Từ đó suy ra nguyên tắc trên slide: **mock provider không thay thế code Consumer.** Nếu bạn viết test theo kiểu tự dựng một request bằng tay rồi bắn vào mock, bạn sẽ có một file pact trông rất đẹp — nhưng nó mô tả một Consumer **tưởng tượng**, không phải Consumer thật của bạn. Contract khi đó vô giá trị, vì nó chứng nhận cho một thứ không tồn tại. Đây là lỗi phổ biến nhất khi mới dùng Pact.
 
 **Chú thích dựng phim**
 
@@ -770,7 +769,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B10 — Giải phẫu pact.json và matcher (14:00–16:00)
 
-**Slide:** `pages/5.demo_pact/5.3.contract_anatomy.md`
+**Slide:** `pages/5.demo_pact/5.3.contract_anatomy.md` (Slide 34)
 
 **Hình ảnh trên màn hình**
 
@@ -780,25 +779,25 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 > Đây là hình dạng thật của một interaction bên trong file pact. File thật dài hơn và có thêm phần metadata, nhưng phần cốt lõi đúng như trên slide.
 >
-> *(highlight 1)* Trên cùng là **`description`** — mô tả interaction, ở đây là `"get product 10"`. Chuỗi này sẽ hiện trong báo cáo verification, nên hãy đặt cho rõ nghĩa.
+> _(highlight 1)_ Trên cùng là **`description`** — mô tả interaction, ở đây là `"get product 10"`. Chuỗi này sẽ hiện trong báo cáo verification, nên hãy đặt cho rõ nghĩa.
 >
 > Ngay dưới là **`providerState`**: `"product 10 exists"` — chính là khái niệm provider state mình đã giải thích. Chuỗi này sẽ được phía Provider đọc để dựng dữ liệu trước khi kiểm chứng.
 >
 > Rồi tới **`request`** — method `GET`, path `/product/10`. Đây là thứ Pact sẽ phát lại nguyên văn ở bước sau.
 >
-> *(highlight 2)* Tiếp theo là **`response`**: status `200`, và body có ba trường `id`, `name`, `type`.
+> _(highlight 2)_ Tiếp theo là **`response`**: status `200`, và body có ba trường `id`, `name`, `type`.
 >
 > Ở đây có một câu hỏi rất tự nhiên mà mình muốn các bạn tự đặt ra: **giá trị `"28 Degrees"` trong body có ý nghĩa gì?** Chẳng lẽ khi kiểm chứng, Provider bắt buộc phải trả về đúng chuỗi ký tự đó?
 >
-> *(highlight 3)* Câu trả lời nằm ở **`matchingRules`** — luật so khớp, và đây là chi tiết tinh tế nhất của Pact.
+> _(highlight 3)_ Câu trả lời nằm ở **`matchingRules`** — luật so khớp, và đây là chi tiết tinh tế nhất của Pact.
 >
 > Mặc định, Pact so khớp **chính xác từng giá trị**. Nhưng như thế thì contract sẽ vỡ ngay khi dữ liệu thay đổi, dù API không hề đổi. Nên Pact cho phép khai báo: với trường này, tôi **không** quan tâm giá trị cụ thể, tôi chỉ cần **đúng kiểu dữ liệu**.
 >
-> Ở đây, `$.body.id` và `$.body.name` được khai báo là `type:string`. Nghĩa là: *"tôi cần trường `name` tồn tại và là chuỗi ký tự; nội dung là gì thì tùy Provider."* Còn giá trị `"28 Degrees"` chỉ đóng vai **dữ liệu ví dụ** — nó cho mock provider có cái gì đó để trả về trong lúc chạy test phía Consumer.
+> Ở đây, `$.body.id` và `$.body.name` được khai báo là `type:string`. Nghĩa là: _"tôi cần trường `name` tồn tại và là chuỗi ký tự; nội dung là gì thì tùy Provider."_ Còn giá trị `"28 Degrees"` chỉ đóng vai **dữ liệu ví dụ** — nó cho mock provider có cái gì đó để trả về trong lúc chạy test phía Consumer.
 >
 > Ngoài matcher theo kiểu, Pact còn có matcher theo **biểu thức chính quy** — regex. Repo của nhóm có **10 interaction**, và cả **10** đều dùng một regex matcher cho header `Authorization` để mô tả định dạng Bearer ISO-8601. Điều này rất hợp lý: token thay đổi mỗi lần chạy, nên không thể so khớp chính xác; nhưng **định dạng** thì phải đúng, và regex diễn đạt được đúng ý đó.
 >
-> *(hộp dưới)* Nguyên tắc dùng matcher gói trong ba vế. **Chặt** với những gì Consumer thực sự phụ thuộc. **Lỏng** với dữ liệu động như id sinh tự động, timestamp, token. Và **không over-specify cũng không under-specify**.
+> _(hộp dưới)_ Nguyên tắc dùng matcher gói trong ba vế. **Chặt** với những gì Consumer thực sự phụ thuộc. **Lỏng** với dữ liệu động như id sinh tự động, timestamp, token. Và **không over-specify cũng không under-specify**.
 >
 > Giải thích hai lỗi này vì chúng đối xứng nhau. **Over-specify** — mô tả quá chặt: bạn khóa cả những thứ mình không dùng, khiến Provider không tiến hóa được và pipeline đỏ vì những thay đổi vô hại. **Under-specify** — mô tả quá lỏng: contract không còn bắt được lỗi thật, và bạn có một lưới an toàn giả. Chọn đúng độ chặt cho từng trường chính là kỹ năng cốt lõi khi viết contract.
 
@@ -806,7 +805,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B11 — Bước 2: Provider xác minh contract (16:00–17:50)
 
-**Slide:** `pages/5.demo_pact/5.4.provider_side.md`
+**Slide:** `pages/5.demo_pact/5.4.provider_side.md` (Slide 35)
 
 **Hình ảnh trên màn hình**
 
@@ -818,23 +817,23 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Trước khi đọc sơ đồ, mình muốn xóa một hiểu nhầm rất phổ biến: **verification không hề gọi tới Consumer.** Consumer có thể đang offline, đang được viết lại, hoặc do một đội ở nước khác quản lý. Cái duy nhất Provider cần là **file pact**. Công cụ **verifier** sẽ đóng vai Consumer và phát lại các request đã được ghi trong đó.
 >
-> *(mũi tên 1–2)* Verifier lấy file pact về từ **Broker**. Nó cũng có thể đọc từ file cục bộ, nhưng lấy từ Broker mới là cách dùng đúng trong CI, vì khi đó nó luôn kiểm chứng phiên bản contract mới nhất mà Consumer đã công bố.
+> _(mũi tên 1–2)_ Verifier lấy file pact về từ **Broker**. Nó cũng có thể đọc từ file cục bộ, nhưng lấy từ Broker mới là cách dùng đúng trong CI, vì khi đó nó luôn kiểm chứng phiên bản contract mới nhất mà Consumer đã công bố.
 >
-> *(mũi tên 3–4)* Với mỗi interaction, verifier đọc `providerState` và gọi tới **state handler** tương ứng ở phía Provider — đoạn code có nhiệm vụ dựng dữ liệu. Ở đây, state handler cho `"product 10 exists"` sẽ chèn sản phẩm số 10 vào kho dữ liệu. Xong, nó báo "trạng thái đã sẵn sàng".
+> _(mũi tên 3–4)_ Với mỗi interaction, verifier đọc `providerState` và gọi tới **state handler** tương ứng ở phía Provider — đoạn code có nhiệm vụ dựng dữ liệu. Ở đây, state handler cho `"product 10 exists"` sẽ chèn sản phẩm số 10 vào kho dữ liệu. Xong, nó báo "trạng thái đã sẵn sàng".
 >
-> *(mũi tên 5–6)* Verifier **phát lại request thật** — `GET /product/10` — vào **API thật đang chạy**. Không mock, không giả lập. Request đi qua toàn bộ routing, middleware, tầng xử lý y như một request bình thường. Provider trả về response thật.
+> _(mũi tên 5–6)_ Verifier **phát lại request thật** — `GET /product/10` — vào **API thật đang chạy**. Không mock, không giả lập. Request đi qua toàn bộ routing, middleware, tầng xử lý y như một request bình thường. Provider trả về response thật.
 >
-> *(mũi tên 7)* Verifier **đối chiếu** response nhận được với những gì contract yêu cầu — status, headers, cấu trúc body, theo đúng các matching rules đã khai báo.
+> _(mũi tên 7)_ Verifier **đối chiếu** response nhận được với những gì contract yêu cầu — status, headers, cấu trúc body, theo đúng các matching rules đã khai báo.
 >
-> *(mũi tên 8)* Cuối cùng nó **công bố kết quả verification lên Broker**. Bước này thường bị quên nhưng lại rất quan trọng: không có kết quả trên Broker thì `can-i-deploy` không có gì để tra cứu.
+> _(mũi tên 8)_ Cuối cùng nó **công bố kết quả verification lên Broker**. Bước này thường bị quên nhưng lại rất quan trọng: không có kết quả trên Broker thì `can-i-deploy` không có gì để tra cứu.
 >
-> *(ba hộp dưới)* Ba đặc tính đáng ghi nhớ. **Real routing** — request đi vào API thật, nên nếu bạn cấu hình sai route hay middleware, verification bắt được. **Controlled state** — dữ liệu được dựng lại y hệt ở mỗi lần chạy, nên kết quả tái lập được chứ không phụ thuộc vào việc cơ sở dữ liệu đang chứa gì. Và **precise diff** — khi lệch, báo lỗi chỉ đúng trường bị gãy: mong đợi trường này, nhận được trường kia. Bạn không phải đi dò.
+> _(ba hộp dưới)_ Ba đặc tính đáng ghi nhớ. **Real routing** — request đi vào API thật, nên nếu bạn cấu hình sai route hay middleware, verification bắt được. **Controlled state** — dữ liệu được dựng lại y hệt ở mỗi lần chạy, nên kết quả tái lập được chứ không phụ thuộc vào việc cơ sở dữ liệu đang chứa gì. Và **precise diff** — khi lệch, báo lỗi chỉ đúng trường bị gãy: mong đợi trường này, nhận được trường kia. Bạn không phải đi dò.
 
 ---
 
 ### Cảnh B12 — Broker và deployment gate (17:50–19:20)
 
-**Slide:** `pages/5.demo_pact/5.5.broker_cicd.md`
+**Slide:** `pages/5.demo_pact/5.5.broker_cicd.md` (Slide 36)
 
 **Hình ảnh trên màn hình**
 
@@ -844,11 +843,11 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 > Slide này ghép mọi thứ lại thành một vòng đời hoàn chỉnh.
 >
-> *(khối trên)* **Vòng đời contract.** Consumer chạy test, sinh ra pact file. Pact file được **publish** — công bố — lên Broker. Provider **fetch** — lấy về — và chạy verification. Kết quả verification quay ngược lên Broker và trở thành một ô trong **compatibility matrix**.
+> _(khối trên)_ **Vòng đời contract.** Consumer chạy test, sinh ra pact file. Pact file được **publish** — công bố — lên Broker. Provider **fetch** — lấy về — và chạy verification. Kết quả verification quay ngược lên Broker và trở thành một ô trong **compatibility matrix**.
 >
 > Điểm cần thấy ở đây là **Consumer và Provider không bao giờ gọi trực tiếp tới nhau trong quy trình này**. Broker đứng giữa, làm điểm hẹn. Nhờ vậy hai đội hoàn toàn không cần đồng bộ lịch làm việc.
 >
-> *(khối dưới)* **Cổng triển khai.** Từ ma trận tương thích, lệnh **`can-i-deploy`** đặt một câu hỏi rất cụ thể: *"phiên bản X của service này, nếu đưa lên môi trường Y — nơi đang chạy những phiên bản cụ thể nào đó của các service khác — thì đã được xác nhận là tương thích chưa?"*
+> _(khối dưới)_ **Cổng triển khai.** Từ ma trận tương thích, lệnh **`can-i-deploy`** đặt một câu hỏi rất cụ thể: _"phiên bản X của service này, nếu đưa lên môi trường Y — nơi đang chạy những phiên bản cụ thể nào đó của các service khác — thì đã được xác nhận là tương thích chưa?"_
 >
 > Nếu câu trả lời là **compatible**, pipeline chạy tiếp và service được deploy độc lập.
 >
@@ -856,13 +855,13 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Nhưng hãy chú ý nhánh thứ ba trên sơ đồ: **unknown** — chưa biết. Trường hợp này cũng **chặn deploy**. Và đây là một quyết định thiết kế rất đáng học: "chưa có kết quả kiểm chứng" được xử lý **giống như** "kiểm chứng thất bại". Lý do là nếu hệ thống mặc định cho qua khi thiếu dữ liệu, thì chỉ cần một job publish bị lỗi là cổng an toàn tự động mở toang mà không ai biết. Nguyên tắc chung ở đây gọi là **fail-safe**: khi không chắc chắn, chọn phương án an toàn.
 >
-> *(hộp dưới)* Tóm lại, giá trị của Broker nằm ở chỗ nó **liên kết ba thứ**: phiên bản Consumer, phiên bản Provider, và kết quả verification giữa chúng. Ba thứ đó tạo nên ma trận tương thích — thứ cho phép các service **triển khai độc lập mà vẫn có kiểm soát**. Đó chính là lời hứa lớn nhất của Contract Testing.
+> _(hộp dưới)_ Tóm lại, giá trị của Broker nằm ở chỗ nó **liên kết ba thứ**: phiên bản Consumer, phiên bản Provider, và kết quả verification giữa chúng. Ba thứ đó tạo nên ma trận tương thích — thứ cho phép các service **triển khai độc lập mà vẫn có kiểm soát**. Đó chính là lời hứa lớn nhất của Contract Testing.
 
 ---
 
 ### Cảnh B13 — Case study Product Service (19:20–20:10)
 
-**Slide:** `pages/5.demo_pact/5.6.case_study.md & 5.7.case_study_results.md`
+**Slide:** `pages/5.demo_pact/5.6.case_study.md` & `pages/5.demo_pact/5.7.case_study_results.md` (Slide 37 & 38)
 
 **Lời thoại**
 
@@ -872,7 +871,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > Điểm đáng chú ý là **danh sách rỗng cũng là một interaction riêng**. Vì với Consumer, "trả về mảng rỗng" và "trả về mảng có phần tử" là hai hành vi khác nhau mà giao diện phải xử lý khác nhau. Nếu Provider đổi từ trả mảng rỗng sang trả `404`, frontend sẽ gãy — và chỉ contract cho trường hợp rỗng mới bắt được thay đổi đó.
 >
-> *(kết quả)* Kết quả hiện tại: **10 trên 10** interaction pass ở phía Consumer, và verification phía Provider **pass**.
+> _(kết quả)_ Kết quả hiện tại: **10 trên 10** interaction pass ở phía Consumer, và verification phía Provider **pass**.
 >
 > Hai lệnh chạy ở dưới slide, mình chỉ đọc lướt: một lệnh cho consumer test, một lệnh cho provider verification. **Việc chạy thật, xem output ra sao, các bạn sẽ thấy đầy đủ ở Video 3.**
 
@@ -880,21 +879,21 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B14 — Breaking change và bài học (20:10–21:30)
 
-**Slide:** `pages/5.demo_pact/5.8.breaking_change.md`
+**Slide:** `pages/5.demo_pact/5.8.breaking_change.md` (Slide 39)
 
 **Lời thoại**
 
 > Slide này là phần chốt của Phần D, và cũng là nội dung chính của bài Mini Exercise trên lớp. Ở đây mình giải thích **cơ chế và bài học**; phần chạy thật nằm ở Video 3.
 >
-> *(kịch bản)* Kịch bản: Provider đổi tên trường `name` thành `title` trong response. Đúng loại thay đổi mà mình mô tả ở đầu Video 1B.
+> _(kịch bản)_ Kịch bản: Provider đổi tên trường `name` thành `title` trong response. Đúng loại thay đổi mà mình mô tả ở đầu Video 1B.
 >
 > Điểm cần chú ý: **HTTP status vẫn là `200`.** API vẫn phản hồi, vẫn trả về JSON hợp lệ, không có exception nào được ném ra. Nhìn từ bên ngoài, mọi thứ **có vẻ** vẫn hoạt động.
 >
 > Nhưng contract của Consumer yêu cầu có trường `name`. Và trường đó giờ không còn.
 >
-> *(kết quả)* Khi chạy verification, Provider **fail**. Pact chỉ rõ điểm lệch: mong đợi trường `name`, nhận được `title`. Khôi phục lại tên cũ, verification **pass** trở lại.
+> _(kết quả)_ Khi chạy verification, Provider **fail**. Pact chỉ rõ điểm lệch: mong đợi trường `name`, nhận được `title`. Khôi phục lại tên cũ, verification **pass** trở lại.
 >
-> *(hộp bài học)* Ba bài học, và mình muốn dừng ở bài học thứ hai.
+> _(hộp bài học)_ Ba bài học, và mình muốn dừng ở bài học thứ hai.
 >
 > Thứ nhất: **đổi tên một trường là breaking change**, kể cả khi status code không đổi. "Breaking change" nghĩa là thay đổi làm gãy bên đang sử dụng. Đây là loại thay đổi trông vô hại nhất mà gây hậu quả thật.
 >
@@ -908,7 +907,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B15 — Chuyển phần E (21:30–21:45)
 
-**Slide:** `pages/6.ai_testing/6.1.section.md`
+**Slide:** `pages/6.ai_testing/6.1.section.md` (Slide 40)
 
 **Lời thoại**
 
@@ -918,17 +917,17 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B16 — AI trong quy trình testing (21:45–23:15)
 
-**Slide:** `pages/6.ai_testing/6.2.ai_in_testing.md & 6.3.ai_principles.md`
+**Slide:** `pages/6.ai_testing/6.2.ai_in_testing.md` & `pages/6.ai_testing/6.3.ai_principles.md` (Slide 41 & 42)
 
 **Lời thoại**
 
-> *(cột trái)* AI hỗ trợ được ở bốn chỗ trong công việc kiểm thử. **Sinh test case từ đặc tả API** — đưa vào một mô tả endpoint, nhận về danh sách các trường hợp cần kiểm tra. **Gợi ý cấu trúc Collection** — tổ chức thư mục, đặt tên. **Review contract và phát hiện thiếu sót** — ví dụ chỉ ra rằng bạn có interaction cho trường hợp thành công mà chưa có cho trường hợp lỗi. Và **tạo sơ đồ, tài liệu, workflow mẫu**.
+> _(cột trái)_ AI hỗ trợ được ở bốn chỗ trong công việc kiểm thử. **Sinh test case từ đặc tả API** — đưa vào một mô tả endpoint, nhận về danh sách các trường hợp cần kiểm tra. **Gợi ý cấu trúc Collection** — tổ chức thư mục, đặt tên. **Review contract và phát hiện thiếu sót** — ví dụ chỉ ra rằng bạn có interaction cho trường hợp thành công mà chưa có cho trường hợp lỗi. Và **tạo sơ đồ, tài liệu, workflow mẫu**.
 >
 > Điểm chung của bốn việc này: chúng đều là những việc **tốn thời gian nhưng có khuôn mẫu rõ ràng**. Đó là chỗ AI hữu dụng nhất.
 >
-> *(công cụ)* Nhóm dùng Claude, ChatGPT và Gemini cho phần nghiên cứu và soạn thảo; **Postman Postbot** để sinh test script ngay trong Postman; và một **Agent Skill** tự viết để sinh test từ đặc tả API — mình sẽ nói ở slide sau.
+> _(công cụ)_ Nhóm dùng Claude, ChatGPT và Gemini cho phần nghiên cứu và soạn thảo; **Postman Postbot** để sinh test script ngay trong Postman; và một **Agent Skill** tự viết để sinh test từ đặc tả API — mình sẽ nói ở slide sau.
 >
-> *(cột phải)* Bốn nguyên tắc mà nhóm tự đặt ra khi làm việc với AI. Phần này quan trọng hơn danh sách công cụ, vì nó là thứ quyết định chất lượng đầu ra.
+> _(cột phải)_ Bốn nguyên tắc mà nhóm tự đặt ra khi làm việc với AI. Phần này quan trọng hơn danh sách công cụ, vì nó là thứ quyết định chất lượng đầu ra.
 >
 > **Một — hướng dẫn AI từng bước, không prompt chung chung.** Yêu cầu kiểu "viết test cho API của tôi" cho ra kết quả chung chung và thường sai ngữ cảnh. Chia nhỏ: mô tả endpoint, nêu ràng buộc, chỉ định loại test case cần sinh, rồi mới yêu cầu viết.
 >
@@ -942,27 +941,27 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B17 — Agent Skill (23:15–24:30)
 
-**Slide:** `pages/6.ai_testing/6.4.agent_skill.md`
+**Slide:** `pages/6.ai_testing/6.4.agent_skill.md` (Slide 43)
 
 **Lời thoại**
 
 > **Agent Skill** là một tập hướng dẫn được đóng gói, để AI thực hiện lặp lại một quy trình cụ thể thay vì phải viết lại prompt mỗi lần. Có thể hình dung như một hàm: có đầu vào, có các bước xử lý, có đầu ra xác định.
 >
-> *(ba hộp)* **Đầu vào** là đặc tả API — file OpenAPI, tức chuẩn mô tả API phổ biến nhất hiện nay dưới dạng YAML hoặc JSON, hoặc đơn giản là một file Markdown mô tả endpoint.
+> _(ba hộp)_ **Đầu vào** là đặc tả API — file OpenAPI, tức chuẩn mô tả API phổ biến nhất hiện nay dưới dạng YAML hoặc JSON, hoặc đơn giản là một file Markdown mô tả endpoint.
 >
 > **Xử lý**: phân tích từng endpoint, sinh test case theo các nhóm mà mình đã trình bày ở Video 1A — happy path, negative, authentication, validation, schema, boundary — rồi lắp thành Postman Collection.
 >
 > **Đầu ra**: file Collection JSON, các file dữ liệu, và test script.
 >
-> *(hai con số)* Về tính tái sử dụng — đây là một tiêu chí đánh giá của đồ án. Trên **80%** phần mã nguồn và prompt có thể tái sử dụng cho một API khác. Riêng bản thân Agent Skill, các workflow CI/CD và Newman runner thì tái sử dụng **100%** — vì chúng không gắn với nghiệp vụ của Product Service.
+> _(hai con số)_ Về tính tái sử dụng — đây là một tiêu chí đánh giá của đồ án. Trên **80%** phần mã nguồn và prompt có thể tái sử dụng cho một API khác. Riêng bản thân Agent Skill, các workflow CI/CD và Newman runner thì tái sử dụng **100%** — vì chúng không gắn với nghiệp vụ của Product Service.
 >
-> *(hộp demo)* Và cách nhóm chứng minh con số đó: chạy Agent Skill trên một API hoàn toàn khác — **Swagger PetStore**, một API công khai không liên quan gì tới Product Service — trên môi trường máy sạch. Nếu skill sinh ra được bộ test dùng được cho PetStore mà không phải sửa, thì tính tái sử dụng là có thật chứ không phải tự nhận. **Phần demo này nằm ở Video 3.**
+> _(hộp demo)_ Và cách nhóm chứng minh con số đó: chạy Agent Skill trên một API hoàn toàn khác — **Swagger PetStore**, một API công khai không liên quan gì tới Product Service — trên môi trường máy sạch. Nếu skill sinh ra được bộ test dùng được cho PetStore mà không phải sửa, thì tính tái sử dụng là có thật chứ không phải tự nhận. **Phần demo này nằm ở Video 3.**
 
 ---
 
 ### Cảnh B18 — Chuyển phần F (24:30–24:45)
 
-**Slide:** `pages/7.summary/7.1.section.md`
+**Slide:** `pages/7.summary/7.1.section.md` (Slide 44)
 
 **Lời thoại**
 
@@ -972,39 +971,39 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B19 — API Testing và Contract Testing (24:45–25:55)
 
-**Slide:** `pages/7.summary/7.2.comparison_summary.md`
+**Slide:** `pages/7.summary/7.2.comparison_summary.md` (Slide 45)
 
 **Lời thoại**
 
 > Bảng này đặt hai chủ đề chính cạnh nhau. Mình đi nhanh vì các bạn đã có nền.
 >
-> **Câu hỏi**: một bên hỏi *"endpoint hoạt động đúng không?"*, bên kia hỏi *"hai bên còn tương thích không?"*. **Công cụ**: Postman với Newman, so với Pact. **Phạm vi**: nhiều endpoint nhiều case, so với đúng một cặp Consumer–Provider. **Dữ liệu**: file CSV hoặc JSON theo kiểu data-driven, so với các interaction kèm matcher. **Tự động hóa**: Newman trong GitHub Actions, so với verification cộng `can-i-deploy`. **Phát hiện**: lỗi chức năng, validation, xác thực — so với breaking change tại ranh giới.
+> **Câu hỏi**: một bên hỏi _"endpoint hoạt động đúng không?"_, bên kia hỏi _"hai bên còn tương thích không?"_. **Công cụ**: Postman với Newman, so với Pact. **Phạm vi**: nhiều endpoint nhiều case, so với đúng một cặp Consumer–Provider. **Dữ liệu**: file CSV hoặc JSON theo kiểu data-driven, so với các interaction kèm matcher. **Tự động hóa**: Newman trong GitHub Actions, so với verification cộng `can-i-deploy`. **Phát hiện**: lỗi chức năng, validation, xác thực — so với breaking change tại ranh giới.
 >
-> *(dòng cuối)* Và dòng quan trọng nhất là dòng cuối cùng: **cả hai đều cần thiết.** Đây không phải hai lựa chọn thay thế nhau để bạn chọn một. Chúng che hai vùng rủi ro khác nhau, và vùng nào không được che thì vẫn hở.
+> _(dòng cuối)_ Và dòng quan trọng nhất là dòng cuối cùng: **cả hai đều cần thiết.** Đây không phải hai lựa chọn thay thế nhau để bạn chọn một. Chúng che hai vùng rủi ro khác nhau, và vùng nào không được che thì vẫn hở.
 
 ---
 
 ### Cảnh B20 — Khi nào dùng gì (25:55–26:55)
 
-**Slide:** `pages/7.summary/7.3.when_to_use.md`
+**Slide:** `pages/7.summary/7.3.when_to_use.md` (Slide 46)
 
 **Lời thoại**
 
 > Cụ thể hơn, đây là các dấu hiệu để nhận biết.
 >
-> *(cột trái)* Dùng **API Testing** khi bạn cần kiểm tra chức năng của endpoint, kiểm tra validation đầu vào đầu ra, kiểm tra xác thực và phân quyền, hoặc xây một **regression suite** — bộ test chạy lại sau mỗi thay đổi để phát hiện lỗi cũ tái phát. Nói ngắn gọn: **hầu như dự án nào có API cũng cần lớp này.**
+> _(cột trái)_ Dùng **API Testing** khi bạn cần kiểm tra chức năng của endpoint, kiểm tra validation đầu vào đầu ra, kiểm tra xác thực và phân quyền, hoặc xây một **regression suite** — bộ test chạy lại sau mỗi thay đổi để phát hiện lỗi cũ tái phát. Nói ngắn gọn: **hầu như dự án nào có API cũng cần lớp này.**
 >
-> *(cột phải)* Dùng **Contract Testing** khi có các dấu hiệu sau: nhiều service phát triển **độc lập** bởi các đội khác nhau; đội bạn **hay gặp breaking change** lúc tích hợp; bạn cần một **cổng chặn deploy**; hoặc bạn muốn phát hiện lệch **trước khi** lên staging.
+> _(cột phải)_ Dùng **Contract Testing** khi có các dấu hiệu sau: nhiều service phát triển **độc lập** bởi các đội khác nhau; đội bạn **hay gặp breaking change** lúc tích hợp; bạn cần một **cổng chặn deploy**; hoặc bạn muốn phát hiện lệch **trước khi** lên staging.
 >
 > Nói ngược lại cho rõ: nếu bạn đang làm một ứng dụng một khối, một đội, deploy cùng lúc toàn bộ — thì Contract Testing mang lại ít giá trị, vì không có ranh giới nào tiến hóa độc lập cả. **Contract Testing giải quyết vấn đề của sự độc lập; không có sự độc lập thì không có vấn đề đó.**
 >
-> *(hộp dưới)* Và chiến lược tổng thể, đây là câu đáng chép lại: **Unit lo logic · Contract lo tính tương thích · API và Integration lo chức năng và đấu nối · Ít E2E, chỉ dành cho các hành trình trọng yếu.** Chữ "ít" ở E2E là có chủ đích: E2E đắt, chậm và hay bị flaky, nên chỉ dùng cho những luồng quan trọng nhất.
+> _(hộp dưới)_ Và chiến lược tổng thể, đây là câu đáng chép lại: **Unit lo logic · Contract lo tính tương thích · API và Integration lo chức năng và đấu nối · Ít E2E, chỉ dành cho các hành trình trọng yếu.** Chữ "ít" ở E2E là có chủ đích: E2E đắt, chậm và hay bị flaky, nên chỉ dùng cho những luồng quan trọng nhất.
 
 ---
 
 ### Cảnh B21 — Adoption path (26:55–27:50)
 
-**Slide:** `pages/7.summary/7.4.adoption_path.md`
+**Slide:** `pages/7.summary/7.4.adoption_path.md` (Slide 47)
 
 **Lời thoại**
 
@@ -1024,7 +1023,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B22 — Ba từ khóa và kết (27:50–28:50)
 
-**Slide:** `pages/7.summary/7.5.takeaways.md`, sau đó `7.6.resources & 7.7.official_docs.md`
+**Slide:** `pages/7.summary/7.5.takeaways.md` & `pages/7.summary/7.6.resources.md` & `pages/7.summary/7.7.official_docs.md` (Slide 48 & 49 & 50)
 
 **Lời thoại**
 
@@ -1036,7 +1035,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 >
 > **Safe**: các service tiến hóa độc lập **có kiểm soát** — vẫn đi nhanh, nhưng có cổng chặn khi sắp gãy.
 >
-> *(chuyển slide Resources)* Tóm tắt lại toàn bộ: **API Testing và Contract Testing giải quyết hai nhóm rủi ro khác nhau.** Newman cộng GitHub Actions cho ta một regression suite tự động. Pact cho ta contract artifact, provider verification, và cổng kiểm soát tương thích.
+> _(chuyển slide Resources)_ Tóm tắt lại toàn bộ: **API Testing và Contract Testing giải quyết hai nhóm rủi ro khác nhau.** Newman cộng GitHub Actions cho ta một regression suite tự động. Pact cho ta contract artifact, provider verification, và cổng kiểm soát tương thích.
 >
 > Về tài liệu: repository của nhóm có sẵn source code API mẫu, collection Postman kèm file dữ liệu, phần Pact và các workflow CI/CD. Tài liệu gốc nên đọc thêm là `docs.pact.io` cho Pact và `learning.postman.com` cho Postman.
 >
@@ -1053,48 +1052,48 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 Dùng nhất quán bảng này trong cả ba video. Cột "Cách đọc lần đầu" là công thức giới thiệu thuật ngữ khi nó xuất hiện lần đầu.
 
-| Thuật ngữ                | Tiếng Việt                    | Cách đọc lần đầu trong video                                     |
-| ------------------------ | ----------------------------- | ---------------------------------------------------------------- |
-| API                      | Giao diện lập trình ứng dụng  | "API — Application Programming Interface — giao diện lập trình"   |
-| Endpoint                 | Điểm cuối / đầu mối API       | Giữ nguyên "endpoint"                                            |
-| Resource                 | Tài nguyên                    | "tài nguyên — resource"                                          |
-| Idempotent               | Bất biến khi lặp lại          | "idempotent — gọi nhiều lần cho cùng một kết quả"                |
-| Authentication           | Xác thực                      | "authentication — xác thực — bạn là ai"                          |
-| Authorization            | Phân quyền                    | "authorization — phân quyền — bạn được làm gì"                   |
-| Bearer token             | Token dạng "người cầm"        | "Bearer — người cầm token thì được coi là chủ sở hữu"            |
-| Happy path               | Luồng thuận                   | "happy path — luồng thuận, dữ liệu hợp lệ"                       |
-| Negative test            | Test luồng nghịch             | "negative test — kỳ vọng một lỗi cụ thể, không phải test bị fail" |
-| Assertion                | Câu lệnh khẳng định           | "assertion — câu khẳng định một điều kiện phải đúng"             |
-| Collection               | Bộ sưu tập request            | Giữ nguyên "collection"                                          |
-| Environment              | Bộ biến môi trường            | Giữ nguyên "environment"                                         |
-| Iteration                | Lần lặp                       | "iteration — mỗi lần lặp là một test case"                       |
-| Data-driven testing      | Kiểm thử hướng dữ liệu        | "data-driven — một request, nhiều bộ dữ liệu"                    |
-| CLI runner               | Trình chạy dòng lệnh          | "CLI runner — chạy test từ dòng lệnh, không cần giao diện"       |
-| Readiness probe          | Phép thử sẵn sàng             | "readiness probe — gọi thử tới khi service trả lời"              |
-| Artifact                 | Tệp đầu ra được lưu lại       | "artifact — file báo cáo được CI giữ lại để xem sau"             |
-| Quality gate             | Cổng chất lượng               | "quality gate — cổng chặn pipeline nếu không đạt"                |
-| Flaky test               | Test bấp bênh                 | "flaky — lúc xanh lúc đỏ dù code không đổi"                      |
-| Consumer                 | Bên tiêu thụ / bên gọi API    | "Consumer — bên gọi API"                                         |
-| Provider                 | Bên cung cấp API              | "Provider — bên cung cấp API"                                    |
-| Contract                 | Hợp đồng (có thể thực thi)    | "contract — hợp đồng máy đọc được và chạy được"                  |
-| Interaction              | Tương tác                     | "interaction — một cặp request–response trong contract"          |
-| Provider state           | Trạng thái tiên quyết         | "provider state — điều kiện dữ liệu phải có trước"               |
-| State handler            | Bộ dựng trạng thái            | "state handler — đoạn code dựng dữ liệu cho provider state"      |
-| Matcher / matching rule  | Luật so khớp                  | "matcher — luật so khớp, khớp theo kiểu thay vì theo giá trị"    |
-| Over-specify             | Mô tả quá chặt                | "over-specify — khóa cả những thứ mình không dùng"               |
-| Under-specify            | Mô tả quá lỏng                | "under-specify — lưới an toàn giả"                               |
-| Pact file                | Tệp hợp đồng                  | "pact file — file JSON chứa các interaction"                     |
-| Mock provider            | Provider giả lập              | "mock provider — server giả do Pact dựng lên"                    |
-| Verification             | Kiểm chứng                    | "verification — Provider chứng minh mình đáp ứng contract"       |
-| Pact Broker              | Kho contract trung tâm        | "Broker — nơi lưu contract, phiên bản và kết quả kiểm chứng"     |
-| Compatibility matrix     | Ma trận tương thích           | "compatibility matrix — bảng tra phiên bản nào hợp phiên bản nào" |
-| `can-i-deploy`           | Cổng kiểm tra trước triển khai | "can-i-deploy — phiên bản này có an toàn để deploy không"        |
-| Consumer-driven          | Do bên tiêu thụ dẫn dắt       | "consumer-driven — Consumer nêu nhu cầu, Provider xác minh"      |
-| Breaking change          | Thay đổi gây gãy              | "breaking change — thay đổi làm bên đang dùng bị gãy"            |
-| Regression suite         | Bộ test hồi quy               | "regression suite — chạy lại sau mỗi thay đổi"                   |
-| Test isolation           | Cô lập giữa các lần chạy test | "test isolation — mỗi lần chạy bắt đầu từ trạng thái sạch"       |
-| Agent Skill              | Kỹ năng đóng gói cho AI       | "Agent Skill — tập hướng dẫn đóng gói để AI làm lặp lại"         |
-| OpenAPI                  | Chuẩn mô tả API               | "OpenAPI — chuẩn mô tả API dạng YAML hoặc JSON"                  |
+| Thuật ngữ               | Tiếng Việt                     | Cách đọc lần đầu trong video                                      |
+| ----------------------- | ------------------------------ | ----------------------------------------------------------------- |
+| API                     | Giao diện lập trình ứng dụng   | "API — Application Programming Interface — giao diện lập trình"   |
+| Endpoint                | Điểm cuối / đầu mối API        | Giữ nguyên "endpoint"                                             |
+| Resource                | Tài nguyên                     | "tài nguyên — resource"                                           |
+| Idempotent              | Bất biến khi lặp lại           | "idempotent — gọi nhiều lần cho cùng một kết quả"                 |
+| Authentication          | Xác thực                       | "authentication — xác thực — bạn là ai"                           |
+| Authorization           | Phân quyền                     | "authorization — phân quyền — bạn được làm gì"                    |
+| Bearer token            | Token dạng "người cầm"         | "Bearer — người cầm token thì được coi là chủ sở hữu"             |
+| Happy path              | Luồng thuận                    | "happy path — luồng thuận, dữ liệu hợp lệ"                        |
+| Negative test           | Test luồng nghịch              | "negative test — kỳ vọng một lỗi cụ thể, không phải test bị fail" |
+| Assertion               | Câu lệnh khẳng định            | "assertion — câu khẳng định một điều kiện phải đúng"              |
+| Collection              | Bộ sưu tập request             | Giữ nguyên "collection"                                           |
+| Environment             | Bộ biến môi trường             | Giữ nguyên "environment"                                          |
+| Iteration               | Lần lặp                        | "iteration — mỗi lần lặp là một test case"                        |
+| Data-driven testing     | Kiểm thử hướng dữ liệu         | "data-driven — một request, nhiều bộ dữ liệu"                     |
+| CLI runner              | Trình chạy dòng lệnh           | "CLI runner — chạy test từ dòng lệnh, không cần giao diện"        |
+| Readiness probe         | Phép thử sẵn sàng              | "readiness probe — gọi thử tới khi service trả lời"               |
+| Artifact                | Tệp đầu ra được lưu lại        | "artifact — file báo cáo được CI giữ lại để xem sau"              |
+| Quality gate            | Cổng chất lượng                | "quality gate — cổng chặn pipeline nếu không đạt"                 |
+| Flaky test              | Test bấp bênh                  | "flaky — lúc xanh lúc đỏ dù code không đổi"                       |
+| Consumer                | Bên tiêu thụ / bên gọi API     | "Consumer — bên gọi API"                                          |
+| Provider                | Bên cung cấp API               | "Provider — bên cung cấp API"                                     |
+| Contract                | Hợp đồng (có thể thực thi)     | "contract — hợp đồng máy đọc được và chạy được"                   |
+| Interaction             | Tương tác                      | "interaction — một cặp request–response trong contract"           |
+| Provider state          | Trạng thái tiên quyết          | "provider state — điều kiện dữ liệu phải có trước"                |
+| State handler           | Bộ dựng trạng thái             | "state handler — đoạn code dựng dữ liệu cho provider state"       |
+| Matcher / matching rule | Luật so khớp                   | "matcher — luật so khớp, khớp theo kiểu thay vì theo giá trị"     |
+| Over-specify            | Mô tả quá chặt                 | "over-specify — khóa cả những thứ mình không dùng"                |
+| Under-specify           | Mô tả quá lỏng                 | "under-specify — lưới an toàn giả"                                |
+| Pact file               | Tệp hợp đồng                   | "pact file — file JSON chứa các interaction"                      |
+| Mock provider           | Provider giả lập               | "mock provider — server giả do Pact dựng lên"                     |
+| Verification            | Kiểm chứng                     | "verification — Provider chứng minh mình đáp ứng contract"        |
+| Pact Broker             | Kho contract trung tâm         | "Broker — nơi lưu contract, phiên bản và kết quả kiểm chứng"      |
+| Compatibility matrix    | Ma trận tương thích            | "compatibility matrix — bảng tra phiên bản nào hợp phiên bản nào" |
+| `can-i-deploy`          | Cổng kiểm tra trước triển khai | "can-i-deploy — phiên bản này có an toàn để deploy không"         |
+| Consumer-driven         | Do bên tiêu thụ dẫn dắt        | "consumer-driven — Consumer nêu nhu cầu, Provider xác minh"       |
+| Breaking change         | Thay đổi gây gãy               | "breaking change — thay đổi làm bên đang dùng bị gãy"             |
+| Regression suite        | Bộ test hồi quy                | "regression suite — chạy lại sau mỗi thay đổi"                    |
+| Test isolation          | Cô lập giữa các lần chạy test  | "test isolation — mỗi lần chạy bắt đầu từ trạng thái sạch"        |
+| Agent Skill             | Kỹ năng đóng gói cho AI        | "Agent Skill — tập hướng dẫn đóng gói để AI làm lặp lại"          |
+| OpenAPI                 | Chuẩn mô tả API                | "OpenAPI — chuẩn mô tả API dạng YAML hoặc JSON"                   |
 
 ## 8. Bảng kiểm kết thúc video
 
@@ -1145,7 +1144,7 @@ Dùng nhất quán bảng này trong cả ba video. Cột "Cách đọc lần đ
 
 ### Đọc nguyên văn chữ trên slide
 
-Slide được thiết kế **cố tình thưa** để dành thời gian thực hành. Nếu người quay chỉ đọc lại chữ trên slide, video không thêm giá trị nào. Nguyên tắc: **slide nêu *cái gì*, lời thoại giải thích *vì sao* và *hỏng thì ra sao*.**
+Slide được thiết kế **cố tình thưa** để dành thời gian thực hành. Nếu người quay chỉ đọc lại chữ trên slide, video không thêm giá trị nào. Nguyên tắc: **slide nêu _cái gì_, lời thoại giải thích _vì sao_ và _hỏng thì ra sao_.**
 
 ### Giảng sâu ở slide `3.4.pact_pipeline & 3.5.pact_verification`
 
@@ -1153,7 +1152,7 @@ Slide này đứng trước phần Contract Testing trong deck. Nếu giảng s�
 
 ### Sa vào thao tác công cụ
 
-Mỗi khi thấy mình sắp nói "bây giờ mình mở Postman lên và..." thì dừng lại. Đó là Video 3. Công thức thay thế: *"phần chạy thật các bạn sẽ thấy ở Video 3."*
+Mỗi khi thấy mình sắp nói "bây giờ mình mở Postman lên và..." thì dừng lại. Đó là Video 3. Công thức thay thế: _"phần chạy thật các bạn sẽ thấy ở Video 3."_
 
 ### Dùng lẫn lộn Consumer và Provider
 
