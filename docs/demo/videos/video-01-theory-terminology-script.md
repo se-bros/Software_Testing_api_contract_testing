@@ -96,8 +96,8 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 |   Thời gian | Cảnh                                 | Slide                                   |
 | ----------: | ------------------------------------ | --------------------------------------- |
 | 00:00–00:50 | A1 · Mở đầu, giới thiệu nhóm         | `1.1.cover`                             |
-| 00:50–01:55 | A2 · Agenda & phân vai ba video      | `1.2.agenda`                            |
-| 01:55–03:15 | A3 · Bối cảnh microservices & mục tiêu | `1.3.intro_section`                   |
+| 00:50–01:55 | A2 · Agenda & phân vai ba video      | `1.3.agenda`                            |
+| 01:55–03:15 | A3 · Bối cảnh microservices & mục tiêu | `1.4.intro_section`                   |
 | 03:15–03:30 | A4 · Chuyển phần A                   | `2.1.section`                           |
 | 03:30–06:50 | A5 · API, REST, method, status code  | `2.2.api_basics`                        |
 | 06:50–08:45 | A6 · Authentication & Authorization  | `2.3.authentication`                    |
@@ -111,8 +111,8 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 | 19:05–19:20 | A14 · Chuyển phần B                  | `3.1.section`                           |
 | 19:20–20:35 | A15 · Newman                         | `3.2.newman`                            |
 | 20:35–21:25 | A16 · Newman pipeline                | `3.3.cicd_pipeline`                     |
-| 21:25–22:05 | A17 · Pact pipeline (bản đồ trước)   | `3.4.pact_pipeline & 3.5.pact_verification`                     |
-| 22:05–22:55 | A18 · Hai lớp bảo vệ & chốt 1A       | `3.6.automation_value`                  |
+| 21:25–22:05 | A17 · Pact pipeline (bản đồ trước)   | `3.4.pact_pipeline`                     |
+| 22:05–22:55 | A18 · Hai lớp bảo vệ & chốt 1A       | `3.5.automation_value`                  |
 
 ### Video 1B — Contract Testing, Pact & Tổng kết (~27 phút)
 
@@ -130,16 +130,16 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 | 14:00–16:00 | B10 · Giải phẫu pact.json & matcher    | `5.3.contract_anatomy`                 |
 | 16:00–17:50 | B11 · Provider xác minh contract       | `5.4.provider_side`                    |
 | 17:50–19:20 | B12 · Broker & deployment gate         | `5.5.broker_cicd`                      |
-| 19:20–20:10 | B13 · Case study Product Service       | `5.6.case_study & 5.7.case_study_results`                       |
-| 20:10–21:30 | B14 · Breaking change — bài học        | `5.8.breaking_change`                  |
+| 19:20–20:10 | B13 · Case study Product Service       | `5.6.case_study`                       |
+| 20:10–21:30 | B14 · Breaking change — bài học        | `5.7.breaking_change`                  |
 | 21:30–21:45 | B15 · Chuyển phần E                    | `6.1.section`                          |
-| 21:45–23:15 | B16 · AI trong quy trình testing       | `6.2.ai_in_testing & 6.3.ai_principles`                    |
-| 23:15–24:30 | B17 · Agent Skill                      | `6.4.agent_skill`                      |
+| 21:45–23:15 | B16 · AI trong quy trình testing       | `6.2.ai_in_testing`                    |
+| 23:15–24:30 | B17 · Agent Skill                      | `6.3.agent_skill`                      |
 | 24:30–24:45 | B18 · Chuyển phần F                    | `7.1.section`                          |
 | 24:45–25:55 | B19 · API Testing vs Contract Testing  | `7.2.comparison_summary`               |
 | 25:55–26:55 | B20 · Khi nào dùng gì                  | `7.3.when_to_use`                      |
 | 26:55–27:50 | B21 · Adoption path                    | `7.4.adoption_path`                    |
-| 27:50–28:50 | B22 · Ba từ khóa & kết                 | `7.5.takeaways`, `7.6.resources & 7.7.official_docs`       |
+| 27:50–28:50 | B22 · Ba từ khóa & kết                 | `7.5.takeaways`, `7.6.resources`       |
 
 ## 5. Kịch bản chi tiết — Video 1A
 
@@ -168,7 +168,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A2 — Agenda và phân vai ba video (00:50–01:55)
 
-**Slide:** `pages/1.intro/1.2.agenda.md` (bấm qua slide `1.2` không dừng lại)
+**Slide:** `pages/1.3.agenda.md` (bấm qua slide `1.2` không dừng lại)
 
 **Hình ảnh trên màn hình**
 
@@ -192,7 +192,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A3 — Bối cảnh và mục tiêu seminar (01:55–03:15)
 
-**Slide:** `pages/1.intro/1.3.intro_section.md`
+**Slide:** `pages/1.intro/1.4.intro_section.md`
 
 **Hình ảnh trên màn hình**
 
@@ -267,7 +267,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A6 — Authentication và Authorization (06:50–08:45)
 
-**Slide:** `pages/2.api_testing/2.4.authentication.md & 2.5.auth_mechanisms.md`
+**Slide:** `pages/2.api_testing/2.3.authentication.md`
 
 **Hình ảnh trên màn hình**
 
@@ -295,7 +295,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A7 — Sáu loại test case cho API (08:45–11:45)
 
-**Slide:** `pages/2.api_testing/2.6.test_design.md & 2.7.advanced_test_design.md`
+**Slide:** `pages/2.api_testing/2.4.test_design.md`
 
 **Hình ảnh trên màn hình**
 
@@ -334,7 +334,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A8 — Postman, các khái niệm cốt lõi (11:45–13:25)
 
-**Slide:** `pages/2.api_testing/2.8.postman_overview.md & 2.9.postman_advanced.md`
+**Slide:** `pages/2.api_testing/2.5.postman_overview.md`
 
 **Lời thoại**
 
@@ -358,7 +358,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A9 — Tổ chức Collection (13:25–14:35)
 
-**Slide:** `pages/2.api_testing/2.10.postman_collections.md`
+**Slide:** `pages/2.api_testing/2.6.postman_collections.md`
 
 **Lời thoại**
 
@@ -376,7 +376,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A10 — Script và Assertion (14:35–15:50)
 
-**Slide:** `pages/2.api_testing/2.11.postman_scripts.md`
+**Slide:** `pages/2.api_testing/2.7.postman_scripts.md`
 
 **Lời thoại**
 
@@ -396,7 +396,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A11 — Data-driven testing (15:50–17:05)
 
-**Slide:** `pages/2.api_testing/2.12.postman_datadriven.md`
+**Slide:** `pages/2.api_testing/2.8.postman_datadriven.md`
 
 **Lời thoại**
 
@@ -416,7 +416,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A12 — VS Code REST Client (17:05–17:55)
 
-**Slide:** `pages/2.api_testing/2.13.vscode_restclient.md`
+**Slide:** `pages/2.api_testing/2.9.vscode_restclient.md`
 
 **Lời thoại**
 
@@ -434,7 +434,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A13 — API mẫu Product Service (17:55–19:05)
 
-**Slide:** `pages/2.api_testing/2.14.product_service.md & 2.15.product_endpoints.md`
+**Slide:** `pages/2.api_testing/2.10.product_service.md`
 
 **Lời thoại**
 
@@ -500,7 +500,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A17 — Pact pipeline, xem trước bản đồ (21:25–22:05)
 
-**Slide:** `pages/3.automation_cicd/3.4.pact_pipeline.md & 3.5.pact_verification.md`
+**Slide:** `pages/3.automation_cicd/3.4.pact_pipeline.md`
 
 > **Lưu ý cho người quay:** slide này nằm trong deck **trước** khi Contract Testing được giải thích. Đừng cố giảng sâu ở đây. Nhiệm vụ duy nhất của cảnh này là cho người xem thấy **hình dạng** của pipeline và gieo ba thuật ngữ, để tới Video 1B họ có chỗ móc vào.
 
@@ -516,7 +516,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh A18 — Hai lớp bảo vệ và chốt Video 1A (22:05–22:55)
 
-**Slide:** `pages/3.automation_cicd/3.6.automation_value.md`
+**Slide:** `pages/3.automation_cicd/3.5.automation_value.md`
 
 **Lời thoại**
 
@@ -862,7 +862,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B13 — Case study Product Service (19:20–20:10)
 
-**Slide:** `pages/5.demo_pact/5.6.case_study.md & 5.7.case_study_results.md`
+**Slide:** `pages/5.demo_pact/5.6.case_study.md`
 
 **Lời thoại**
 
@@ -880,7 +880,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B14 — Breaking change và bài học (20:10–21:30)
 
-**Slide:** `pages/5.demo_pact/5.8.breaking_change.md`
+**Slide:** `pages/5.demo_pact/5.7.breaking_change.md`
 
 **Lời thoại**
 
@@ -918,7 +918,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B16 — AI trong quy trình testing (21:45–23:15)
 
-**Slide:** `pages/6.ai_testing/6.2.ai_in_testing.md & 6.3.ai_principles.md`
+**Slide:** `pages/6.ai_testing/6.2.ai_in_testing.md`
 
 **Lời thoại**
 
@@ -942,7 +942,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B17 — Agent Skill (23:15–24:30)
 
-**Slide:** `pages/6.ai_testing/6.4.agent_skill.md`
+**Slide:** `pages/6.ai_testing/6.3.agent_skill.md`
 
 **Lời thoại**
 
@@ -1024,7 +1024,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 ### Cảnh B22 — Ba từ khóa và kết (27:50–28:50)
 
-**Slide:** `pages/7.summary/7.5.takeaways.md`, sau đó `7.6.resources & 7.7.official_docs.md`
+**Slide:** `pages/7.summary/7.5.takeaways.md`, sau đó `7.6.resources.md`
 
 **Lời thoại**
 
@@ -1046,7 +1046,7 @@ Nêu rõ bảng này ở đầu Video 1A để người học biết mình đang
 
 **Chú thích dựng phim**
 
-- Không quay slide `7.8.qna` và `7.9.thank_you` trong video — hai slide đó dành cho buổi trình bày trực tiếp.
+- Không quay slide `7.7.qna` và `7.8.thank_you` trong video — hai slide đó dành cho buổi trình bày trực tiếp.
 - End card 6 giây: logo nhóm + "Tiếp theo: Video 2 — Cài đặt môi trường".
 
 ## 7. Bảng thuật ngữ Việt–Anh
@@ -1147,7 +1147,7 @@ Dùng nhất quán bảng này trong cả ba video. Cột "Cách đọc lần đ
 
 Slide được thiết kế **cố tình thưa** để dành thời gian thực hành. Nếu người quay chỉ đọc lại chữ trên slide, video không thêm giá trị nào. Nguyên tắc: **slide nêu *cái gì*, lời thoại giải thích *vì sao* và *hỏng thì ra sao*.**
 
-### Giảng sâu ở slide `3.4.pact_pipeline & 3.5.pact_verification`
+### Giảng sâu ở slide `3.4.pact_pipeline`
 
 Slide này đứng trước phần Contract Testing trong deck. Nếu giảng sâu tại đây, người xem sẽ nghe một loạt thuật ngữ chưa được định nghĩa và mất mạch. Giữ đúng vai trò "xem trước bản đồ" như kịch bản Cảnh A17.
 
@@ -1182,9 +1182,9 @@ Ba điểm phát hiện khi soạn kịch bản, gửi lại cho hai bạn phụ
 
 1. **`pages/1.intro/1.2.members.md` chỉ chứa đúng một dòng `layout: center`, không có dấu `---` bao quanh.** Vì không phải frontmatter hợp lệ, dòng này bị coi là nội dung và sẽ hiển thị thành chữ "layout: center" trên một slide trống. Danh sách thành viên hiện đã nằm sẵn trong slide bìa `1.1.cover.md`, nên nhiều khả năng đây là file thừa. Đề xuất: xóa dòng khai báo trong `slides.md` hoặc bổ sung nội dung cho slide này. Kịch bản hiện tại xử lý tạm bằng cách **bấm qua không dừng lại**.
 
-2. **Speaker note của `pages/7.summary/7.6.resources.md & 7.7.official_docs.md` ghi repository là `github.com/Anhnguyenk835/Software_Testing_api_contract_testing`**, trong khi kịch bản Video 2 và remote thực tế của repo là `github.com/se-bros/Software_Testing_api_contract_testing`. Cần thống nhất một địa chỉ. Kịch bản này dùng bản `se-bros`.
+2. **Speaker note của `pages/7.summary/7.6.resources.md` ghi repository là `github.com/Anhnguyenk835/Software_Testing_api_contract_testing`**, trong khi kịch bản Video 2 và remote thực tế của repo là `github.com/se-bros/Software_Testing_api_contract_testing`. Cần thống nhất một địa chỉ. Kịch bản này dùng bản `se-bros`.
 
-3. **Agenda ở `1.2.agenda.md` có 10 mục nhưng deck lại chia thành 6 phần A–F.** Hai cách đánh số này không ánh xạ một-một, nên nếu người xem đối chiếu sẽ hơi rối. Không phải lỗi, nhưng nếu còn thời gian thì nên gộp agenda về đúng 6 phần cho khớp với các slide phân đoạn.
+3. **Agenda ở `1.3.agenda.md` có 10 mục nhưng deck lại chia thành 6 phần A–F.** Hai cách đánh số này không ánh xạ một-một, nên nếu người xem đối chiếu sẽ hơi rối. Không phải lỗi, nhưng nếu còn thời gian thì nên gộp agenda về đúng 6 phần cho khớp với các slide phân đoạn.
 
 ## 11. Tài liệu tham khảo
 
