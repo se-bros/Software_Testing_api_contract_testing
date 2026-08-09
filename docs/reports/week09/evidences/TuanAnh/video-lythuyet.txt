@@ -1,0 +1,3 @@
+Video 1 (Trình bày lý thuyết):
+1A - API Testing: https://youtu.be/mnnLj9pOvvc 
+1B - Contract Testing: https://youtu.be/U4o4Np4piL8 
