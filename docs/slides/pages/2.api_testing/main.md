@@ -47,6 +47,10 @@ src: ./2.12.postman_datadriven.md
 ---
 
 ---
+src: ./2.13.postman_workflow.md
+---
+
+---
 src: ./2.13.vscode_restclient.md
 ---
 
